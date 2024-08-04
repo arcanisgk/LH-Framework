@@ -1,0 +1,19 @@
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-3">
+            <form action="/admin" method="post">
+                <button class="btn btn-success fw-semibold ps-3 pe-3 m-1" type="submit" name="event" value="updateCard">Sync Cards</button>
+            </form>
+            <form action="/admin" method="post">
+                <button class="btn btn-success fw-semibold ps-3 pe-3 m-1" type="submit" name="event" value="updateImage">Sync Images</button>
+            </form>
+            <form action="/admin" method="post">
+                <button class="btn btn-success fw-semibold ps-3 pe-3 m-1" type="submit" name="event" value="updateSets">Sync Sets and Card Info</button>
+            </form>
+            <form action="/admin" method="post">
+                <button class="btn btn-success fw-semibold ps-3 pe-3 m-1" type="submit" name="event" value="generateJsonSearch">Generate Json for Quick Search</button>
+            </form>
+        </div>
+        <div class="col-9">{{content}}</div>
+    </div>
+</div>

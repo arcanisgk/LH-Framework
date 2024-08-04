@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'itc_stone_serifbold';
+    src: url('assets/font/yu-gi-oh_itc_stone_serif_small_caps_bold.woff2') format('woff2'),
+    url('assets/font/yu-gi-oh_itc_stone_serif_small_caps_bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Noto Sans, Liberation Sans, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji, FontAwesome, 'yu-gi-oh_itc_stone_serif_small_caps_bold', serif;
+}
+
+.ygo-font {
+    font-family: 'yu-gi-oh_itc_stone_serif_small_caps_bold', serif !important;
+}
+
+.switch-lg {
+    width: 2.5em !important;
+    height: 1.25em !important;
+}
+
+.nav-link:focus, .nav-link:hover {
+    color: #6c757d;
+}
+
+.nav-link {
+    color: #6c757d !important;
+}
+
+.active {
+    color: #0d6efd !important;
+}
+
+main > .container {
+    padding: 32px 15px 0;
+}
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    display: none;
+}
+
+#results {
+    z-index: 9999;
+    background-color: white;
+    top: 3rem;
+    max-width: 600px;
+}

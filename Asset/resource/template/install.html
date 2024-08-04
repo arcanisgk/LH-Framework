@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Setup | LH-2 | Adaptive Development Platform</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="assets/css/plugins/sweetalert2.min.css" rel="stylesheet">
+    <link href="assets/css/vendor.min.css" rel="stylesheet">
+    <link href="assets/css/default/app.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <style>
+        .app-content {
+            margin-left: 220px;
+            margin-right: 220px;
+            padding: 20px 30px;
+        }
+
+        .pace .pace-progress {
+            top: 0 !important;
+        }
+
+        .btn, .btn:hover {
+            border-bottom-color: rgb(12, 10, 10)
+        }
+
+        .form-control-plaintext {
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body class="theme-cyan">
+
+<div id="loader" class="app-loader">
+    <span class="spinner"></span>
+</div>
+<form>
+    <div id="app" class="app app-sidebar-fixed">
+
+        <div class="app-sidebar-mobile-backdrop"><a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a></div>
+
+        <div id="content" class="app-content">
+
+            <ol class="breadcrumb float-xl-end">
+                <li class="breadcrumb-item">LH-2 System</li>
+                <li class="breadcrumb-item active">Setup</li>
+            </ol>
+
+            <h1 class="page-header">Setup Form <small>Config ADP</small></h1>
+
+            <hr class="mb-4">
+
+            <div class="row">
+
+                <div style="width: 230px">
+                    <div class="w-200px d-none d-xl-block my-n4 py-4 text-end mb-3">
+                        <img src="assets/img/logo/lh-2-logo.png" class="mw-100">
+                    </div>
+                    <nav class="navbar navbar-sticky d-none d-xl-block my-n4 py-4 text-end mt-lg-3 h-75"> <!-- removi el h-100 -->
+                        <nav class="nav" id="bsSpyTarget">
+                            <a class="nav-link active" href="#general" data-toggle="scroll-to">General</a>
+                            <a class="nav-link" href="#session" data-toggle="scroll-to">Session</a>
+                            <a class="nav-link" href="#database" data-toggle="scroll-to">Database</a>
+                        </nav>
+                    </nav>
+
+                </div>
+
+
+                <div class="col-xl-8" id="bsSpyContent">
+
+                    <div id="general" class="mb-4 pb-3">
+                        <h4 class="d-flex align-items-center mb-2">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:user-bold-duotone"></span>
+                            General
+                            <input type="hidden" name="step-1" value="false">
+                            <span id="step-1-text" class="ms-3 text-success hide"> Step #1 Complete!!!</span>
+                        </h4>
+                        <p>Application settings and owner.</p>
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold">
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="company-name">Company Name</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="company-name" name="json-company-name" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalCompanyName" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="company-owner">Company Owner</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="company-owner" name="json-company-owner" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalCompanyOwner" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="license">License</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="license" name="json-license" class="form-control-plaintext" type="text" value="FREE-FREE-FREE-FREE" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalLicense" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="protocol">Protocol</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="protocol" name="json-protocol" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Detected</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="domain">Domain for access</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="domain" name="json-domain" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Detected</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="lang">Default language</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="lang" name="json-lang" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <label for="m-lang">Multiple languages?</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <input id="m-lang" name="json-m-lang" class="form-control-plaintext" type="text" value="Click on Edit" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalLang" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="entry">Entry</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="entry" name="json-entry" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalEntryView" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="session" class="mb-4 pb-3">
+                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:clock-circle-line-duotone"></span>
+                            Session
+                            <input type="hidden" name="step-2" value="false">
+                            <span id="step-2-text" class="ms-3 text-success hide"> Step #2 Complete!!!</span>
+                        </h4>
+                        <p>let's configure how the sessions will work.</p>
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold">
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-name">Web Session Name</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="session-name" name="json-session-name" class="form-control-plaintext" type="text" value="Click on Edit" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Detected</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-inactivity"> Evaluate Session Inactivity</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="session-inactivity" name="json-session-inactivity" class="form-control-plaintext" type="text" value="True" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Security</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-lifetime">Session Life Time</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="session-lifetime" name="json-session-lifetime" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalSessionLifeTime" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-activity-expire">Session Activity Expire</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="session-activity-expire" name="json-session-activity-expire" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalSessionActivityExpire" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-secure">Session Secure</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="session-secure" name="json-session-secure" class="form-control-plaintext" type="text" value="True" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Security</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-http-only">Session HTTP Only</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="session-http-only" name="json-session-http-only" class="form-control-plaintext" type="text" value="True" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Security</a>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="session-same-site">Session Same Site</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                                            <input id="session-same-site" name="json-session-same-site" class="form-control-plaintext" type="text" value="True" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold" role="button" aria-disabled="true">Automatically Security</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="database" class="mb-4 pb-3">
+                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:clock-circle-line-duotone"></span>
+                            Database
+                            <input type="hidden" name="step-3" value="false">
+                            <span id="step-3-text" class="ms-3 text-success hide"> Step #3 Complete!!!</span>
+                        </h4>
+                        <p>let's configure how the System would be connected to the database system.</p>
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold">
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <label for="database-con1-db-name">Connection #1</label>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="database-con1-db-name" name="json-database-con1-db-name" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center mt-1 mb-1">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="database-con1-db-host" name="json-database-con1-db-host" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center mt-1  mb-1">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="database-con1-db-user" name="json-database-con1-db-user" class="form-control-plaintext" type="text" value="Click on Edit" readonly required/>
+                                        </div>
+                                        <div class="text-body text-opacity-60 d-flex align-items-center mt-1">
+                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <input id="database-con1-db-pass" name="json-database-con1-db-pass" class="form-control-plaintext" type="password" value="" autocomplete="off"
+                                                   placeholder="*******" readonly required/>
+                                        </div>
+                                    </div>
+                                    <div class="w-125px">
+                                        <a href="#modalDataBase" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                                    <div id="privacyAndSecurity" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:lock-password-bold-duotone"></span>
+                                            Privacy and security
+                                        </h4>
+                                        <p>Limit the account visibility and the security settings for your website.</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Who can see your future posts?</div>
+                                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                                            Friends only
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Photo tagging</div>
+                                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i> Enabled
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Location information</div>
+                                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i> Disabled
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Firewall</div>
+                                                        <div class="text-body text-opacity-60 d-block d-xl-flex align-items-center">
+                                                            <div class="d-flex align-items-center"><i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i> Disabled</div>
+                                                            <span class="bg-warning bg-opacity-10 text-warning ms-xl-3 mt-1 d-inline-block mt-xl-0 px-1 rounded-sm">
+                                                                <i class="fa fa-exclamation-circle text-warning fs-12px me-1"></i>
+                                                                <span class="text-warning">Please enable the firewall for your website</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="payment" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:bag-4-bold-duotone"></span>
+                                            Payment
+                                        </h4>
+                                        <p>Manage your website payment provider</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Allowed payment method</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            Paypal, Credit Card, Apple Pay, Amazon Pay, Google Wallet, Alipay
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="shipping" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:box-bold-duotone"></span>
+                                            Shipping
+                                        </h4>
+                                        <p>Allowed shipping area and zone setting</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Allowed shipping method</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            Local, Domestic
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="mediaAndFiles" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:camera-bold-duotone"></span>
+                                            Media and Files
+                                        </h4>
+                                        <p>Allowed files and media format upload setting</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Allowed files and media format</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            .png, .jpg, .gif, .mp4
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Media and files cdn</div>
+                                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i> Disabled
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="languages" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:globus-bold-duotone"></span>
+                                            Languages
+                                        </h4>
+                                        <p>Language font support and auto translation enabled</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Language enabled</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            English (default), Chinese, France, Portuguese, Japanese
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Auto translation</div>
+                                                        <div class="text-body text-opacity-60 d-flex align-items-center">
+                                                            <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i> Enabled
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="system" class="mb-4 pb-3">
+                                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:ssd-round-bold-duotone"></span>
+                                            System
+                                        </h4>
+                                        <p>System storage, bandwidth and database setting</p>
+                                        <div class="card">
+                                            <div class="list-group list-group-flush fw-bold">
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Web storage</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            40.8gb / 100gb
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px">Manage</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Monthly bandwidth</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            Unlimited
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Database</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            MySQL version 8.0.19
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-secondary w-125px disabled">Update</a>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item d-flex align-items-center">
+                                                    <div class="flex-fill">
+                                                        <div>Platform</div>
+                                                        <div class="text-body text-opacity-60">
+                                                            PHP 7.4.4, NGINX 1.17.0
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#modalEdit" data-bs-toggle="modal" class="btn btn-success w-125px">Update</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    -->
+
+                    <div id="adminSettings" class="mb-4 pb-3">
+                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1" data-icon="solar:restart-bold-duotone"></span>
+                            Control settings
+                        </h4>
+                        <p>Validate, Save or Reset all website setting to factory default setting.</p>
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold">
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <div>(Step: #1) Validate Settings</div>
+                                        <div class="text-body text-opacity-60">
+                                            This action will validate all the current system setting.
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="#" class="btn btn-outline-green w-125px">Validate</a>
+                                    </div>
+                                </div>
+
+                                <!--
+
+                                # import
+                                # export
+                                <div class="list-group-item d-flex align-items-center">
+                                                                    <div class="flex-fill">
+                                        <div>Reset Settings</div>
+                                        <div class="text-body text-opacity-60">
+                                            This action will clear and reset all the current website setting.
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="#" class="btn btn-outline-orange w-125px">Reset</a>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="flex-fill">
+                                        <div>(Step: #2) Save Settings</div>
+                                        <div class="text-body text-opacity-60">
+                                            This action will save all the current system setting.
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="button" name="b-save-json" class="btn btn-red w-125px">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
+
+    </div>
+
+</form>
+<!-- Modals -->
+<form>
+    <div class="modal fade" id="modalCompanyName">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Company Name or Individual</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="i-company-name">Set the Name</label>
+                        <div class="row">
+                            <div class="col-12">
+                                <input id="i-company-name" name="i-company-name" class="form-control opacity-50" placeholder="Company Inc. LTD. | John Doe" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-company-name" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> It is important to define the name of the company or individual person that implements this system, since this information must generally appear in
+                        documents
+                        that you generate officially.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-company-name" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCompanyOwner">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Company Owner or Individual</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="i-company-owner">Set the Name</label>
+                        <div class="row">
+                            <div class="col-12">
+                                <input id="i-company-owner" name="i-company-owner" class="form-control opacity-50" placeholder="Company Inc. LTD. | John Doe" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-company-owner" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> It is important to define the name of the company owner or individual person that implements this system, since this information must generally appear in
+                        documents that you generate officially.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-company-owner" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalLicense">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit License </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="i-license">Set the License Key for support service</label>
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <input id="i-license" name="i-license" class="form-control opacity-50" placeholder="1234-ABCD-1234-ABCD" value="FREE-FREE-FREE-FREE" readonly>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="free-license" type="hidden"/>
+                                    <input class="form-check-input" id="free-license" name="free-license" type="checkbox" checked/>
+                                    <label class="form-check-label" for="free-license">for Free</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-license" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div id="a-license2" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> License error, license must be 19 characters long, example: 1234-ABCD-1234-ABCD.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> You do not need a License, unless you directly require integration support or specialized training in implementations.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-license" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalLang">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Language</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="i-lang">Set the default Language</label>
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <select class="form-select" name="i-lang" id="i-lang">
+                                    <option value="en" selected>English (default)</option>
+                                    <option value="es">Español</option>
+                                    <option value="fr">Française</option>
+                                    <option value="de">Deutsch</option>
+                                    <option value="zh">中國人</option>
+                                    <option value="hi">हिंदी</option>
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="multi-language" type="hidden"/>
+                                    <input class="form-check-input" id="multi-language" name="multi-language" type="checkbox" checked/>
+                                    <label class="form-check-label" for="multi-language">Enable multi-language</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b>
+                        <p> The default language of the platform is English. Please note that the system includes by default the dictionaries of the languages selected for the platform and the
+                            administration system. You must decide if you want to support multiple languages at this time. Also consider that you should implement the template and dictionary system to
+                            expand the capabilities of using multiple languages, as well as including new languages.</p>
+                        <p class="mb-0"> The default language of the platform will be used as a last resort, the priority in Language detection is as follows:<br>
+                            1. Language set by end user as default.<br>
+                            2. language detected on the end user's operating system.<br>
+                            3. language set by default on the platform.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-lang" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalEntryView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Page/View for Users </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="i-entry">Set the Default Page/View for Users</label>
+                        <div class="row align-items-center">
+                            <div class="col-7">
+                                <select class="form-select" id="i-entry" name="i-entry">
+                                    <option value="Login" selected>Login (Default)</option>
+                                    <option value="Dashboard">Dashboard</option>
+                                    <option value="Store">Store</option>
+                                    <option value="Home">Home</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b>
+                        <p> It is important to establish a home or entry page by placing one of these by default, it will make it easier for users to understand the main purpose of this application or
+                            site.</p>
+                        <p class="mb-0">Keep in mind that if you select Dashboard, Home or Store, you will need to develop its content unlike the other entry points.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-entry" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalSessionLifeTime">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set Time for Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-session-lifetime-days">Days</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="number" id="i-session-lifetime-days" name="i-session-lifetime-days" class="form-control opacity-50" placeholder="30" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-session-lifetime-hours">Hours</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="number" id="i-session-lifetime-hours" name="i-session-lifetime-hours" class="form-control opacity-50" placeholder="24" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-session-lifetime" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum value of 1 hour.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> Now it's time to set the duration of the default session started, this is mainly for browser data in general. all values will be recalculated and converted
+                        to
+                        seconds. the minimum value is 1 hour.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-lifetime" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalSessionActivityExpire">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set Time for Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-session-activity-expire-days">Days</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="number" id="i-session-activity-expire-days" name="i-session-activity-expire-days" class="form-control opacity-50" placeholder="30" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-session-activity-expire-hours">Hours</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="number" id="i-session-activity-expire-hours" name="i-session-activity-expire-hours" class="form-control opacity-50" placeholder="24" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-session-activity-expire" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum value of 1 hour.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> Now it's time to set the duration of the default session activity, this is mainly for user data in general. all values will be recalculated and converted to
+                        seconds. the minimum value is 1 hour.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-activity-expire" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDataBase">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Setup Database Credential</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-database-name">DB Name</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" id="i-database-name" name="i-database-name" class="form-control opacity-50" placeholder="db-name" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-database-host">DB Host</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" id="i-database-host" name="i-database-host" class="form-control opacity-50" placeholder="localhost | 127.0.0.1" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-database-user">DB User</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" id="i-database-user" name="i-database-user" class="form-control opacity-50" placeholder="root" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="i-database-password">DB Password</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="password" id="i-database-password" name="i-database-password" class="form-control opacity-50" placeholder="********" value="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 offset-6 mb-3">
+                            <div class="password-meter">
+                                <div class="meter-section rounded me-2"></div>
+                                <div class="meter-section rounded me-2"></div>
+                                <div class="meter-section rounded me-2"></div>
+                                <div class="meter-section rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 d-grid gap-2 d-block">
+                            <button type="button" name="test-bd-connection" class="btn btn-primary mb-2">Test Database Connection</button>
+                            <input type="hidden" name="test-bd-connection-result" value="false">
+                        </div>
+                        <div class="col-6">
+                            <div id="a-database-con1-connection-error" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error!!!</b>
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div id="a-database-con1-connection-success" class="alert alert-success alert-dismissible hide mb-3">
+                                <b>Success!!!</b>
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a-database-con1-config" class="alert alert-danger alert-dismissible hide mb-3">
+                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum value of 1 hour.
+                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                    </div>
+                    <div class="alert bg-body">
+                        <b>Please note:</b> In this section we are going to configure our connection to our database so that the system can establish the minimum structures necessary for its
+                        configuration.<br><br>
+
+                        Keep in mind that the password field has minimum requirements:<br>
+                        - Use 8 or more characters.<br>
+                        - with a mix of letters, numbers & symbols.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button name="b-save-database-con1" type="button" class="btn btn-theme">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script defer data-cfasync="false" src="assets/js/email-decode.min.js" type="text/javascript"></script>
+<script defer src="assets/js/vendor.min.js" type="text/javascript"></script>
+<script defer src="assets/js/app.min.js" type="text/javascript"></script>
+<script defer src="assets/js/iconify.min.js" type="text/javascript"></script>
+<script defer src="assets/js/plugins/sweetalert2.all.min.js" type="text/javascript"></script>
+<script defer src="assets/js/axios.min.js" type="text/javascript"></script>
+<script defer src="assets/js/installer.js" type="text/javascript"></script>
+
+</body>
+</html>

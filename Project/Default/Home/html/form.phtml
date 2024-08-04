@@ -1,0 +1,193 @@
+<header>
+    <div class="container-fluid m-0">
+        <form action="/home" method="get">
+            <nav class="navbar fixed-top bg-light">
+                <div class="container-fluid">
+                    <div class="dropdown input-group custom-font">
+                        <button class="btn btn-success dropdown-toggle fw-semibold ps-2 pe-2" type="button" data-bs-toggle="dropdown"><i class="fa-solid fa-bars pe-1"></i></button>
+                        <ul class="dropdown-menu">
+                            <!--
+                            <li><a class="dropdown-item" href="/dueltool">It's duel time!</a></li>
+                            <li><a class="dropdown-item" href="/store">Stores and Vendors</a></li>
+                            <li><a class="dropdown-item" href="/collection">My Collection</a></li>
+                            <li><a class="dropdown-item" href="/userprofile">User Profile</a></li>
+                            -->
+                            <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
+                            {{admin_area}}
+                        </ul>
+                        <button class="btn btn-primary fw-semibold ps-3 pe-3" type="button" data-bs-toggle="modal" data-bs-target="#searchConfig"><i class="fa-solid fa-gear"></i></button>
+                        <input id="search" name="search" type="text" class="form-control shadow-none" placeholder="code | text name"
+                               aria-label="code | text name" value="{{search}}"
+                               aria-describedby="Search" {{search_enable}}>
+                        <button class="btn btn-warning fw-semibold ps-3 pe-3" type="submit" name="event" value="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button class="btn btn-success fw-semibold ps-3 pe-3" type="button"><i class="fa-solid fa-cart-shopping"></i></button>
+                    </div>
+                </div>
+            </nav>
+        </form>
+    </div>
+</header>
+<button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top"><i class="fas fa-arrow-up"></i></button>
+<main class="flex-shrink-0" style="overflow-y: auto;">
+    <div class="container-fluid row row-cols-1 justify-content-center align-items-center position-absolute m-1 p-1 rounded-1 collapse ms-0 me-0 ms-md-5 me-md-5" id="results">
+        <div class="d-grid gap-2 d-inline-flex justify-content-end align-items-center">
+            <p class="flex-fill align-middle m-0" id="counts">Texto justificado a la izquierda</p>
+            <button class="btn btn-success btn-sm" name="back" type="button">Back</button>
+            <button class="btn btn-success btn-sm" name="next" type="button">Next</button>
+        </div>
+        <ul class="list-group p-1 m-1" id="list-suggestion">
+        </ul>
+        <div class="d-grid gap-2 d-flex justify-content-end">
+            <button class="btn btn-success btn-sm" name="back" type="button">Back</button>
+            <button class="btn btn-success btn-sm" name="next" type="button">Next</button>
+        </div>
+    </div>
+    <div class="container-fluid m-0 pt-5 pb-5">
+        <div class="row mt-3">
+            <div class="col-12 overflow-auto">
+                {{head_search}}
+                {{content}}
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer mt-auto py-1 bg-primary bg-gradient fixed-bottom">
+    <div class="container-fluid ps-0 pe-0">
+        <div class="dropdown input-group custom-font">
+            <label class="input-group-text bg-primary bg-gradient border-0 text-white me-auto">All Rights Reserved. &trade; TCG-Wallet &reg;</label>
+            <button class="btn btn-danger dropdown-toggle rounded-1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bars pe-1"></i></button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <!--
+                <li><a class="dropdown-item" href="/membership">Membership</a></li>
+                <li><a class="dropdown-item" href="/tech">Tech Blog Post</a></li>
+                <li><a class="dropdown-item" href="/community">Community</a></li>
+                <li><a class="dropdown-item" href="/questionanswer">Q&A</a></li>
+                -->
+                <li><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                <li><a class="dropdown-item" href="/termsofservice">Terms of Service</a></li>
+                <li><a class="dropdown-item" href="/privacypolicies">Privacy Policies</a></li>
+                <li><a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.icarosnet.tcgwallet" target="_blank" rel="noopener noreferrer">Android APP</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<div id="list-modals">
+    <div class="modal fade" id="searchConfig" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Search Parameters</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-1">
+                            <div class="col-12 col-sm-5  fw-bold">
+                                <label for="list-order" class="col-form-label">Sort by:</label>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <select class="form-select shadow-none" aria-label="Select" id="list-order" name="list-order">
+                                    <option value="1" selected>High to Low Price</option>
+                                    <option value="2">Low to High Price</option>
+                                    <option value="3">Most Recent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-12 col-sm-5  fw-bold">
+                                <label for="list-show-store" class="col-form-label">Search in:</label>
+                            </div>
+                            <div class="col-12 col-sm-7">
+                                <select class="form-select shadow-none" aria-label="Select" id="list-show-store" name="list-show-store">
+                                    <option value="1">All stores</option>
+                                    <option value="2" selected>Main Stores</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-12 col-sm-5 fw-bold">
+                                <label>Hide Out of Stock:</label>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg shadow-none" type="checkbox" role="switch" id="list-stock" name="list-stock" aria-label="Hide Out of Stock" checked>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-12 col-sm-12">
+                                <label class="col-form-label fw-bold">Card condition:</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-1" name="list-condition-1">
+                                    <label class="form-check-label" for="list-condition-1">Show All</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-2" name="list-condition-2">
+                                    <label class="form-check-label" for="list-condition-2">Graded</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-3" name="list-condition-3" checked>
+                                    <label class="form-check-label" for="list-condition-3">Near Mint (NM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-4" name="list-condition-4" checked>
+                                    <label class="form-check-label" for="list-condition-4">Little Played (LP)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-5" name="list-condition-5">
+                                    <label class="form-check-label" for="list-condition-5">Moderate Played (MP)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-6" name="list-condition-6">
+                                    <label class="form-check-label" for="list-condition-6">Heavy Played (HP)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-lg me-2 shadow-none" type="checkbox" role="switch" id="list-condition-7" name="list-condition-7">
+                                    <label class="form-check-label" for="list-condition-7">Damaged (D)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 offset-0 col-sm-7 offset-sm-5">
+                                <button type="button" class="btn btn-outline-warning text-muted disabled ">Advanced Search Engine</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save Options</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

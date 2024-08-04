@@ -1,0 +1,35 @@
+{
+  "name": "arcanisgk/lh-2",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "files": [
+      "Asset/resource/constant/default.php",
+      "Asset/resource/function/init_loader.php",
+      "Asset/resource/function/init_function.php"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "authors": [
+    {
+      "name": "Walter Nuñez",
+      "email": "icarosnet@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.3",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-xml": "*",
+    "phpmailer/phpmailer": ">=6.8",
+    "arcanisgk/web-cli-detector": ">=1.0",
+    "ext-pdo": "*"
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "@composer dump-autoload"
+    ]
+  }
+}
