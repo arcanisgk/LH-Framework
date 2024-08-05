@@ -2,7 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Asset\Helper\Error;
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Requiered).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+namespace Asset\Framework\ToolBox;
 
 use Asset\Framework\Core\ArgumentLoader;
 
@@ -35,7 +49,7 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  int  $termWidth
+     * @param int $termWidth
      */
     public static function setTermWidth(int $termWidth): void
     {
@@ -55,24 +69,24 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  array|string  $source
-     * @param  int           $nlHeader
-     * @param  int           $nlFooter
-     * @param  bool          $highlight
-     * @param  int           $limitLen
-     * @param  int           $typeOutput
-     * @param  bool          $error
+     * @param array|string $source
+     * @param int $nlHeader
+     * @param int $nlFooter
+     * @param bool $highlight
+     * @param int $limitLen
+     * @param int $typeOutput
+     * @param bool $error
      *
      * @return string
      */
     public function drawBoxes(
         array|string $source,
-        int          $nlHeader = 0,
-        int          $nlFooter = 0,
-        bool         $highlight = false,
-        int          $limitLen = 0,
-        int          $typeOutput = 0,
-        bool         $error = false,
+        int $nlHeader = 0,
+        int $nlFooter = 0,
+        bool $highlight = false,
+        int $limitLen = 0,
+        int $typeOutput = 0,
+        bool $error = false,
     ): string {
         $arguments   = ArgumentLoader::getArguments();
         $source      = (is_array($source) ? $source : preg_split('/\r\n|\r|\n/', rtrim($source)));
@@ -92,16 +106,51 @@ class DrawBoxCLI
             'rs' => '╢',
         ];
         $colorScheme = ['c' => '', 'r' => ''];
+
         switch ($typeOutput) {
-            case 1: //output message
-                $colorScheme['c'] = '[1;42m';
+            case 1: // Output message (green background)
+                $colorScheme['c'] = '[1;42;30m';
                 $colorScheme['r'] = '[0m';
                 break;
-            case 2: //danger
+            case 2: // Danger (red background)
                 $colorScheme['c'] = '[1;41m';
                 $colorScheme['r'] = '[0m';
                 break;
+            case 3: // Warning (yellow background)
+                $colorScheme['c'] = '[1;43;30m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 4: // Info (blue background)
+                $colorScheme['c'] = '[1;44;30m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 5: // Success (green text)
+                $colorScheme['c'] = '[1;32m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 6: // Error (red text)
+                $colorScheme['c'] = '[1;31m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 7: // Highlight (cyan background)
+                $colorScheme['c'] = '[1;46;30m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 8: // Bold text (white text, no background color)
+                $colorScheme['c'] = '[1;37m';
+                $colorScheme['r'] = '[0m';
+                break;
+            case 9: // Purple background
+                $colorScheme['c'] = '[1;45m';
+                $colorScheme['r'] = '[0m';
+                break;
+            default: // Default color (reset)
+                $colorScheme['c'] = '[0m';
+                $colorScheme['r'] = '[0m';
+                break;
         }
+
+
         $cliColors = [
             'hf'    => ($highlight && $isCli && $nlHeader !== 0) ? "\033{$colorScheme['c']}" : '',
             'reset' => ($highlight && $isCli) ? "\033{$colorScheme['r']}" : '',
@@ -116,84 +165,86 @@ class DrawBoxCLI
         if ($limitLen == 0) {
             $longest = $termWidth;
         }
+
+
         if ($limitLen == 0 || $this->checkIsFit($longest, $limitLen) || isset($arguments['f'])) {
             $printArea = $longest - 2;
             $result    = '';
             $nLines    = count($source);
             $i         = 0;
-            $fTop      = $boxChars['tl'] . str_repeat($boxChars['h'], $printArea) . $boxChars['tr'];
-            $fBottom   = $boxChars['bl'] . str_repeat($boxChars['h'], $printArea) . $boxChars['br'];
+            $fTop      = $boxChars['tl'].str_repeat($boxChars['h'], $printArea).$boxChars['tr'];
+            $fBottom   = $boxChars['bl'].str_repeat($boxChars['h'], $printArea).$boxChars['br'];
             $lineTxt   = [];
-            $lineTxt[] = $cliColors['hf'] . $fTop . $cliColors['reset'] . PHP_EOL;
+            $lineTxt[] = $cliColors['hf'].$fTop.$cliColors['reset'].PHP_EOL;
             $start     = true;
             foreach ($source as $key => $line) {
                 $i++;
                 if ($nlHeader > 0 && $i <= $nlHeader) {
                     $line      = str_pad($line, $printArea, ' ', STR_PAD_BOTH);
-                    $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $line . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                    $lineTxt[] = $cliColors['hf'].$boxChars['v'].$line.$boxChars['v'].$cliColors['reset'].PHP_EOL;
                     if ($i == $nlHeader) {
-                        $lineTxt[] = $cliColors['hf'] . $boxChars['ls'] .
-                            str_repeat($boxChars['hs'], $printArea) .
-                            $boxChars['rs'] . $cliColors['reset'] . PHP_EOL;
+                        $lineTxt[] = $cliColors['hf'].$boxChars['ls'].
+                            str_repeat($boxChars['hs'], $printArea).
+                            $boxChars['rs'].$cliColors['reset'].PHP_EOL;
                     }
                 } elseif ($nlFooter === 0 || $i <= ($nLines - $nlFooter)) {
                     if ($start) {
-                        $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] .
-                            str_pad('', $printArea) .
-                            $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                        $lineTxt[] = $cliColors['hf'].$boxChars['v'].$cliColors['reset'].
+                            str_pad('', $printArea).
+                            $cliColors['hf'].$boxChars['v'].$cliColors['reset'].PHP_EOL;
                         $start     = false;
                     }
                     if ($printArea >= mb_strlen($line)) {
-                        $line      = ' ' . $line;
+                        $line      = ' '.$line;
                         $line      = str_pad($line, $printArea);
-                        $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . $line .
-                            $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                        $lineTxt[] = $cliColors['hf'].$boxChars['v'].$cliColors['reset'].$line.
+                            $cliColors['hf'].$boxChars['v'].$cliColors['reset'].PHP_EOL;
                     } else {
                         $chunks = $this->limitLineLength($line, $printArea - 2);
                         foreach ($chunks as $chunkLine) {
                             if ($printArea >= mb_strlen($chunkLine)) {
                                 $chunkLine = str_pad($chunkLine, $printArea - 2);
                             }
-                            $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . ' ' . $chunkLine . ' ' .
-                                $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                            $lineTxt[] = $cliColors['hf'].$boxChars['v'].$cliColors['reset'].' '.$chunkLine.' '.
+                                $cliColors['hf'].$boxChars['v'].$cliColors['reset'].PHP_EOL;
                         }
                     }
                     if ($i === $nLines || ($nlFooter > 0 && $i === $nLines - $nlFooter)) {
-                        $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] .
-                            str_pad('', $printArea) .
-                            $cliColors['hf'] . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                        $lineTxt[] = $cliColors['hf'].$boxChars['v'].$cliColors['reset'].
+                            str_pad('', $printArea).
+                            $cliColors['hf'].$boxChars['v'].$cliColors['reset'].PHP_EOL;
                     }
                 } elseif ($nlFooter > 0) {
-                    $lineTxt[] = $cliColors['hf'] . $boxChars['ls'] .
-                        str_repeat($boxChars['hs'], $printArea) .
-                        $boxChars['rs'] . $cliColors['reset'] . PHP_EOL;
+                    $lineTxt[] = $cliColors['hf'].$boxChars['ls'].
+                        str_repeat($boxChars['hs'], $printArea).
+                        $boxChars['rs'].$cliColors['reset'].PHP_EOL;
                     $line      = str_pad($line, $printArea, ' ', STR_PAD_BOTH);
-                    $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $line . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                    $lineTxt[] = $cliColors['hf'].$boxChars['v'].$line.$boxChars['v'].$cliColors['reset'].PHP_EOL;
                 }
             }
             if (isset($arguments['f']) && $error === false) {
-                $lineTxt[] = $cliColors['hf'] . $fBottom . $cliColors['reset'] . PHP_EOL;
+                $lineTxt[] = $cliColors['hf'].$fBottom.$cliColors['reset'].PHP_EOL;
                 $resultTxt = implode('', $lineTxt);
                 $content   = $this->RemoveANSSequence($resultTxt);
-                $lineTxt[] = $cliColors['hf'] . $boxChars['ls'] .
-                    str_repeat($boxChars['hs'], $printArea) .
-                    $boxChars['rs'] . $cliColors['reset'] . PHP_EOL;
+                $lineTxt[] = $cliColors['hf'].$boxChars['ls'].
+                    str_repeat($boxChars['hs'], $printArea).
+                    $boxChars['rs'].$cliColors['reset'].PHP_EOL;
                 $created   = $this->createFileOutput($arguments['f'], $content);
                 if ($created) {
                     $line = str_pad("Archivo '{$arguments['f']}' creado exitosamente.", $printArea, ' ', STR_PAD_BOTH);
                 } else {
                     $line = str_pad("Error al Crear el Archivo '{$arguments['f']}'!!!", $printArea, ' ', STR_PAD_BOTH);
                 }
-                $lineTxt[] = $cliColors['hf'] . $boxChars['v'] . $line . $boxChars['v'] . $cliColors['reset'] . PHP_EOL;
+                $lineTxt[] = $cliColors['hf'].$boxChars['v'].$line.$boxChars['v'].$cliColors['reset'].PHP_EOL;
             }
-            $lineTxt[] = $cliColors['hf'] . $fBottom . $cliColors['reset'] . PHP_EOL;
+            $lineTxt[] = $cliColors['hf'].$fBottom.$cliColors['reset'].PHP_EOL;
             $result    .= implode('', $lineTxt);
         } else {
-            $output = '!!!Your Terminal Windows is too Narrow. Resize It!!!' . PHP_EOL .
-                '==> Minimum Expected: ' . $longest . PHP_EOL .
-                '==> Given Size:       ' . $limitLen . PHP_EOL . PHP_EOL .
-                'If you cannot Resize the window;' . PHP_EOL .
-                'You can Output the data to a file and avoid this error:' . PHP_EOL .
+            $output = '!!!Your Terminal Windows is too Narrow. Resize It!!!'.PHP_EOL.
+                '==> Minimum Expected: '.$longest.PHP_EOL.
+                '==> Given Size:       '.$limitLen.PHP_EOL.PHP_EOL.
+                'If you cannot Resize the window;'.PHP_EOL.
+                'You can Output the data to a file and avoid this error:'.PHP_EOL.
                 'php script.php -f="filename"';
             $result = $this->drawBoxes($output, 1, 1, true, 0, 2, true);
         }
@@ -202,8 +253,8 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  int  $longest
-     * @param  int  $limitLen
+     * @param int $longest
+     * @param int $limitLen
      *
      * @return bool|string
      */
@@ -213,8 +264,8 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  string  $text
-     * @param  int     $limit
+     * @param string $text
+     * @param int $limit
      *
      * @return array
      */
@@ -245,7 +296,7 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  string  $resultTxt
+     * @param string $resultTxt
      *
      * @return string
      */
@@ -257,8 +308,8 @@ class DrawBoxCLI
     }
 
     /**
-     * @param  string  $filename
-     * @param  string  $content
+     * @param string $filename
+     * @param string $content
      *
      * @return bool
      */
@@ -276,13 +327,13 @@ class DrawBoxCLI
         if ($termWidth == null && str_contains(PHP_OS, 'WIN')) {
             $termWidth = shell_exec('mode con');
             preg_match('/CON.*:(\n[^|]+?){3}(?<cols>\d+)/', $termWidth, $match);
-            $termWidth = isset($match['cols']) ? (int) $match['cols'] : null;
+            $termWidth = isset($match['cols']) ? (int)$match['cols'] : null;
         } elseif ($termWidth == null && function_exists('shell_exec')) {
             $termResponse = shell_exec('tput cols 2> /dev/tty');
             if ($termResponse !== null) {
                 $termWidth = trim($termResponse) ?? null;
                 if ($termWidth !== null) {
-                    $termWidth = (int) $termWidth;
+                    $termWidth = (int)$termWidth;
                 }
             }
         }

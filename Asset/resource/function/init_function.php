@@ -3,34 +3,20 @@
 declare(strict_types=1);
 
 /**
- * function displays resource content.
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Required).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-if (!function_exists('exDataEx')) {
-    function exDataEx(...$data): void
-    {
-        foreach ($data as $var) {
-            echo '<pre>';
-            echo var_dump($var);
-            echo '</pre>';
-        }
-    }
-}
-if (!function_exists('exDataReturn')) {
-    function exDataReturn(...$data): string
-    {
-        ob_start();
-        foreach ($data as $var) {
-            echo '<pre>';
-            echo var_dump($var);
-            echo '</pre>';
-        }
-        $var = ob_get_contents();
-        ob_end_clean();
-
-        return $var;
-    }
-}
+use Asset\Framework\ToolBox\Dumper;
 
 /**
  * @param ...$var
@@ -40,20 +26,5 @@ if (!function_exists('exDataReturn')) {
 
 function ex(...$var): void
 {
-    $stuff = (IS_CLI) ?
-        [
-            'salE' => '',
-            'salC' => '',
-            'nl'   => PHP_EOL,
-        ] : [
-            'salE' => '<pre>',
-            'salC' => '</pre>',
-            'nl'   => '<br>',
-        ];
-    foreach ($var as $arg) {
-        echo $stuff['salE'];
-        echo var_dump($arg);
-        echo $stuff['salC'];
-        echo $stuff['nl'];
-    }
+    Dumper::getInstance()::dump(['data' => $var]);
 }

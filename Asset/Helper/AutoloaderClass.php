@@ -2,6 +2,20 @@
 
 declare(strict_types=1);
 
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Required).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 namespace Asset\Helper;
 
 use RuntimeException;
@@ -44,7 +58,7 @@ class AutoloaderClass
     /**
      * Autoload the class.
      *
-     * @param  string  $class  The class name.
+     * @param string $class The class name.
      *
      * @return void
      * @throws RuntimeException When the class file is not found.
@@ -63,7 +77,7 @@ class AutoloaderClass
     /**
      * Validate the class name.
      *
-     * @param  string  $class  The class name.
+     * @param string $class The class name.
      *
      * @return bool True if the class name is valid, false otherwise.
      */
@@ -75,7 +89,7 @@ class AutoloaderClass
     /**
      * Build a safe file path based on the class name.
      *
-     * @param  string  $class  The relative class name.
+     * @param string $class The relative class name.
      *
      * @return string The safe file path.
      */
@@ -87,7 +101,7 @@ class AutoloaderClass
             return preg_replace('/[^a-zA-Z0-9]/', '', $part);
         }, $parts);
         $safePath  = implode(DS, $safeParts);
-        $filename  = PD . DS . $safePath . '.php';
+        $filename  = PD.DS.$safePath.'.php';
 
         return realpath($filename);
     }
@@ -95,7 +109,7 @@ class AutoloaderClass
     /**
      * Handle the case when the class is not found.
      *
-     * @param  string  $class  The class name.
+     * @param string $class The class name.
      *
      * @return void
      * @throws RuntimeException

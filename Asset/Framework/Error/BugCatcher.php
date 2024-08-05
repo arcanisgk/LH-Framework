@@ -2,10 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Asset\Helper\Error;
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Requiered).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
+namespace Asset\Framework\Error;
+
+use Closure;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
+use Asset\Framework\ToolBox\DrawBoxCLI;
 
 /**
  * Class that handles capturing and displaying errors in the application.
@@ -19,7 +35,7 @@ class BugCatcher
      *
      * @var string
      */
-    private const DS = DIRECTORY_SEPARATOR;
+    private const string DS = DIRECTORY_SEPARATOR;
 
     /**
      * @var BugCatcher|null Unique instance of the BugCatcher class.
@@ -80,7 +96,7 @@ class BugCatcher
     /**
      * Set the line separator used in the application.
      *
-     * @param  string  $lineSeparator  The line separator.
+     * @param string $lineSeparator The line separator.
      *
      * @return BugCatcher This BugCatcher instance.
      */
@@ -104,7 +120,7 @@ class BugCatcher
     /**
      * Set whether errors should be displayed on screen.
      *
-     * @param  bool  $displayError  True to display errors, false otherwise.
+     * @param bool $displayError True to display errors, false otherwise.
      *
      * @return BugCatcher This BugCatcher instance.
      */
@@ -178,7 +194,7 @@ class BugCatcher
     /**
      * Exception handler. Captures and handles exceptions thrown in the application.
      *
-     * @param  Throwable  $e  The captured exception.
+     * @param Throwable $e The captured exception.
      */
     #[NoReturn] public function exceptionHandler(Throwable $e): void
     {
@@ -198,10 +214,10 @@ class BugCatcher
     /**
      * Error handler. Captures and handles errors generated in the application.
      *
-     * @param  mixed|null  $errorLevel  Error level.
-     * @param  mixed|null  $errorDesc   Error description.
-     * @param  mixed|null  $errorFile   File where the error occurred.
-     * @param  mixed|null  $errorLine   Line where the error occurred.
+     * @param mixed|null $errorLevel Error level.
+     * @param mixed|null $errorDesc Error description.
+     * @param mixed|null $errorFile File where the error occurred.
+     * @param mixed|null $errorLine Line where the error occurred.
      */
     #[NoReturn] public function errorHandler(
         mixed $errorLevel = null,
@@ -239,7 +255,7 @@ class BugCatcher
     /**
      * Generate a backtrace message from error information.
      *
-     * @param  array  $errorArray  Error information.
+     * @param array $errorArray Error information.
      *
      * @return string The backtrace message.
      */
@@ -267,7 +283,7 @@ class BugCatcher
     /**
      * Format arguments for display.
      *
-     * @param  array  $args  Arguments array.
+     * @param array $args Arguments array.
      *
      * @return string Formatted arguments.
      */
@@ -278,8 +294,14 @@ class BugCatcher
         foreach ($args as $arg) {
             if (is_array($arg)) {
                 $formattedArgs[] = 'Array';
+            } elseif (is_object($arg)) {
+                if ($arg instanceof Closure) {
+                    $formattedArgs[] = 'Closure';
+                } else {
+                    $formattedArgs[] = get_class($arg);
+                }
             } else {
-                $formattedArgs[] = is_string($arg) ? "'" . $arg . "'" : (string) $arg;
+                $formattedArgs[] = is_string($arg) ? "'".$arg."'" : (string)$arg;
             }
         }
 
@@ -289,7 +311,7 @@ class BugCatcher
     /**
      * Get description of the route (file and line) or magic call method.
      *
-     * @param  array  $track  Stack trace information.
+     * @param array $track Stack trace information.
      *
      * @return string Route description.
      */
@@ -305,7 +327,7 @@ class BugCatcher
     /**
      * Generate and display the output corresponding to the error.
      *
-     * @param  array  $errorArray  Error information.
+     * @param array $errorArray Error information.
      */
     #[NoReturn] private function output(array $errorArray): void
     {
@@ -322,7 +344,7 @@ class BugCatcher
     /**
      * Generate output for CLI environment.
      *
-     * @param  array  $errorArray
+     * @param array $errorArray
      *
      * @return string The generated output.
      */
@@ -331,16 +353,16 @@ class BugCatcher
         $output = '';
         $nl     = $this->getLineSeparator();
         if ($this->getDisplayError()) {
-            $output .= "Class: {$errorArray['class']}" . $nl
-                . "Description:" . $nl . "{$errorArray['description']}" . $nl . $nl
-                . "File: {$errorArray['file']}" . $nl
-                . "Line: {$errorArray['line']}" . ' ' . "Type: {$errorArray['type']}" . ' ' . "Time: {$errorArray['micro_time']}" . $nl . $nl
-                . "Backtrace:" . $nl . "{$errorArray['trace_msg']}" . $nl
-                . "Development by: W. Nunez ";
+            $output .= "Class: {$errorArray['class']}".$nl
+                ."Description:".$nl."{$errorArray['description']}".$nl.$nl
+                ."File: {$errorArray['file']}".$nl
+                ."Line: {$errorArray['line']}".' '."Type: {$errorArray['type']}".' '."Time: {$errorArray['micro_time']}".$nl.$nl
+                ."Backtrace:".$nl."{$errorArray['trace_msg']}".$nl
+                ."Development by: W. Nunez";
         } else {
             $output .= "Micro Time: {$errorArray['micro_time']}";
         }
-        require_once 'DrawBoxCLI.php';
+        //require_once 'DrawBoxCLI.php';
         $drawBox = DrawBoxCLI::getInstance();
 
         return $drawBox->drawBoxes($output, 1, 1, true, 0, 2);
@@ -349,22 +371,22 @@ class BugCatcher
     /**
      * Get the path to the error template file based on whether a handler is available.
      *
-     * @param  bool  $hasHandler  True if a handler is available, false otherwise.
+     * @param bool $hasHandler True if a handler is available, false otherwise.
      *
      * @return string The path to the error template file.
      */
     private function getErrorTemplatePath(bool $hasHandler): string
     {
-        $templateFolder = __DIR__ . self::DS . 'template' . self::DS;
+        $templateFolder = __DIR__.self::DS.'template'.self::DS;
         $templateFile   = $hasHandler ? 'handler_error.php' : 'no_handler_error.php';
 
-        return $templateFolder . $templateFile;
+        return $templateFolder.$templateFile;
     }
 
     /**
      * Generate output for web environment.
      *
-     * @param  array  $errorArray  Error information.
+     * @param array $errorArray Error information.
      *
      * @return string The generated output.
      */
@@ -390,7 +412,7 @@ class BugCatcher
     /**
      * Log the error to the log file and return the timestamp.
      *
-     * @param  array  $errorArray  Error information.
+     * @param array $errorArray Error information.
      *
      * @return int The log timestamp.
      */
@@ -398,13 +420,13 @@ class BugCatcher
     {
         $description = preg_replace("/(\r\n|\n|\r|\t|<br>)/", '', $errorArray['description']);
         $microTime   = time();
-        $smgError    = $microTime . ' ' . date('Y-m-d H:i:s') . ' ' . $description . PHP_EOL;
+        $smgError    = $microTime.' '.date('Y-m-d H:i:s').' '.$description.PHP_EOL;
         $logPath     = dirname(__FILE__)
-            . self::DS . '..'
-            . self::DS . '..'
-            . self::DS . 'resource'
-            . self::DS . 'log'
-            . self::DS . 'error_log.log';
+            .self::DS.'..'
+            .self::DS.'..'
+            .self::DS.'resource'
+            .self::DS.'log'
+            .self::DS.'error_log.log';
         error_log($smgError, 3, $logPath);
 
         return $microTime;

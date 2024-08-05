@@ -20,11 +20,11 @@
   ],
   "require": {
     "php": ">=8.3",
-    "ext-json": "*",
-    "ext-mbstring": "*",
-    "ext-xml": "*",
     "phpmailer/phpmailer": ">=6.8",
     "arcanisgk/web-cli-detector": ">=1.0",
+    "ext-mbstring": "*",
+    "ext-xml": "*",
+    "ext-json": "*",
     "ext-pdo": "*"
   },
   "scripts": {

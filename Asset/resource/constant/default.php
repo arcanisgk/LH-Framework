@@ -2,6 +2,20 @@
 
 declare(strict_types=1);
 
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Required).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 use IcarosNet\WebCLIToolKit\WebCLIDetector;
 
 if (!defined('DS')) {
@@ -33,7 +47,7 @@ if (!defined('WD')) {
      * Description: This constant represents the path that the web entry point is located on.
      */
 
-    define('WD', rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') . DS);
+    define('WD', rtrim($_SERVER['DOCUMENT_ROOT'], '/\\').DS);
 }
 
 if (!defined('NL')) {
@@ -78,13 +92,13 @@ if (!defined('TW') && IS_CLI) {
     if (str_contains(PHP_OS, 'WIN')) {
         $termWidth = shell_exec('mode con');
         preg_match('/CON.*:(\n[^|]+?){3}(?<cols>\d+)/', $termWidth, $match);
-        $termWidth = isset($match['cols']) ? (int) $match['cols'] : null;
+        $termWidth = isset($match['cols']) ? (int)$match['cols'] : null;
     } elseif (function_exists('shell_exec')) {
         $termResponse = shell_exec('tput cols 2> /dev/tty');
         if ($termResponse !== null) {
             $termWidth = trim($termResponse) ?? null;
             if ($termWidth !== null) {
-                $termWidth = (int) $termWidth;
+                $termWidth = (int)$termWidth;
             }
         }
     }
@@ -96,7 +110,7 @@ if (!defined('TW') && IS_CLI) {
     define('TW', $termWidth);
 }
 
-if (!defined('RQ')) {
+if (!defined('RQ') && isset($_SERVER['REQUEST_METHOD'])) {
     define('RQ', $_SERVER['REQUEST_METHOD']);
 }
 

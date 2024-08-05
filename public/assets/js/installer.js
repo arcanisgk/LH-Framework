@@ -433,11 +433,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             showConfirmButton: false,
                             cancelButtonText: 'Return to Form'
                         }).then(() => {
-                            window.location = window.location.hostname;
+                            window.location.href = window.location.origin;
                         });
                     } else {
                         Swal.fire({
-                            icon: 'success',
+                            icon: 'warning',
                             html: 'Installation error!!!',
                             showCancelButton: true,
                             showConfirmButton: false,

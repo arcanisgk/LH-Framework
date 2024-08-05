@@ -2,6 +2,20 @@
 
 declare(strict_types=1);
 
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Requiered).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 namespace Asset\Framework\Core;
 
 /**
@@ -40,7 +54,8 @@ class Config
     public function loadConfiguration(): void
     {
         if (!defined('CONFIG')) {
-            $jsonFile = glob(PD . DS . 'Asset' . DS . 'resource' . DS . 'config' . DS . '*.json');
+
+            $jsonFile = glob(implode(DS, [PD, 'Asset', 'resource', 'config', '*.json']));
             foreach ($jsonFile as $file) {
                 $jsonContent = file_get_contents($file);
                 $configData  = $this->configArrayToUpperCase(json_decode($jsonContent, true));
@@ -54,7 +69,7 @@ class Config
     }
 
     /**
-     * @param  mixed  $jsonContent
+     * @param mixed $jsonContent
      *
      * @return array
      */
