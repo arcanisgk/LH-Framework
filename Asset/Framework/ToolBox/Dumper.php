@@ -62,7 +62,7 @@ class Dumper
      */
     public static function dump(array $param): ?string
     {
-        $stuff  = (IS_CLI) ?
+        $stuff = (IS_CLI) ?
             [
                 'salE' => '',
                 'salC' => '',
@@ -72,20 +72,25 @@ class Dumper
                 'salC' => '</pre>',
                 'nl'   => '<br>',
             ];
-        $output = 'Output Variable:'.$stuff['nl'];
-        foreach ($param['data'] as $arg) {
 
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $caller    = $backtrace[1];
+        $fileInfo  = "[{$caller['file']}:{$caller['line']}]";
+        $output    = 'Output Variable: '.$stuff['nl'].$fileInfo.$stuff['nl'];
+
+        foreach ($param['data'] as $arg) {
             $output .= self::format($arg).$stuff['nl'];
         }
 
         if (IS_CLI) {
+
             $drawBox = DrawBoxCLI::getInstance();
 
-            echo $drawBox->drawBoxes($output, 1, 0, true, 0, 4);
+            echo $drawBox->drawBoxes($output, 2, 0, true, 0, 4);
+
         } else {
             echo $stuff['salE'].$output.$stuff['salC'];
         }
-
 
         return null;
     }
@@ -115,43 +120,83 @@ class Dumper
 
         switch (gettype($var)) {
             case 'NULL':
-                return 'null';
+                return self::highlight('null', 'null');
             case 'boolean':
-                return $var ? 'true' : 'false';
+                return self::highlight($var ? 'true' : 'false', 'boolean');
             case 'double':
             case 'integer':
-                return (string)$var;
+                return self::highlight((string)$var, 'number');
             case 'string':
-                return '"'.addslashes($var).'"';
+                return self::highlight('"'.addslashes($var).'"', 'string');
             case 'array':
-                $output = "[\n";
-                foreach ($var as $key => $value) {
-                    $output .= $indent.'  '.self::export($key).' => '.self::export($value, $indentLevel + 1).",\n";
-                }
-                $output .= $indent.']';
+                if (empty($var)) {
+                    return "[]";
+                } else {
+                    $output = "[\n";
+                    foreach ($var as $key => $value) {
+                        $output .= $indent.'  '.self::export($key).' => '.self::export($value, $indentLevel + 1).",\n";
+                    }
+                    $output .= $indent.']';
 
-                return $output;
+                    return $output;
+                }
             case 'object':
                 if ($indentLevel > 5) {
                     return get_class($var).' {...}';
                 }
                 $reflection = new ReflectionObject($var);
                 $properties = $reflection->getProperties();
-                $output     = get_class($var)." {\n";
-                foreach ($properties as $property) {
-                    /** @var mixed $property */
-                    $property->setAccessible(true);
-                    $name   = $property->getName();
-                    $value  = $property->getValue($var);
-                    $output .= $indent.'  '.$name.': '.self::export($value, $indentLevel + 1)."\n";
+                if (empty($properties)) {
+                    $output = get_class($var)." {}";
+                } else {
+                    $output = get_class($var)." {\n";
+                    foreach ($properties as $property) {
+                        $property->setAccessible(true);
+                        $name   = $property->getName();
+                        $value  = $property->getValue($var);
+                        $output .= $indent.'  '.self::highlight($name, 'property').': '.self::export(
+                                $value,
+                                $indentLevel + 1
+                            )."\n";
+                    }
+                    $output .= $indent.'}';
                 }
-                $output .= $indent.'}';
 
                 return $output;
             case 'resource':
-                return 'resource';
+                return self::highlight('resource', 'resource');
             default:
-                return 'unknown type';
+                return self::highlight('unknown type', 'unknown');
+        }
+    }
+
+    private static function highlight(string $text, string $type): string
+    {
+        if (IS_CLI) {
+            $styles = [
+                'null'     => "\033[0;35m", // Magenta
+                'boolean'  => "\033[0;33m", // Yellow
+                'number'   => "\033[0;32m", // Green
+                'string'   => "\033[0;34m", // Blue
+                'property' => "\033[0;36m", // Cyan
+                'resource' => "\033[0;31m", // Red
+                'unknown'  => "\033[1;37m", // White
+                'reset'    => "\033[0m", // Reset
+            ];
+
+            return $styles[$type].$text.$styles['reset'];
+        } else {
+            $styles = [
+                'null'     => 'color: #c71585;',  // Rosa fuerte
+                'boolean'  => 'color: #e6193c;',  // Rojo (red)
+                'number'   => 'color: #407ee7;',  // Azul (blue)
+                'string'   => 'color: #29a329;',  // Verde (green)
+                'property' => 'color: #1999b3;',  // Cian (cyan)
+                'resource' => 'color: #3d62f5;',  // Azul (blue)
+                'unknown'  => 'color: #72898f;',  // Gris azulado (base0)
+            ];
+
+            return '<span style="'.$styles[$type].'">'.htmlspecialchars($text).'</span>';
         }
     }
 }
