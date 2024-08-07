@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
@@ -29,7 +29,8 @@ class Route
      */
     private static ?self $instance = null;
 
-    private array $handlers;
+    private static array $handlers;
+
 
     /**
      * Get the singleton instance of Route.
@@ -46,60 +47,33 @@ class Route
     }
 
     /**
-     * @param string $path
      *
-     * @return void
      */
-    private function setHandler(string $path): void
+    public function __construct()
     {
-        $handler                  = [RouteController::class, 'execute'];
-        $this->handlers[RQ.$path] = [
-            'path'    => $path,
-            'method'  => RQ,
-            'handler' => $handler,
-        ];
+        self::initRoute();
     }
 
     /**
      * @return void
      */
-    public function run(): void
+    private static function initRoute(): void
     {
-        $routeBuilder = null;
-        foreach ($this->handlers as $handler) {
-            if (RQ === $handler['method']) {
-                $routeBuilder = $handler;
-            }
-        }
-        /**
-         * Normally run on:
-         * namespace: Framework\Core\RequestController
-         * Method: execute
-         */
-        if (is_array($routeBuilder)) {
-            $path     = $routeBuilder['path'];
-            $instance = $routeBuilder['handler'][0]::getInstance($path);
-            $method   = $routeBuilder['handler'][1];
-            $callback = [$instance, $method];
-            call_user_func($callback);
-        }
-    }
 
-    /**
-     * @return void
-     */
-    public function initRoute(): void
-    {
-        $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-        $this->redirectDefault($uri);
-        $this->setHandler($uri);
-        $this->run();
-    }
+        if (isset($_GET)) {
+            $method = 'GET';
+        } elseif (isset($_POST)) {
+            $method = 'POST';
+        } else {
+            $method = 'GET';
+        }
 
-    private function redirectDefault(string $uri): void
-    {
-        if ($uri === '/') {
-            Request::getInstance()->redirect(CONFIG['APP']['HOST']['ENTRY']);
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $callback       = '';
+            $uri            = parse_url($_SERVER['REQUEST_URI'])['path'];
+            self::$handlers = [$method => [$uri => $callback]];
+
+            ex(self::$handlers);
         }
     }
 }

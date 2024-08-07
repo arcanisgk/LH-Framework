@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
@@ -46,7 +46,7 @@ class Config
     /**
      * @var array
      */
-    public array $configurations = [];
+    private array $configurations = [];
 
     /**
      * @return void
@@ -58,7 +58,7 @@ class Config
             $jsonFile = glob(implode(DS, [PD, 'Asset', 'resource', 'config', '*.json']));
             foreach ($jsonFile as $file) {
                 $jsonContent = file_get_contents($file);
-                $configData  = $this->configArrayToUpperCase(json_decode($jsonContent, true));
+                $configData  = Variable::getArrayWithUpperCaseKey(json_decode($jsonContent, true));
                 if ($jsonContent !== false) {
                     $constantName                        = strtoupper(basename($file, '.json'));
                     $this->configurations[$constantName] = $configData;
@@ -66,25 +66,5 @@ class Config
             }
             define('CONFIG', $this->configurations);
         }
-    }
-
-    /**
-     * @param mixed $jsonContent
-     *
-     * @return array
-     */
-    private function configArrayToUpperCase(mixed $jsonContent): array
-    {
-        $result = [];
-        foreach ($jsonContent as $key => $value) {
-            $uppercaseKey = strtoupper($key);
-            if (is_array($value)) {
-                $result[$uppercaseKey] = $this->configArrayToUpperCase($value);
-            } else {
-                $result[$uppercaseKey] = $value;
-            }
-        }
-
-        return $result;
     }
 }

@@ -223,10 +223,10 @@ class DrawBoxCLI
         $lines  = explode("\n", $text);
         $result = [];
         foreach ($lines as $line) {
-            $delimiter     = str_contains($line, '=>') ? ' =>' : (str_contains($line, ':') ? ':' : null);
-            $delimiterChar = mb_strlen($delimiter);
-            $lineTemp      = $this->RemoveANSSequence($line);
+            $delimiter = str_contains($line, '=>') ? ' =>' : (str_contains($line, ':') ? ':' : null);
+            $lineTemp  = $this->RemoveANSSequence($line);
             if (mb_strlen($lineTemp) >= $limit) {
+                $delimiterChar  = mb_strlen($delimiter);
                 $lineArr        = explode($delimiter, $line);
                 $lineTempArr    = explode($delimiter, $lineTemp);
                 $ansiColorLeft  = $this->extractAnsiCodes($lineArr[0]);

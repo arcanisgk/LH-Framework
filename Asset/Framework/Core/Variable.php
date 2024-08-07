@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
@@ -42,6 +42,23 @@ class Variable
     public function isJson(string $var): bool
     {
         return json_decode($var) != null;
+    }
+
+    /**
+     * Converts all keys in an array to uppercase.
+     *
+     * @param mixed $array
+     * @return array Array with all keys in uppercase.
+     */
+    public static function getArrayWithUpperCaseKey(mixed $array): array
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            $uppercaseKey          = strtoupper($key);
+            $result[$uppercaseKey] = is_array($value) ? self::getArrayWithUpperCaseKey($value) : $value;
+        }
+
+        return $result;
     }
 
 

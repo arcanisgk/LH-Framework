@@ -32,26 +32,4 @@ if (!version_compare(phpversion(), '8.3', '>=')) {
 
 require_once realpath(implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'vendor', 'autoload.php']));
 
-//Kernel::getInstance()->run();
-
-
-$array = [
-    'null'         => null,
-    'int'          => 1,
-    'float'        => 1.25,
-    'string'       => 'Hello World!!!',
-    'array'        => ['ups!!', 'other'],
-    'object-empty' => (object)[],
-    'object'       => (object)['prop1' => 3.1416, 'prop2' => true],
-    'long-text'    => 'asjdghfaskjdgcjhzxcgvhjzxjvhxcvbnxzcvnxbczvmnbxzncvbzcxnvbmxnzvbnmcxbvnmxzcbvxncbvxnzvbxcnbvnmxcvbxnvbxnczbvzxnbvnxzcvbxncvbcxnvbcxnvbxcnvbxnvbxmnvbmzxnbvzxnvbzxnvbxncbvxcnzbvcxnzvxmznbvxzcnbvcxnzvbmzxncbvcxnvbxzcnvbzxnbvzcxnvbzcxnvbzxcmnvbzxnvbcxnvbzxnvbxzmcvnbmnvbshfzvgsjfhgsjgfsdvbzcxn',
-    'other-array'  => [
-        [],
-        ['text' => 'asjdghfaskjdgcjhzxcgvhjzxjvhxcvbnxzcvnxbczvmnbxzncvbzcxnvbmxnzvbnmcxbvnmxzcbvxncbvxnzvbxcnbvnmxcvbxnvbxnczbvzxnbvnxzcvbxncvbcxnvbcxnvbxcnvbxnvbxmnvbmzxnbvzxnvbzxnvbxncbvxcnzbvcxnzvxmznbvxzcnbvcxnzvbmzxncbvcxnvbxzcnvbzxnbvzcxnvbzcxnvbzxcmnvbzxnvbcxnvbzxnvbxzmcvnbmnvbshfzvgsjfhgsjgfsdvbzcxn'],
-    ],
-    'object2'      => (object)[
-        'prop1' => 'asjdghfaskjdgcjhzxcgvhjzxjvhxcvbnxzcvnxbczvmnbxzncvbzcxnvbmxnzvbnmcxbvnmxzcbvxncbvxnzvbxcnbvnmxcvbxnvbxnczbvzxnbvnxzcvbxncvbcxnvbcxnvbxcnvbxnvbxmnvbmzxnbvzxnvbzxnvbxncbvxcnzbvcxnzvxmznbvxzcnbvcxnzvbmzxncbvcxnvbxzcnvbzxnbvzcxnvbzcxnvbzxcmnvbzxnvbcxnvbzxnvbxzmcvnbmnvbshfzvgsjfhgsjgfsdvbzcxn',
-        'prop2' => false,
-    ],
-];
-
-ex([$array]);
+Kernel::getInstance()->run();

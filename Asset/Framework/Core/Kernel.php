@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
@@ -31,6 +31,7 @@ class Kernel
      */
     private static ?self $instance = null;
 
+
     /**
      * Get the singleton instance of Kernel.
      *
@@ -50,9 +51,21 @@ class Kernel
      */
     public function run(): void
     {
-        Config::getInstance()->loadConfiguration();
-        Session::getInstance()->handleSession();
-        Route::getInstance()->initRoute();
+        if (!IS_CLI) {
+            Config::getInstance()->loadConfiguration();
+            Session::getInstance()->handleSession();
+            Route::getInstance();//->initRoute();
+            ex(isset($_POST), isset($_GET));
+        } else {
+            //Ejecutar como CLI
+            echo "Is CLI";
+        }
+
+
+        /*
+
+
+
 
         $forms = Forms::getInstance();
 
@@ -68,8 +81,7 @@ class Kernel
         }
 
         Route::getInstance()->initRoute();
-
-        ex($forms);
+        */
 
     }
 }

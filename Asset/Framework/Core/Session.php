@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Last Hammer Framework 2.0
- * PHP Version 8.3 (Requiered).
+ * PHP Version 8.3 (Required).
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
@@ -44,38 +44,41 @@ class Session
     }
 
     /**
+     * Session manager.
+     *
      * @return void
      */
     public function handleSession(): void
     {
-        if (!isset($_SESSION)) {
+
+        if (session_status() === PHP_SESSION_NONE) {
+
             session_name(CONFIG['SESSION']['SESSION']['SESSION_NAME']);
-            session_set_cookie_params(
-                [
-                    'lifetime' => CONFIG['SESSION']['SESSION']['SESSION_LIFETIME'],
-                    'path'     => '/',
-                    'domain'   => CONFIG['APP']['HOST']['DOMAIN'],
-                    'secure'   => CONFIG['SESSION']['SESSION']['SESSION_SECURE'],
-                    'httponly' => CONFIG['SESSION']['SESSION']['SESSION_HTTPONLY'],
-                    'samesite' => CONFIG['SESSION']['SESSION']['SESSION_SAME_SITE'],
-                ],
-            );
+            session_set_cookie_params([
+                'lifetime' => CONFIG['SESSION']['SESSION']['SESSION_LIFETIME'],
+                'path'     => '/',
+                'domain'   => CONFIG['APP']['HOST']['DOMAIN'],
+                'secure'   => CONFIG['SESSION']['SESSION']['SESSION_SECURE'],
+                'httponly' => CONFIG['SESSION']['SESSION']['SESSION_HTTPONLY'],
+                'samesite' => CONFIG['SESSION']['SESSION']['SESSION_SAME_SITE'],
+            ]);
+
+            session_start();
+
         }
-        session_start();
-        if (!isset($_SESSION['SYSTEM'])) {
-            $_SESSION = [
-                'SYSTEM' => [
-                    'SESSION_STAR_DATE' => time(),
-                    'LANG'              => CONFIG['APP']['HOST']['LANG'],
-                ],
-                'USER'   => [
-                    'LOGIN'       => false,
-                    'PREFERENCES' => [
-                        'LANG' => CONFIG['APP']['HOST']['LANG'],
-                    ],
-                ],
-            ];
-        }
+
+        $_SESSION['SYSTEM'] ??= [
+            'SESSION_START_DATE' => time(),
+            'LANG'               => CONFIG['APP']['HOST']['LANG'],
+        ];
+
+        $_SESSION['USER'] ??= [
+            'LOGIN'       => false,
+            'PREFERENCES' => [
+                'LANG' => CONFIG['APP']['HOST']['LANG'],
+            ],
+        ];
+
         if ($_SESSION['USER']['LOGIN']) {
             if (CT > $_SESSION['SESSION_LIFETIME'] || CT > $_SESSION['SESSION_ACTIVITY_EXPIRE']) {
                 session_destroy();
