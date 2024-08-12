@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\ToolBox;
 
-use Asset\Framework\Core\ArgumentLoader;
+use Asset\Framework\Core\Argument;
 
 class DrawBoxCLI
 {
@@ -89,7 +89,7 @@ class DrawBoxCLI
         bool $error = false,
     ): string {
 
-        $arguments = ArgumentLoader::getArguments();
+        $arguments = Argument::getArguments();
 
         $source = (is_array($source) ? $source : preg_split('/\r\n|\r|\n/', rtrim($source)));
 

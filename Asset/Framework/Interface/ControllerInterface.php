@@ -16,25 +16,9 @@ declare(strict_types=1);
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Asset\Framework\ToolBox\Dumper;
-use JetBrains\PhpStorm\NoReturn;
+namespace Asset\Framework\Interface;
 
-/**
- * @param ...$var
- *
- * @return void
- */
-function ex(...$var): void
+interface ControllerInterface
 {
-    Dumper::getInstance()::dump(['data' => $var]);
-}
-
-/**
- * @param ...$var
- * @return void
- */
-#[NoReturn] function ex_c(...$var): void
-{
-    Dumper::getInstance()::dump(['data' => $var]);
-    exit();
+    public static function getInstance(): self;
 }

@@ -18,9 +18,14 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Controller\RouteController;
+use Exception;
+use Throwable;
+
 /**
- * Class Route
- * A simple ...
+ * Class that handles: Routing request
+ *
+ * @package Asset\Framework\Core;
  */
 class Route
 {
@@ -29,8 +34,15 @@ class Route
      */
     private static ?self $instance = null;
 
-    private static array $handlers;
+    /**
+     * @var array
+     */
+    private array $routes = [];
 
+    /**
+     * @var array
+     */
+    private array $middlewares = [];
 
     /**
      * Get the singleton instance of Route.
@@ -46,34 +58,97 @@ class Route
         return self::$instance;
     }
 
+
     /**
-     *
+     * @return void
+     * @throws Exception
      */
-    public function __construct()
+    public function initialize(): void
     {
-        self::initRoute();
+        $this->redirectDefault();
+        $this->setDefaultRoutes();
+        $this->run();
     }
 
     /**
      * @return void
      */
-    private static function initRoute(): void
+    private function redirectDefault(): void
     {
+        if (UR === '/') {
+            Request::getInstance()->redirect(CONFIG['APP']['HOST']['ENTRY']);
+        }
+    }
 
-        if (isset($_GET)) {
-            $method = 'GET';
-        } elseif (isset($_POST)) {
-            $method = 'POST';
-        } else {
-            $method = 'GET';
+
+    /**
+     * @return void
+     */
+    private function setDefaultRoutes(): void
+    {
+        $this->addRoute('GET', UR, [RouteController::class, 'execute']);
+    }
+
+    /**
+     * @param string $method
+     * @param string $path
+     * @param callable|array $handler
+     * @return void
+     */
+    public function addRoute(string $method, string $path, callable|array $handler): void
+    {
+        $this->routes[] = [
+            'method'  => $method,
+            'path'    => $path,
+            'handler' => $handler,
+        ];
+    }
+
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public function run(): void
+    {
+        foreach ($this->routes as $route) {
+            if ($this->matchRoute($route['method'], $route['path'])) {
+
+                Middleware::processMiddleware();
+                [$controller, $method] = $route['handler'];
+                $instance = $controller::getInstance($route['path']);
+
+                try {
+                    $instance->$method();
+                } catch (Throwable $e) {
+                    throw new Exception('Error executing route: '.$e->getMessage());
+                }
+
+                return;
+            }
         }
 
-        if (isset($_SERVER['REQUEST_URI'])) {
-            $callback       = '';
-            $uri            = parse_url($_SERVER['REQUEST_URI'])['path'];
-            self::$handlers = [$method => [$uri => $callback]];
+        $this->redirectNotFound();
+    }
 
-            ex(self::$handlers);
-        }
+    /**
+     * @param string $method
+     * @param string $path
+     * @return bool
+     */
+    private function matchRoute(string $method, string $path): bool
+    {
+        return $method === $_SERVER['REQUEST_METHOD'] && $path === parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    }
+
+    /**
+     * @return void
+     */
+    private function redirectNotFound(): void
+    {
+        $this->addRoute('GET', '/not-found', [RouteController::class, 'execute']);
+        $route = $this->routes[0];
+        [$controller, $method] = $route['handler'];
+        $instance = $controller::getInstance($route['path']);
+        $instance->$method();
     }
 }

@@ -86,4 +86,46 @@ class Files
         return ob_get_clean();
     }
 
+    public function getAbsolutePath(string $path): string
+    {
+        $path               = mb_ereg_replace('\\\\|/', DS, $path);
+        $startWithSeparator = $path[0] === DS;
+        preg_match('/^[a-z]:/i', $path, $matches);
+        $startWithLetterDir = $matches[0] ?? false;
+
+        $subPaths  = array_filter(explode(DS, $path), 'mb_strlen');
+        $absolutes = [];
+
+        foreach ($subPaths as $subPath) {
+            $absolutes = match ($subPath) {
+                '.' => $absolutes,
+                '..' => empty($absolutes) || (!$startWithSeparator && !$startWithLetterDir) ?
+                    array_merge($absolutes, [$subPath]) :
+                    array_slice($absolutes, 0, -1),
+                default => array_merge($absolutes, [$subPath]),
+            };
+        }
+
+        $prefix = $startWithSeparator ? DS : ($startWithLetterDir ? $startWithLetterDir.DS : '');
+
+        return $prefix.implode(DS, $absolutes);
+    }
+
+    /**
+     * @param array $resources
+     * @return bool
+     */
+    public function fileCopy(array $resources): bool
+    {
+        $path = pathinfo($resources[1]);
+        if (!file_exists($path['dirname'])) {
+            mkdir($path['dirname'], 0777, true);
+        }
+        if (!copy($resources[0], $resources[1])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

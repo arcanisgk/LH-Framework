@@ -49,6 +49,14 @@ class Config
     private array $configurations = [];
 
     /**
+     * @return bool
+     */
+    public static function checkFullConfig(): bool
+    {
+        return true;//(CONFIG['APP']['PROJECT']['PROJECT_CONFIG'] === true);
+    }
+
+    /**
      * @return void
      */
     public function loadConfiguration(): void

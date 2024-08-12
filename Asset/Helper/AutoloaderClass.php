@@ -66,7 +66,7 @@ class AutoloaderClass
     public function autoload(string $class): void
     {
         $filePath = $this->buildSafeFilePath($class);
-        if ($this->isValidClassName($class) && file_exists($filePath)) {
+        if (!is_bool($filePath) && $this->isValidClassName($class) && file_exists($filePath)) {
             require_once $filePath;
 
             return;

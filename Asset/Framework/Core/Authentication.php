@@ -8,7 +8,7 @@ declare(strict_types=1);
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
  * @copyright 2017 - 2024
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note      This program is distributed in the hope that it will be useful
@@ -18,24 +18,23 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
-use PDO;
-use PDOException;
-
 /**
- * Class Database
- * A simple ...
+ * Class that handles:
+ *
+ * @package Asset\Framework\Core;
  */
-class Database
+class Authentication
 {
+
     /**
-     * @var Database|null Singleton instance of the Database.
+     * @var Authentication|null Singleton instance of the class: Authentication.
      */
     private static ?self $instance = null;
 
     /**
-     * Get the singleton instance of Database.
+     * Get the singleton instance of teh class Authentication.
      *
-     * @return Database The singleton instance.
+     * @return Authentication The singleton instance.
      */
     public static function getInstance(): self
     {
@@ -47,25 +46,19 @@ class Database
     }
 
     /**
-     * @param array $config
-     *
+     * Authentication constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
+    /**
      * @return bool
      */
-    public function testConnection(array $config): bool
+    public static function check(): bool
     {
-        $host = $config['host'];
-        $db   = $config['db'];
-        $user = $config['user'];
-        $pass = $config['pass'];
-        try {
-
-            $conn = new PDO("mysql:host=".$host.";dbname=".$db, $user, $pass);
-
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            return true;
-        } catch (PDOException $e) {
-            return false;
-        }
+        return true;
     }
+
 }

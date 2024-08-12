@@ -16,7 +16,7 @@ declare(strict_types=1);
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Asset\Framework\Core\{ArgumentLoader, EventLog, Request};
+use Asset\Framework\Core\{Argument, Log, Request};
 use Asset\Helper\{AutoloaderClass, Installer\Installation};
 use IcarosNet\WebCLIToolKit\WebCLIDetector;
 
@@ -24,11 +24,11 @@ require_once implode(DS, [PD, 'Asset', 'Helper', 'AutoloaderClass.php']);
 
 AutoloaderClass::getInstance();
 
-EventLog::getInstance();
+Log::getInstance();
 
 if (WebCLIDetector::getInstance()->isCLI()) {
     if (isset($argv)) {
-        ArgumentLoader::getInstance($argv);
+        Argument::getInstance($argv);
     }
 
     require_once implode(DS, [PD, 'Asset', 'Framework', 'Error', 'BugCatcher.php']);

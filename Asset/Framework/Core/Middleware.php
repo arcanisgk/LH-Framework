@@ -8,7 +8,7 @@ declare(strict_types=1);
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
  * @copyright 2017 - 2024
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note      This program is distributed in the hope that it will be useful
@@ -18,24 +18,23 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
-use PDO;
-use PDOException;
-
 /**
- * Class Database
- * A simple ...
+ * Class that handles:
+ *
+ * @package Asset\Framework\Core;
  */
-class Database
+class Middleware
 {
+
     /**
-     * @var Database|null Singleton instance of the Database.
+     * @var Middleware|null Singleton instance of the class: Middleware.
      */
     private static ?self $instance = null;
 
     /**
-     * Get the singleton instance of Database.
+     * Get the singleton instance of teh class Middleware.
      *
-     * @return Database The singleton instance.
+     * @return Middleware The singleton instance.
      */
     public static function getInstance(): self
     {
@@ -47,25 +46,26 @@ class Database
     }
 
     /**
-     * @param array $config
-     *
-     * @return bool
+     * Middleware constructor.
      */
-    public function testConnection(array $config): bool
+    public function __construct()
     {
-        $host = $config['host'];
-        $db   = $config['db'];
-        $user = $config['user'];
-        $pass = $config['pass'];
-        try {
 
-            $conn = new PDO("mysql:host=".$host.";dbname=".$db, $user, $pass);
+    }
 
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    /**
+     * @return void
+     */
+    public static function processMiddleware(): void
+    {
 
-            return true;
-        } catch (PDOException $e) {
-            return false;
+        if (!Config::checkFullConfig() && UR !== '/Admin') {
+            Request::getInstance()->redirect('/Admin');
         }
+
+        if (!Authentication::check() && UR !== '/User-Access') {
+            Request::getInstance()->redirect('/User-Access');
+        }
+
     }
 }

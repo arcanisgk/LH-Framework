@@ -83,6 +83,10 @@ IndexIgnore *
     RewriteEngine On
     RewriteBase /
 
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
     RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico)$ [NC]
     RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
 

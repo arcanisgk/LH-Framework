@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\ToolBox;
 
+use ReflectionNamedType;
 use ReflectionObject;
 
 /**
@@ -152,8 +153,14 @@ class Dumper
                     $output = get_class($var)." {\n";
                     foreach ($properties as $property) {
                         $property->setAccessible(true);
-                        $name   = $property->getName();
-                        $value  = $property->getValue($var);
+                        $name     = $property->getName();
+                        $type     = $property->getType();
+                        $typeName = $type ? $type->getName() : 'mixed';
+                        if (in_array($typeName, ['int', 'float', 'string', 'bool', 'array'])) {
+                            $value = $property->getValue($var);
+                        } else {
+                            $value = 'object(class::'.$typeName.')';
+                        }
                         $output .= $indent.'  '.self::highlight($name, 'property').': '.self::export(
                                 $value,
                                 $indentLevel + 1
@@ -163,15 +170,19 @@ class Dumper
                 }
 
                 return $output;
-            case 'resource':
+            case
+            'resource':
                 return self::highlight('resource', 'resource');
             default:
                 return self::highlight('unknown type', 'unknown');
         }
     }
 
-    private static function highlight(string $text, string $type): string
-    {
+    private
+    static function highlight(
+        string $text,
+        string $type
+    ): string {
         if (IS_CLI) {
             $styles = [
                 'null'     => "\033[0;35m", // Magenta

@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Last Hammer Framework 2.0
+ * PHP Version 8.3 (Required).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+namespace Repository\Default\Home\Back;
+
+use Asset\Framework\Controller\EventController;
+use Asset\Framework\Controller\FrontResourceController;
+use Asset\Framework\Controller\ResponseController;
+use Asset\Framework\Interface\ControllerInterface;
+use Asset\Framework\View\FormBuilder;
+use Exception;
+
+/**
+ * Class that handles:
+ *
+ * @package Repository\Default\Home\Back;
+ */
+class Main extends FrontResourceController implements ControllerInterface
+{
+
+    /**
+     * @var Main|null Singleton instance of the class: Main.
+     */
+    private static ?self $instance = null;
+
+    /**
+     * Get the singleton instance of teh class Main.
+     *
+     * @return Main The singleton instance.
+     */
+    public static function getInstance(): self
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * @var ResponseController|null
+     */
+    private ?ResponseController $response;
+
+    /**
+     * @var EventController|null
+     */
+    private ?EventController $event;
+
+    /**
+     * Main constructor.
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        //$assets = $this->getHtmlAssets();
+
+        $this->response = ResponseController::getInstance();
+
+        $this->event = EventController::getInstance();
+
+    }
+
+    /**
+     * @return object
+     */
+    public function process(): object
+    {
+
+        $form = FormBuilder::getInstance('/home', 'post')
+            ->addRowStart()
+            ->addButton('button', 'Hello World', 'btn-success btn-sm', 'col-12 d-grid gap-2')
+            ->render();
+
+        ex($form);
+
+        return (object)[];
+    }
+
+}

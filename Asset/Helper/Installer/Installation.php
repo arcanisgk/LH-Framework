@@ -78,6 +78,10 @@ class Installation
                         'company_name'  => $_POST['json-company-name'],
                         'company_owner' => $_POST['json-company-owner'],
                     ],
+                    'project' => [
+                        'project_name'   => $_POST['json-project-name'],
+                        'project_config' => false,
+                    ],
                     'host'    => [
                         'domain'   => $_POST['json-domain'],
                         'lang'     => $_POST['json-lang'],

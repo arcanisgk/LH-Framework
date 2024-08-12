@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (document.querySelector("input[name='json-company-owner']").value === "Click on Edit") {
             complete = false;
         }
+
+        if (document.querySelector("input[name='json-project-name']").value === "Click on Edit") {
+            complete = false;
+        }
+
         if (document.querySelector("input[name='json-license']").value === "Click on Edit") {
             complete = false;
         }
@@ -109,8 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function iconChange(inputSetting) {
         let iconElement = inputSetting.parentElement.querySelector("i");
-        iconElement.classList.remove("text-body", "text-opacity-25");
+        iconElement.classList.remove("text-body", "text-opacity-25", "text-danger");
         iconElement.classList.add("text-success");
+    }
+
+    function iconChangeError(inputSetting) {
+        let iconElement = inputSetting.parentElement.querySelector("i");
+        if (iconElement !== null) {
+            iconElement.classList.remove("text-body", "text-opacity-25");
+            iconElement.classList.add("text-danger");
+        }
     }
 
     window.errorField = function (errorField) {
@@ -151,6 +164,24 @@ document.addEventListener("DOMContentLoaded", function () {
             window.validateStep1();
         }
     });
+
+    const modalProjectName = new bootstrap.Modal(document.getElementById("modalProjectName"));
+    const saveChangesProjectName = document.querySelector("button[name='b-save-project-name']");
+    const inputSettingProjectName = document.querySelector("input[name='i-project-name']");
+    const errorFieldProjectName = document.getElementById("a-Project-name");
+    const inputProjectName = document.querySelector("input[name='json-project-name']");
+    saveChangesProjectName.addEventListener("click", function () {
+        let companyOwner = inputSettingProjectName.value;
+        if (companyOwner.trim() === "") {
+            errorField(errorFieldProjectName);
+        } else {
+            inputProjectName.value = companyOwner;
+            iconChange(inputProjectName);
+            modalProjectName.hide();
+            window.validateStep1();
+        }
+    });
+
 
     const modalLicense = new bootstrap.Modal(document.getElementById("modalLicense"));
     const saveChangesLicense = document.querySelector("button[name='b-save-license']");
@@ -418,7 +449,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (value === 'Click on Edit') {
                 error = true;
                 let labelFor = document.querySelector('label[for="' + input.id + '"]');
-                errorField.push(labelFor.textContent);
+                if (labelFor !== null) {
+                    errorField.push(labelFor.textContent);
+                    const inputTarget = document.querySelector("input[name='" + fieldName + "']");
+                    iconChangeError(inputTarget);
+                }
             }
             form_data.append(fieldName, value);
         });

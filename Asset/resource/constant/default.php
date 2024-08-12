@@ -114,4 +114,9 @@ if (!defined('RQ') && isset($_SERVER['REQUEST_METHOD'])) {
     define('RQ', $_SERVER['REQUEST_METHOD']);
 }
 
+if (!defined('UR') && isset($_SERVER['REQUEST_URI'])) {
+    define('UR', $_SERVER['REQUEST_URI']);
+}
+
+
 require_once 'paths.php';
