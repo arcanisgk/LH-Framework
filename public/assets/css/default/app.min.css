@@ -17686,6 +17686,11 @@ a:focus {
     opacity: 0;
     display: none;
 }
+
+.fixed-footer {
+    bottom: 70px !important;
+}
+
 .btn-scroll-to-top.show {
     opacity: 1;
     display: block;

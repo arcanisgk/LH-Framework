@@ -1,0 +1,1249 @@
+<div id="app" class="app app-header-fixed app-sidebar-fixed app-content-full-height">
+
+    <div id="header" class="app-header">
+
+        <div class="navbar-header">
+            <a href="#dashboard-1" class="navbar-brand">
+                <img src="assets/ico/64.png" alt="Brand Image"/> <b class="me-3px"> Last Hammer </b> Framework
+            </a>
+            <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+
+        <div class="navbar-nav">
+            <div class="navbar-item navbar-form">
+                <form action method="POST" name="search">
+                    <div class="form-group">
+                        <label for="search">
+                            <input id="search" type="text" class="form-control" placeholder="Enter keyword"/>
+                        </label>
+                        <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="navbar-item dropdown">
+                <a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge">5</span>
+                </a>
+                <div class="dropdown-menu media-list dropdown-menu-end">
+                    <div class="dropdown-header">NOTIFICATIONS (5)</div>
+                    <a href="#" class="dropdown-item media">
+                        <div class="media-left">
+                            <i class="fa fa-bug media-object bg-gray-500"></i>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading">Server Error Reports
+                                <i class="fa fa-exclamation-circle text-danger"></i>
+                            </h6>
+                            <div class="text-muted fs-10px">3 minutes ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item media">
+                        <div class="media-left">
+                            <img src="assets/img/user/user-1.jpg" class="media-object" alt/>
+                            <i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading">John Smith</h6>
+                            <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+                            <div class="text-muted fs-10px">25 minutes ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item media">
+                        <div class="media-left">
+                            <img src="assets/img/user/user-2.jpg" class="media-object" alt/>
+                            <i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading">Olivia</h6>
+                            <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+                            <div class="text-muted fs-10px">35 minutes ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item media">
+                        <div class="media-left">
+                            <i class="fa fa-plus media-object bg-gray-500"></i>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading"> New User Registered</h6>
+                            <div class="text-muted fs-10px">1 hour ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item media">
+                        <div class="media-left">
+                            <i class="fa fa-envelope media-object bg-gray-500"></i>
+                            <i class="fab fa-google text-warning media-object-icon fs-14px"></i>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading"> New Email From John</h6>
+                            <div class="text-muted fs-10px">2 hour ago</div>
+                        </div>
+                    </a>
+                    <div class="dropdown-footer text-center">
+                        <a href="#" class="text-decoration-none">View more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-item navbar-user dropdown">
+                <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                    <img src="assets/img/user/user-13.jpg" alt/>
+                    <span>
+                        <span class="d-none d-md-inline">Adam Schwartz</span>
+                        <b class="caret"></b>
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end me-1">
+                    <a href="#extra_profile" class="dropdown-item">Edit Profile</a>
+                    <a href="#email_inbox" class="dropdown-item d-flex align-items-center">
+                        Inbox
+                        <span class="badge bg-danger rounded-pill ms-auto pb-4px">2</span>
+                    </a>
+                    <a href="#calendar" class="dropdown-item">Calendar</a>
+                    <a href="#extra_settings_pagel" class="dropdown-item">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#login" class="dropdown-item">Log Out</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="sidebar" class="app-sidebar" data-bs-theme="dark">
+
+        <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+            <div class="menu">
+                <div class="menu-profile">
+                    <a href="#" class="menu-profile-link" data-toggle="app-sidebar-profile"
+                       data-target="#appSidebarProfileMenu">
+                        <div class="menu-profile-cover with-shadow"></div>
+                        <div class="menu-profile-image">
+                            <img src="assets/img/user/user-13.jpg" alt/>
+                        </div>
+                        <div class="menu-profile-info">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">Sean Ngu</div>
+                                <div class="menu-caret ms-auto"></div>
+                            </div>
+                            <small>Frontend developer</small>
+                        </div>
+                    </a>
+                </div>
+                <div id="appSidebarProfileMenu" class="collapse">
+                    <div class="menu-item pt-5px">
+                        <a href="#" class="menu-link">
+                            <div class="menu-icon"><i class="fa fa-cog"></i></div>
+                            <div class="menu-text">Settings</div>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="#" class="menu-link">
+                            <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
+                            <div class="menu-text"> Send Feedback</div>
+                        </a>
+                    </div>
+                    <div class="menu-item pb-5px">
+                        <a href="#" class="menu-link">
+                            <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
+                            <div class="menu-text"> Helps</div>
+                        </a>
+                    </div>
+                    <div class="menu-divider m-0"></div>
+                </div>
+                <div class="menu-header">Navigation</div>
+                <div class="menu-item has-sub">
+                    <a href="#" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-list-ol"></i>
+                        </div>
+                        <div class="menu-text">Form Stuff <span class="menu-label">NEW</span></div>
+                        <div class="menu-caret"></div>
+                    </a>
+                    <div class="menu-submenu">
+                        <div class="menu-item">
+                            <a href="#form_elements" class="menu-link">
+                                <div class="menu-text">Form Elements <i class="fa fa-paper-plane text-theme"></i></div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_plugins" class="menu-link">
+                                <div class="menu-text">Form Plugins <i class="fa fa-paper-plane text-theme"></i></div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_slider_switcher" class="menu-link">
+                                <div class="menu-text">Form Slider + Switcher</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_validation" class="menu-link">
+                                <div class="menu-text">Form Validation</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_wizards" class="menu-link">
+                                <div class="menu-text">Wizards <i class="fa fa-paper-plane text-theme"></i></div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_wysiwyg" class="menu-link">
+                                <div class="menu-text">WYSIWYG</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_editable" class="menu-link">
+                                <div class="menu-text">X-Editable</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_multiple_upload" class="menu-link">
+                                <div class="menu-text">Multiple File Upload</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_summernote" class="menu-link">
+                                <div class="menu-text">Summernote</div>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a href="#form_dropzone" class="menu-link">
+                                <div class="menu-text">Dropzone</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item has-sub">
+                    <a href="#" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-table"></i>
+                        </div>
+                        <div class="menu-text">Tables</div>
+                        <div class="menu-caret"></div>
+                    </a>
+                    <div class="menu-submenu">
+                        <div class="menu-item">
+                            <a href="#table_basic" class="menu-link">
+                                <div class="menu-text">Basic Tables</div>
+                            </a>
+                        </div>
+                        <div class="menu-item has-sub">
+                            <a href="#" class="menu-link">
+                                <div class="menu-text">Managed Tables</div>
+                                <div class="menu-caret"></div>
+                            </a>
+                            <div class="menu-submenu">
+                                <div class="menu-item">
+                                    <a href="#table_manage" class="menu-link">
+                                        <div class="menu-text">Default</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_buttons" class="menu-link">
+                                        <div class="menu-text">Buttons</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_colreorder" class="menu-link">
+                                        <div class="menu-text">ColReorder</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_fixed_columns" class="menu-link">
+                                        <div class="menu-text">Fixed Column</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_fixed_header" class="menu-link">
+                                        <div class="menu-text">Fixed Header</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_keytable" class="menu-link">
+                                        <div class="menu-text">KeyTable</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_responsive" class="menu-link">
+                                        <div class="menu-text">Responsive</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_rowreorder" class="menu-link">
+                                        <div class="menu-text">RowReorder</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_scroller" class="menu-link">
+                                        <div class="menu-text">Scroller</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_select" class="menu-link">
+                                        <div class="menu-text">Select</div>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="#table_manage_combine" class="menu-link">
+                                        <div class="menu-text">Extension Combination</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item d-flex">
+                    <a href="#"
+                       class="app-sidebar-minify-btn ms-auto d-flex align-items-center text-decoration-none"
+                       data-toggle="app-sidebar-minify">
+                        <i class="fa fa-angle-double-left"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="app-sidebar-bg" data-bs-theme="dark"></div>
+    <div class="app-sidebar-mobile-backdrop">
+        <a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a>
+    </div>
+
+
+    <div id="content" class="app-content d-flex flex-column p-0">
+
+        <div class="app-content-padding flex-grow-1 overflow-hidden" data-scrollbar="true" data-height="100%">
+
+            <ol class="breadcrumb float-xl-end">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+
+            <h1 class="page-header" id="form_elements">Form Elements <small>header small text goes here...</small></h1>
+
+
+            <div class="row mb-3">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Form Controls</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div class="alert alert-muted">
+                                Textual form controls—like <code>&lt;input&gt;</code>s, <code>&lt;textarea&gt;</code>s,
+                                <code>&lt;select&gt;</code>s are styled with the <code>.form-control</code> and
+                                <code>.form-select</code> class. Included are styles for general appearance, focus
+                                state, sizing, and more.
+                            </div>
+                            <form>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Email address</label>
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control mb-5px" placeholder="Enter email"/>
+                                        <small class="fs-12px text-gray-500-darker">We'll never share your email with
+                                            anyone else.</small>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Example select</label>
+                                    <div class="col-md-9">
+                                        <select class="form-select">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Example multiple select</label>
+                                    <div class="col-md-9">
+                                        <select multiple class="form-select">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Example textarea</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Example File Input</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="file" id="formFile"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-1.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-2">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Readonly</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Readonly</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" placeholder="Readonly input here…"
+                                               readonly/>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Readonly Plaintext</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" readonly class="form-control-plaintext"
+                                               value="email@example.com"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-15px">
+                                    <label class="form-label col-form-label col-md-3">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="Password"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-2.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-3">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Form Range <span class="badge bg-success">NEW</span></h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form>
+                                <div class="d-flex align-items-center py-2">
+                                    <div class="w-60px text-end pe-2">Min: <b>0</b></div>
+                                    <div class="d-flex flex-1">
+                                        <input type="range" class="form-range" min="0" max="5" id="customRange"/>
+                                    </div>
+                                    <div class="w-60px text-start ps-2">Max: <b>50</b></div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-3.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-4">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Floating Label <span class="badge bg-success ms-1">NEW</span></h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input type="email" class="form-control fs-15px" id="floatingInput"
+                                               placeholder="name@example.com">
+                                        <label for="floatingInput" class="d-flex align-items-center fs-13px">Email
+                                            address</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form-floating">
+                                        <input type="email" class="form-control fs-15px" id="floatingInputValue"
+                                               placeholder="name@example.com" value="test@example.com">
+                                        <label for="floatingInputValue" class="d-flex align-items-center fs-13px">Input
+                                            with value</label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-4.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-5">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Sizing</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-10px">
+                                        <input class="form-control form-control-lg" type="text"
+                                               placeholder=".form-control-lg"/>
+                                    </div>
+                                    <div class="mb-10px">
+                                        <input class="form-control" type="text" placeholder="default input"/>
+                                    </div>
+                                    <div class="mb-3 mb-md-0">
+                                        <input class="form-control form-control-sm" type="text"
+                                               placeholder=".form-control-sm"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-10px">
+                                        <select class="form-select form-select-lg">
+                                            <option>.form-select-lg</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-10px">
+                                        <select class="form-select">
+                                            <option>default select</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="form-select form-select-sm">
+                                            <option>.form-select-sm</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-5.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-6">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Validation</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form>
+                                <div class="row mb-10px">
+                                    <label class="form-label col-form-label col-md-3">Valid Input</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text">@</div>
+                                            <input type="text" class="form-control is-valid"/>
+                                            <div class="valid-feedback">Looks good!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-10px">
+                                    <label class="form-label col-form-label col-md-3">Invalid Input</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text">@</div>
+                                            <input type="text" class="form-control is-invalid"/>
+                                            <div class="invalid-feedback">Please choose a unique and valid username.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="form-label col-form-label col-md-3">Tooltip Message</label>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-text">@</div>
+                                                    <input type="text" class="form-control is-invalid"/>
+                                                    <div class="invalid-tooltip">Please choose a unique and valid
+                                                        username.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-text">@</div>
+                                                    <input type="text" class="form-control is-valid"/>
+                                                    <div class="valid-tooltip">Looks good!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-6.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h3 class="mb-3">Checkboxes and Radios</h3>
+
+            <div class="row mb-3">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-7">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Checkboxes <span class="badge bg-success ms-1">NEW</span></h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <label class="form-label col-form-label col-md-3">Checkbox</label>
+                                    <div class="col-md-9">
+                                        <div class="form-check mt-2 mb-2">
+                                            <input class="form-check-input" type="checkbox" value id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Default checkbox
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value id="flexCheckChecked"
+                                                   checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Checked checkbox
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value id="flexCheckDisabled"
+                                                   disabled>
+                                            <label class="form-check-label" for="flexCheckDisabled">
+                                                Disabled checkbox
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value
+                                                   id="flexCheckCheckedDisabled" checked disabled>
+                                            <label class="form-check-label" for="flexCheckCheckedDisabled">
+                                                Disabled checked checkbox
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input is-valid" type="checkbox" value
+                                                   id="validCheckbox"/>
+                                            <label class="form-check-label" for="validCheckbox">
+                                                Valid Checkbox
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input is-invalid" type="checkbox" value
+                                                   id="invalidCheckbox"/>
+                                            <label class="form-check-label" for="invalidCheckbox">
+                                                Invalid Checkbox
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="form-label col-form-label col-md-3">Inline Checkbox</label>
+                                    <div class="col-md-9 pt-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                   value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">1</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                   value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">2</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                                   value="option3" disabled>
+                                            <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-0">
+                                    <label class="form-label col-form-label col-md-3">Switches</label>
+                                    <div class="col-md-9 pt-2">
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch
+                                                checkbox input</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                                   checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch
+                                                checkbox input</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled"
+                                                   disabled>
+                                            <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled
+                                                switch checkbox input</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckCheckedDisabled" checked disabled>
+                                            <label class="form-check-label"
+                                                   for="flexSwitchCheckCheckedDisabled">Disabled checked switch checkbox
+                                                input</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-7.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-8">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Radios <span class="badge bg-success ms-1">NEW</span></h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <label class="form-label col-form-label col-md-3">Radios</label>
+                                    <div class="col-md-9 pt-2">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                   id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Default radio
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                   id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Default checked radio
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDisabled"
+                                                   id="flexRadioDisabled" disabled>
+                                            <label class="form-check-label" for="flexRadioDisabled">
+                                                Disabled radio
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDisabled"
+                                                   id="flexRadioCheckedDisabled" checked disabled>
+                                            <label class="form-check-label" for="flexRadioCheckedDisabled">
+                                                Disabled checked radio
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input is-valid" type="radio" name="default_radio"
+                                                   id="validDefaultRadio" value/>
+                                            <label class="form-check-label" for="validDefaultRadio">Success
+                                                State</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input is-invalid" type="radio" name="default_radio"
+                                                   id="invalidDefaultRadio" value/>
+                                            <label class="form-check-label" for="invalidDefaultRadio">Error
+                                                State</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="form-label col-form-label col-md-3">Inline Radios</label>
+                                    <div class="col-md-9 pt-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="inlineRadio1"
+                                                   name="inlineRadio"/>
+                                            <label class="form-check-label" for="inlineRadio1">1</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="customRadio2"
+                                                   name="inlineRadio"/>
+                                            <label class="form-check-label" for="customRadio2">2</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="customRadio2"
+                                                   name="inlineRadio"/>
+                                            <label class="form-check-label" for="customRadio2">3 (disabled)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-8.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h3 class="mb-3">Input Group</h3>
+
+            <div class="row mb-3">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-9">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Input Group</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">@</div>
+                                <input type="text" class="form-control" placeholder="Username"/>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control"/>
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">$</div>
+                                <input type="text" class="form-control"/>
+                                <div class="input-group-text">.00</div>
+                            </div>
+                            <div class="input-group mb-10px">
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-check-input"/>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Checkbox add on"/>
+                            </div>
+                            <div class="input-group mb-10px">
+                                <div class="input-group-text">
+                                    <input type="radio" class="form-check-input"/>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Radio button add on"/>
+                            </div>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-primary">Action</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item">Action</a>
+                                    <a href="#" class="dropdown-item">Another action</a>
+                                    <a href="#" class="dropdown-item">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">Separated link</a>
+                                </div>
+                                <input type="text" class="form-control"/>
+                                <button type="button" class="btn btn-indigo dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a href="#" class="dropdown-item">Action</a>
+                                    <a href="#" class="dropdown-item">Another action</a>
+                                    <a href="#" class="dropdown-item">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">Separated link</a>
+                                </div>
+                                <button type="button" class="btn btn-indigo">Action</button>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-9.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-10">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Input Group Sizing</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div class="input-group input-group-lg mb-10px">
+                                <div class="input-group-text">@</div>
+                                <input type="text" class="form-control" placeholder="Username"/>
+                            </div>
+                            <div class="input-group mb-10px">
+                                <div class="input-group-text">@</div>
+                                <input type="text" class="form-control" placeholder="Username"/>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-text">@</div>
+                                <input type="text" class="form-control" placeholder="Username"/>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-10.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <h3 class="mb-3">Form Style</h3>
+
+            <div class="row mb-3">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Default Style</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form action="https://seantheme.com/" method="POST">
+                                <fieldset>
+                                    <legend class="mb-3">Legend</legend>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputEmail1">Email address</label>
+                                        <input class="form-control" type="email" id="exampleInputEmail1"
+                                               placeholder="Enter email"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">Password</label>
+                                        <input class="form-control" type="password" id="exampleInputPassword1"
+                                               placeholder="Password"/>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="nf_checkbox_css_1"/>
+                                        <label class="form-check-label" for="nf_checkbox_css_1">Check me out</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100px me-5px">Login</button>
+                                    <button type="submit" class="btn btn-default w-100px">Cancel</button>
+                                </fieldset>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-11.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-12">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Form Horizontal</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form action="https://seantheme.com/" method="POST">
+                                <fieldset>
+                                    <legend class="mb-3">Legend</legend>
+                                    <div class="row mb-3">
+                                        <label class="form-label col-form-label col-md-3">Email address</label>
+                                        <div class="col-md-9">
+                                            <input type="email" class="form-control" placeholder="Enter email"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="form-label col-form-label col-md-3">Password</label>
+                                        <div class="col-md-9">
+                                            <input type="password" class="form-control" placeholder="Password"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-9 offset-md-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                       id="fh_checkbox_css_1"/>
+                                                <label class="form-check-label" for="fh_checkbox_css_1">Check me
+                                                    out</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-7 offset-md-3">
+                                            <button type="submit" class="btn btn-primary w-100px me-5px">Login</button>
+                                            <button type="submit" class="btn btn-default w-100px ">Cancel</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-12.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-stuff-13">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Inline Form</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form class="row row-cols-lg-auto g-3 align-items-center" action="https://seantheme.com/"
+                                  method="POST">
+                                <div class="col-12">
+                                    <input type="email" class="form-control" id="exampleInputEmail2"
+                                           placeholder="Enter email"/>
+                                </div>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="exampleInputPassword2"
+                                           placeholder="Password"/>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="inline_form_checkbox" type="checkbox"/>
+                                        <label class="form-check-label" for="inline_form_checkbox">Remember me</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100px me-5px">Sign in</button>
+                                <button type="submit" class="btn btn-default w-100px">Register</button>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-elements/code-13.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div id="footer" class="app-footer m-0">
+            &copy; 2024 Icaros Net - Republica de Panama All Rights Reserved
+        </div>
+
+    </div>
+
+
+    {{app_setting}}
+
+
+    <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top fixed-footer" data-toggle="scroll-to-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+</div>

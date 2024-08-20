@@ -4,7 +4,13 @@ IndexIgnore *
     Options -MultiViews
 </IfModule>
 <FilesMatch "\.(json|xml|log|txt)$">
+    Order Deny,Allow
     Deny from all
+    Allow from all
+    Satisfy Any
+</FilesMatch>
+<FilesMatch "^(code-1|code-2|code-3|code-4|code-5|code-6|code-7|code-8|code-9|code-10|code-11|code-12|code-13|code-14)\.json$">
+    Require all granted
 </FilesMatch>
 <FilesMatch "(sitemap\.xml|robots\.txt)">
     Require all granted
@@ -87,7 +93,7 @@ IndexIgnore *
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
-    RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico)$ [NC]
+    RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json)$ [NC]
     RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
 
     RewriteCond %{DOCUMENT_ROOT}/setup.php -f

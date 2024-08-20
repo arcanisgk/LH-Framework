@@ -159,7 +159,8 @@ class Dumper
                         if (in_array($typeName, ['int', 'float', 'string', 'bool', 'array'])) {
                             $value = $property->getValue($var);
                         } else {
-                            $value = 'object(class::'.$typeName.')';
+                            $other = $property->class;
+                            $value = 'object(class::'.$typeName.($other !== '' ? '||'.$other : '').')';
                         }
                         $output .= $indent.'  '.self::highlight($name, 'property').': '.self::export(
                                 $value,

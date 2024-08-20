@@ -110,13 +110,13 @@ class Route
      */
     public function run(): void
     {
+        
         foreach ($this->routes as $route) {
             if ($this->matchRoute($route['method'], $route['path'])) {
 
                 Middleware::processMiddleware();
                 [$controller, $method] = $route['handler'];
                 $instance = $controller::getInstance($route['path']);
-
                 try {
                     $instance->$method();
                 } catch (Throwable $e) {

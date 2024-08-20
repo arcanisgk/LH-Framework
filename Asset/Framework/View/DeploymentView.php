@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\View;
 
+use Asset\Framework\Controller\ResponseController;
 use Asset\Framework\Core\Files;
 use Exception;
 
@@ -53,7 +54,7 @@ class DeploymentView
      */
     public function __construct()
     {
-        $this->templates['default'] = implode(DS, ['resource', 'template', 'index.html']);
+
     }
 
 
@@ -65,7 +66,7 @@ class DeploymentView
     /**
      * @var array
      */
-    private array $data;
+    private array $data = [];
 
     /**
      * @return array
@@ -100,16 +101,18 @@ class DeploymentView
     }
 
     /**
-     * @param array $response
+     * @param ResponseController|null $response
      * @return void
      * @throws Exception
      */
-    public function showContent(array $response): void
+    public function showContent(?ResponseController $response): void
     {
-        $this->setData($response['data']);
+
+        $this->setData($response->getData());
         if (!isset($_SESSION['BUILD_UP'])) {
             $this->fullBuild();
         }
+
     }
 
     /**
@@ -118,30 +121,56 @@ class DeploymentView
      */
     private function fullBuild(): void
     {
+
         $file = Files::getInstance();
-        $dir  = $file->getAbsolutePath(dirname(__DIR__).'/../'.$this->templates['default']);
+        $dir  = $file->getAbsolutePath(
+            implode(DS, [PD, 'Asset', 'resource', 'template', 'index.html'])
+        );
+
+        $dir_tpl_icon         = implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html']);
+        $dir_tpl_css          = implode(DS, [PD, 'Asset', 'resource', 'template', 'styles_link.html']);
+        $dir_tpl_html_content = implode(DS, [PD, 'Asset', 'resource', 'template', 'html_content.html']);
+        $dir_tpl_app_setting  = implode(DS, [PD, 'Asset', 'resource', 'template', 'app_setting.html']);
+        $dir_tpl_js           = implode(DS, [PD, 'Asset', 'resource', 'template', 'javascript_link.html']);
+
+        $css = implode('', $this->getData()['assets']['CSS']);
+        $js  = implode('', $this->getData()['assets']['JS']);
+
+        $icon_link = RenderTemplateView::getInstance()->setPath($dir_tpl_icon)
+            ->render();
+
+        $styles_link = RenderTemplateView::getInstance()->setPath($dir_tpl_css)
+            ->setData(['view_css' => $css])
+            ->render();
+
+        $app_setting = RenderTemplateView::getInstance()->setPath($dir_tpl_app_setting)
+            ->render();
+
+        $javascript_link = RenderTemplateView::getInstance()->setPath($dir_tpl_js)
+            ->setData(['view_js' => $js])
+            ->render();
+
+
+        $html_content = RenderTemplateView::getInstance()->setPath($dir_tpl_html_content)
+            ->setData($this->getData())
+            ->render();
+
         $data = [
             'lang'            => CONFIG['APP']['HOST']['LANG'],
             'html_tittle'     => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
-            'icon_link'       => RenderTemplateView::getInstance()->render(
-                implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html'])
-            ),
-            'styles_link'     => RenderTemplateView::getInstance()->render(
-                implode(DS, [PD, 'Asset', 'resource', 'template', 'styles_link.html']),
-                ['view_css' => implode('', $_SERVER['HTML_ASSETS']['CSS'])],
-            ),
-            'html_content'    => RenderTemplateView::getInstance()->render(
-                implode(DS, [PD, 'Asset', 'resource', 'template', 'html_content.html']),
-                $this->getData()
-            ),
-            'javascript_link' => RenderTemplateView::getInstance()->render(
-                implode(DS, [PD, 'Asset', 'resource', 'template', 'javascript_link.html']),
-                ['view_js' => implode('', $_SERVER['HTML_ASSETS']['JS'])],
-            ),
+            'icon_link'       => $icon_link,
+            'styles_link'     => $styles_link,
+            'html_content'    => $html_content,
+            'app_setting'     => $app_setting,
+            'javascript_link' => $javascript_link,
         ];
 
+        $html = RenderTemplateView::getInstance()->setPath($dir)
+            ->setData($data)
+            ->render();
+
         $this->outHtml(
-            RenderTemplateView::getInstance()->render($dir, $data)
+            $html
         );
     }
 

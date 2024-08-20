@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{lang}}" class="h-100">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <title>{{html_tittle}}</title>
     {{icon_link}}
     {{styles_link}}
 </head>
-<body class="d-flex flex-column h-100">
+<body class="pace-top">
+
+<div id="loader" class="app-loader">
+    <span class="spinner"></span>
+</div>
+
 {{html_content}}
 {{javascript_link}}
 </body>

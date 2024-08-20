@@ -45,6 +45,8 @@ class EventController
         return self::$instance;
     }
 
+    public array $response = [];
+
     /**
      * EventController constructor.
      */
