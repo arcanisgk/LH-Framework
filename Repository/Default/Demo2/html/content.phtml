@@ -328,7 +328,6 @@
 
             <h1 class="page-header" id="form_elements">Form Elements <small>header small text goes here...</small></h1>
 
-
             <div class="row mb-3">
 
                 <div class="col-xl-6">
@@ -1174,7 +1173,6 @@
 
             </div>
 
-
             <div class="row">
 
                 <div class="col-12">
@@ -1229,6 +1227,1239 @@
 
             </div>
 
+            <h1 class="page-header" id="form_plugins">Form Plugins <small>header small text goes here...</small></h1>
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-1">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Date Range Picker</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default Date Ranges</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group" id="default-daterange">
+                                            <input type="text" name="default-daterange" class="form-control" value
+                                                   placeholder="click to select the date range"/>
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Advance Date Ranges</label>
+                                    <div class="col-lg-8">
+                                        <div id="advance-daterange"
+                                             class="btn btn-default d-flex text-start align-items-center">
+                                            <span class="flex-1"></span>
+                                            <i class="fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-1.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-2">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Select2</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Basic Select2</label>
+                                    <div class="col-lg-8">
+                                        <select class="default-select2 form-control">
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="AK">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV">Nevada</option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                            <optgroup label="Mountain Time Zone">
+                                                <option value="AZ">Arizona</option>
+                                                <option value="CO">Colorado</option>
+                                                <option value="ID">Idaho</option>
+                                                <option value="MT">Montana</option>
+                                                <option value="NE">Nebraska</option>
+                                                <option value="NM">New Mexico</option>
+                                                <option value="ND">North Dakota</option>
+                                                <option value="UT">Utah</option>
+                                                <option value="WY">Wyoming</option>
+                                            </optgroup>
+                                            <optgroup label="Central Time Zone">
+                                                <option value="AL">Alabama</option>
+                                                <option value="AR">Arkansas</option>
+                                                <option value="IL">Illinois</option>
+                                                <option value="IA">Iowa</option>
+                                                <option value="KS">Kansas</option>
+                                                <option value="KY">Kentucky</option>
+                                                <option value="LA">Louisiana</option>
+                                                <option value="MN">Minnesota</option>
+                                                <option value="MS">Mississippi</option>
+                                                <option value="MO">Missouri</option>
+                                                <option value="OK">Oklahoma</option>
+                                                <option value="SD">South Dakota</option>
+                                                <option value="TX">Texas</option>
+                                                <option value="TN">Tennessee</option>
+                                                <option value="WI">Wisconsin</option>
+                                            </optgroup>
+                                            <optgroup label="Eastern Time Zone">
+                                                <option value="CT">Connecticut</option>
+                                                <option value="DE">Delaware</option>
+                                                <option value="FL">Florida</option>
+                                                <option value="GA">Georgia</option>
+                                                <option value="IN">Indiana</option>
+                                                <option value="ME">Maine</option>
+                                                <option value="MD">Maryland</option>
+                                                <option value="MA">Massachusetts</option>
+                                                <option value="MI">Michigan</option>
+                                                <option value="NH">New Hampshire</option>
+                                                <option value="NJ">New Jersey</option>
+                                                <option value="NY">New York</option>
+                                                <option value="NC">North Carolina</option>
+                                                <option value="OH">Ohio</option>
+                                                <option value="PA">Pennsylvania</option>
+                                                <option value="RI">Rhode Island</option>
+                                                <option value="SC">South Carolina</option>
+                                                <option value="VT">Vermont</option>
+                                                <option value="VA">Virginia</option>
+                                                <option value="WV">West Virginia</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Multiple Selection</label>
+                                    <div class="col-lg-8">
+                                        <select class="multiple-select2 form-control" multiple>
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="AK">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV">Nevada</option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                            <optgroup label="Mountain Time Zone">
+                                                <option value="AZ">Arizona</option>
+                                                <option value="CO">Colorado</option>
+                                                <option value="ID">Idaho</option>
+                                                <option value="MT">Montana</option>
+                                                <option value="NE">Nebraska</option>
+                                                <option value="NM">New Mexico</option>
+                                                <option value="ND">North Dakota</option>
+                                                <option value="UT">Utah</option>
+                                                <option value="WY">Wyoming</option>
+                                            </optgroup>
+                                            <optgroup label="Central Time Zone">
+                                                <option value="AL">Alabama</option>
+                                                <option value="AR">Arkansas</option>
+                                                <option value="IL">Illinois</option>
+                                                <option value="IA">Iowa</option>
+                                                <option value="KS">Kansas</option>
+                                                <option value="KY">Kentucky</option>
+                                                <option value="LA">Louisiana</option>
+                                                <option value="MN">Minnesota</option>
+                                                <option value="MS">Mississippi</option>
+                                                <option value="MO">Missouri</option>
+                                                <option value="OK">Oklahoma</option>
+                                                <option value="SD">South Dakota</option>
+                                                <option value="TX">Texas</option>
+                                                <option value="TN">Tennessee</option>
+                                                <option value="WI">Wisconsin</option>
+                                            </optgroup>
+                                            <optgroup label="Eastern Time Zone">
+                                                <option value="CT">Connecticut</option>
+                                                <option value="DE">Delaware</option>
+                                                <option value="FL">Florida</option>
+                                                <option value="GA">Georgia</option>
+                                                <option value="IN">Indiana</option>
+                                                <option value="ME">Maine</option>
+                                                <option value="MD">Maryland</option>
+                                                <option value="MA">Massachusetts</option>
+                                                <option value="MI">Michigan</option>
+                                                <option value="NH">New Hampshire</option>
+                                                <option value="NJ">New Jersey</option>
+                                                <option value="NY">New York</option>
+                                                <option value="NC">North Carolina</option>
+                                                <option value="OH">Ohio</option>
+                                                <option value="PA">Pennsylvania</option>
+                                                <option value="RI">Rhode Island</option>
+                                                <option value="SC">South Carolina</option>
+                                                <option value="VT">Vermont</option>
+                                                <option value="VA">Virginia</option>
+                                                <option value="WV">West Virginia</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-2.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-3">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Datepicker</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default Datepicker</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="datepicker-default"
+                                               placeholder="Select Date" value="04/1/2024"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Inline Datepicker</label>
+                                    <div class="col-lg-8">
+                                        <div id="datepicker-inline">
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Auto Close Datepicker</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="datepicker-autoClose"
+                                               placeholder="Auto Close Datepicker"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Disabled Past Date</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group date" id="datepicker-disabled-past"
+                                             data-date-format="dd-mm-yyyy" data-date-start-date="Date.default">
+                                            <input type="text" class="form-control" placeholder="Select Date"/>
+                                            <span class="input-group-text input-group-addon"><i
+                                                        class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Range Datepicker</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-daterange">
+                                            <input type="text" class="form-control" name="start"
+                                                   placeholder="Date Start"/>
+                                            <span class="input-group-text input-group-addon">to</span>
+                                            <input type="text" class="form-control" name="end" placeholder="Date End"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-3.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-4">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Select Picker</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control" id="ex-basic">
+                                            <option>Mustard</option>
+                                            <option>Ketchup</option>
+                                            <option>Relish</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Multiple SelectBox</label>
+                                    <div class="col-lg-8">
+                                        <select class="selectpicker form-control" id="ex-multiselect" multiple>
+                                            <optgroup label="Picnic">
+                                                <option>Mustard</option>
+                                                <option>Ketchup</option>
+                                                <option>Relish</option>
+                                            </optgroup>
+                                            <optgroup label="Camping">
+                                                <option>Tent</option>
+                                                <option>Flashlight</option>
+                                                <option>Toilet Paper</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Live Search</label>
+                                    <div class="col-lg-8">
+                                        <select class="selectpicker form-control" id="ex-search" multiple>
+                                            <option value="1">Mustard</option>
+                                            <option value="2">Ketchup</option>
+                                            <option value="3">Relish</option>
+                                            <option value="4">Tent</option>
+                                            <option value="5">Flashlight</option>
+                                            <option value="6">Toilet Paper</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-4.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-5">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">IonRange Slider</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="default_rangeSlider" name="default_rangeSlider" value/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Custom Range</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customRange_rangeSlider" name="customRange_rangeSlider"
+                                               value/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Custom Values</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="customValue_rangeSlider" name="customValue_rangeSlider"
+                                               value/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-5.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-6">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Colorpicker</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default Colorpicker</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" value="#007aff" class="form-control"
+                                               id="colorpicker-default"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-6.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-7">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Timepicker</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default timepicker</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group bootstrap-timepicker">
+                                            <input id="timepicker" type="text" class="form-control"/>
+                                            <span class="input-group-text input-group-addon"><i
+                                                        class="fa fa-clock"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-7.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-8">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">jQuery Autocomplete</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Autocomplete</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" name id="jquery-autocomplete" class="form-control"
+                                               placeholder="Try typing 'a' or 'b'."/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-8.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-9">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Masked Input</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Date</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-date"
+                                               placeholder="dd/mm/yyyy"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Phone</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-phone"
+                                               placeholder="(999) 999-9999"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Tax ID</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-tid"
+                                               placeholder="99-9999999"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Product Key</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-pkey"
+                                               placeholder="a*-999-a999"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">SSN</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-ssn"
+                                               placeholder="999/99/9999"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">SSN</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="masked-input-pno"
+                                               placeholder="AAA-9999-A"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-9.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-10">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">jQuery Tag-It</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default Tags Input with
+                                        Autocomplete</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-default">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                        <p>Try to enter "c++, java, php" </p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Inverse Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-inverse" class="inverse">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">White Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-white" class="white">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Primary Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-primary" class="primary">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Info Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-info" class="info">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Success Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-success" class="success">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Warning Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-warning" class="warning">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Danger Theme</label>
+                                    <div class="col-lg-8">
+                                        <ul id="jquery-tagIt-danger" class="danger">
+                                            <li>Tag1</li>
+                                            <li>Tag2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-10.json"></code></pre>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-inverse" data-sortable-id="form-plugins-11">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title"> Clipboard.js <span class="badge bg-success ms-2">NEW</span></h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body p-0">
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Default</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group">
+                                            <input id="clipboard-default" type="text" class="form-control"
+                                                   value="https://github.com/zenorocha/clipboard.js.git"/>
+                                            <button class="btn btn-dark" type="button" data-toggle="clipboard"
+                                                    data-clipboard-target="#clipboard-default"><i
+                                                        class="fa fa-clipboard"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">Cut to copy</label>
+                                    <div class="col-lg-8">
+										<textarea class="form-control mb-10px" id="clipboard-textarea"
+                                                  rows="7">Mussum ipsum cacilds...</textarea>
+                                        <button class="btn btn-dark btn-sm" type="button" data-toggle="clipboard"
+                                                data-clipboard-target="#clipboard-textarea" data-clipboard-action="cut">
+                                            Cut
+                                            to clipboard
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="form-label col-form-label col-lg-4">without Form</label>
+                                    <div class="col-lg-8">
+                                        <button class="btn btn-dark btn-sm" type="button" data-toggle="clipboard"
+                                                data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+                                            Click
+                                            to copy
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-plugins/code-11.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h1 class="page-header" id="form_slider_switcher">Form Slider + Switcher <small>header small text goes
+                    here...</small>
+            </h1>
+
+            <div class="row">
+
+                <div class="col-xl-8">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-slider-switcher-1">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Switchery</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <div>
+                                <p>
+                                    You can use the predefined javascript variable in <code>/src/js/app.js</code> to
+                                    create different color theme switchery.
+                                </p>
+                                <label class="form-label mb-2">Switchery Color Theme</label>
+                                <div class="d-flex">
+                                    <div class="me-2"><input type="checkbox" data-render="switchery" data-theme="blue"
+                                                             checked/></div>
+                                    <div class="me-2"><input type="checkbox" data-render="switchery"
+                                                             data-theme="default" checked/></div>
+                                    <div class="me-2"><input type="checkbox" data-render="switchery" data-theme="orange"
+                                                             checked/></div>
+                                    <div class="me-2"><input type="checkbox" data-render="switchery" data-theme="red"
+                                                             checked/></div>
+                                    <div class="me-2"><input type="checkbox" data-render="switchery" data-theme="purple"
+                                                             checked/></div>
+                                    <div><input type="checkbox" data-render="switchery" data-theme="black" checked/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html"
+                                       data-url="assets/data/form-slider-switcher/code-1.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-4">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-slider-switcher-3">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Switchery State</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <label class="form-label mb-2">Checked & Unchecked Switchery</label>
+                            <div class="d-flex mb-3">
+                                <div class="d-flex align-items-center me-3">
+                                    <input type="checkbox" data-render="switchery" data-theme="default" checked/>
+                                    <span class="text-muted ms-2">checked</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <input type="checkbox" data-render="switchery" data-theme="default"/>
+                                    <span class="text-muted ms-2">unchecked</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mb-3 mb-lg-0">
+                                    <label class="form-label mb-2">Disabled</label>
+                                    <div class="mb-3">
+                                        <input type="checkbox" data-render="switchery" data-theme="blue" disabled
+                                               checked/>
+                                        <span class="text-muted ms-2">checked</span>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" data-render="switchery" data-theme="blue" disabled/>
+                                        <span class="text-muted ms-2">unchecked</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="form-label mb-2">State</label>
+                                    <div class="mb-3">
+                                        <input type="checkbox" data-render="switchery" data-theme="black"
+                                               data-id="switchery-state" checked/>
+                                        <a href="#" class="btn btn-xs btn-outline-black ms-2"
+                                           data-click="check-switchery-state">check state</a>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" data-render="switchery" data-theme="blue"
+                                               data-change="check-switchery-state-text" checked/>
+                                        <a href="#" class="btn btn-xs btn-primary disabled ms-2"
+                                           data-id="switchery-state-text">true</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html"
+                                       data-url="assets/data/form-slider-switcher/code-2.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel panel-inverse">
+
+                <div class="panel-heading">
+                    <h4 class="panel-title">Powerange Slider</h4>
+                    <div class="panel-heading-btn">
+                        <a href="#" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i
+                                    class="fa fa-expand"></i></a>
+                        <a href="#" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
+                                    class="fa fa-redo"></i></a>
+                        <a href="#" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                                    class="fa fa-minus"></i></a>
+                        <a href="#" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
+                                    class="fa fa-times"></i></a>
+                    </div>
+                </div>
+
+
+                <div class="panel-body">
+                    <p>
+                        You can use the predefined javascript variable in <code>/src/js/app.js</code> to create
+                        different color theme switchery. You may add the <code>hideRange</code> option and set the value
+                        as <code>true</code>
+                        during the slider init in order to remove the range number from the slider.
+                    </p>
+                    <div class="row gx-5">
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <label class="form-label">Default Slider</label>
+                                    <div class="powerange-wrapper mb-4">
+                                        <input type="text" data-render="powerange-slider" data-start="70"/>
+                                    </div>
+                                    <label class="form-label pt-10px">Slider State (Disabled)</label>
+                                    <div class="powerange-wrapper mb-4">
+                                        <input type="text" data-render="powerange-slider" data-start="50"
+                                               data-disable="true"/>
+                                    </div>
+                                    <div class="d-flex align-items-center pt-10px mb-1">
+                                        <label class="form-label flex-1 mb-0">Get Value via Javascript </label>
+                                        <a href="#" data-toggle="get-value-powerange" data-target="#sliderGetValue"
+                                           class="btn btn-xs btn-outline-primary">Check Value</a>
+                                    </div>
+                                    <div class="powerange-wrapper mb-0">
+                                        <input type="text" data-render="powerange-slider" data-start="30"
+                                               id="sliderGetValue"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <label class="form-label mb-1">Slider Colors</label>
+                                    <div class="powerange-wrapper powerange-without-range mb-2">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="90"/>
+                                    </div>
+                                    <div class="powerange-wrapper powerange-without-range mb-2 red">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="75"/>
+                                    </div>
+                                    <div class="powerange-wrapper powerange-without-range mb-2 teal">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="60"/>
+                                    </div>
+                                    <div class="powerange-wrapper powerange-without-range mb-2 purple">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="45"/>
+                                    </div>
+                                    <div class="powerange-wrapper powerange-without-range mb-2 orange">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="30"/>
+                                    </div>
+                                    <div class="powerange-wrapper powerange-without-range mb-0 black">
+                                        <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                               data-start="15"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label mb-1">Horizontal Slider</label>
+                            <div class="d-flex mt-n1">
+                                <div class="powerange-wrapper powerange-without-range powerange-vertical mb-0 me-1">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="90" data-height="180px"/>
+                                </div>
+                                <div
+                                        class="powerange-wrapper powerange-without-range powerange-vertical mb-0 me-1 teal">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="75" data-height="180px"/>
+                                </div>
+                                <div
+                                        class="powerange-wrapper powerange-without-range powerange-vertical mb-0 me-1 purple">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="60" data-height="180px"/>
+                                </div>
+                                <div class="powerange-wrapper powerange-without-range powerange-vertical mb-0 me-1 red">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="45" data-height="180px"/>
+                                </div>
+                                <div
+                                        class="powerange-wrapper powerange-without-range powerange-vertical mb-0 me-1 orange">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="30" data-height="180px"/>
+                                </div>
+                                <div class="powerange-wrapper powerange-without-range powerange-vertical mb-0 black">
+                                    <input type="text" data-render="powerange-slider" data-hide-range="true"
+                                           data-vertical="true" data-start="15" data-height="180px"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="hljs-wrapper">
+                    <pre><code class="html" data-url="assets/data/form-slider-switcher/code-3.json"></code></pre>
+                </div>
+
+            </div>
+
+            <h1 class="page-header" id="form_validation">Form Validation <small>header small text goes
+                    here...</small></h1>
+
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-validation-1">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Basic Form Validation</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form class="form-horizontal" data-parsley-validate="true" name="demo-form">
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="fullname">Full Name *
+                                        :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" id="fullname" name="fullname"
+                                               placeholder="Required" data-parsley-required="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="email">Email * :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" id="email" name="email"
+                                               data-parsley-type="email" placeholder="Email"
+                                               data-parsley-required="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="website">Website :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="url" id="website" name="website"
+                                               data-parsley-type="url" placeholder="url"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="message">Message (20 chars
+                                        min, 200 max) :</label>
+                                    <div class="col-lg-8">
+										<textarea class="form-control" id="message" name="message" rows="4"
+                                                  data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                  placeholder="Range from 20 - 200"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="message">Digits :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" id="digits" name="digits"
+                                               data-parsley-type="digits" placeholder="Digits"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label" for="message">Number :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" id="number" name="number"
+                                               data-parsley-type="number" placeholder="Number"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-label">&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-validation/code-1.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-6">
+
+                    <div class="panel panel-inverse" data-sortable-id="form-validation-2">
+
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Extra Validation Field</h4>
+                            <div class="panel-heading-btn">
+                                <a href="#" class="btn btn-xs btn-icon btn-default"
+                                   data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-success"
+                                   data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-warning"
+                                   data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="#" class="btn btn-xs btn-icon btn-danger"
+                                   data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <form data-parsley-validate="true">
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label">AlphaNum* :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" id="alphanum" name="alphanum"
+                                               data-parsley-type="alphanum" placeholder="Alphanumeric String."
+                                               data-parsley-required="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label">Required Select Box :</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-select" id="select-required" name="selectBox"
+                                                data-parsley-required="true">
+                                            <option value>Please choose</option>
+                                            <option value="foo">Foo</option>
+                                            <option value="bar">Bar</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label">Required Radio Button :</label>
+                                    <div class="col-lg-8 pt-2">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" name="radiorequired"
+                                                   value="foo" id="radioRequired1" data-parsley-required="true"/>
+                                            <label class="form-check-label" for="radioRequired1">Radio Button 1</label>
+                                        </div>
+                                        <div class="form-check mt-2">
+                                            <input type="radio" class="form-check-input" name="radiorequired"
+                                                   id="radioRequired2" value="bar"/>
+                                            <label class="form-check-label" for="radioRequired2">Radio Button 2</label>
+                                        </div>
+                                        <div class="form-check mt-2">
+                                            <input type="radio" class="form-check-input" name="radiorequired"
+                                                   id="radioRequired3" value="key"/>
+                                            <label class="form-check-label" for="radioRequired3">Radio Button 2</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label">Check at least 2 checkboxes
+                                        :</label>
+                                    <div class="col-lg-8 pt-2">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="mincheck1"
+                                                   name="mincheck[]" data-parsley-mincheck="2" value="foo" required/>
+                                            <label class="form-check-label" for="mincheck1">Checkbox 1</label>
+                                        </div>
+                                        <div class="form-check mt-2">
+                                            <input type="checkbox" class="form-check-input" id="mincheck2"
+                                                   name="mincheck[]" value="bar"/>
+                                            <label class="form-check-label" for="mincheck2">Checkbox 2</label>
+                                        </div>
+                                        <div class="form-check mt-2">
+                                            <input type="checkbox" class="form-check-input" id="mincheck3"
+                                                   name="mincheck[]" value="baz"/>
+                                            <label class="form-check-label" for="mincheck3">Checkbox 3</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label class="col-lg-4 col-form-label form-label">Regular Expression :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control parsley-validated" type="text" id="data-regexp"
+                                               data-parsley-pattern="#[A-Fa-f0-9]{6}" placeholder="hexa color code"
+                                               data-required="true"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-label">&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <button type="submit" class="btn btn-danger">Validate</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="hljs-wrapper">
+                            <pre><code class="html" data-url="assets/data/form-validation/code-2.json"></code></pre>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -1247,3 +2478,7 @@
     </a>
 
 </div>
+
+<script defer src="assets/js/demo/form-plugins.demo.js" type="text/javascript"></script>
+<script defer src="assets/js/demo/render.highlight.js" type="text/javascript"></script>
+<script defer src="assets/js/demo/form-slider-switcher.demo.js" type="text/javascript"></script>

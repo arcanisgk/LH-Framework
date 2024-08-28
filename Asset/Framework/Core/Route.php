@@ -110,7 +110,7 @@ class Route
      */
     public function run(): void
     {
-        
+
         foreach ($this->routes as $route) {
             if ($this->matchRoute($route['method'], $route['path'])) {
 
@@ -119,8 +119,9 @@ class Route
                 $instance = $controller::getInstance($route['path']);
                 try {
                     $instance->$method();
-                } catch (Throwable $e) {
-                    throw new Exception('Error executing route: '.$e->getMessage());
+                } catch (Throwable) {
+                    //throw new Exception('Error executing route: '.$e->getMessage());
+                    $this->redirectNotFound();
                 }
 
                 return;

@@ -1,21 +1,14 @@
-console.log("Hello World!!!");
+import {ControllerUI} from "./controller-ui.js";
+import {HandlerConsoleOutput} from "./handler-console-output.js";
+import {HandlerGlobalSetting} from "./handler-global-setting.js";
 
-window.addEventListener("load", () => setTimeout(() => {
-    console.log('Full Load!!!');
-    const fragment = window.location.hash;
-    if (fragment) {
-        const element = document.querySelector(fragment);
-        console.log(element);
-        if (element) {
-            element.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"});
-        }
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await HandlerConsoleOutput.defaultMGS('init');
+        HandlerGlobalSetting.Init();
+        const controllerUI = new ControllerUI();
+        await controllerUI.initializeUI();
+    } catch (error) {
+        await HandlerConsoleOutput.defaultMGS('error', 'Deploy Interfaces', error);
     }
-}, 1500));
-
-$(document).on('click', '#liveToastBtn', function (e) {
-    e.preventDefault();
-
-    $('#liveToast').toast('show');
-
-    $(this).blur();
 });

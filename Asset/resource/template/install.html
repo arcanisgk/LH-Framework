@@ -1,77 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <title>Setup | LH-2 | Adaptive Development Platform</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="" name="description">
-    <meta content="" name="author">
-    <link href="assets/css/plugins/sweetalert2.min.css" rel="stylesheet">
-    <link href="assets/css/vendor.min.css" rel="stylesheet">
-    <link href="assets/css/default/app.min.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
-    <style>
-        .app-content {
-            margin-left: 220px;
-            margin-right: 220px;
-            padding: 20px 30px;
-        }
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta name="description"
+          content="Welcome to LH-2 | Last Hammer Framework, this is a platform that will allow you to easily deploy different types of web portals based on LAMP, a landing page with manageable content, a web store, an ERP administrative development system, the use and the limits are set by you.">
+    <meta content="Walter Nuñez | arcanisgk | Icaros Net" name="author">
 
-        .pace .pace-progress {
-            top: 0 !important;
-        }
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="256x256" href="assets/ico/256.png">
+    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="assets/ico/128.png">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="assets/ico/64.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/64.png">
 
-        .btn, .btn:hover {
-            border-bottom-color: rgb(12, 10, 10)
-        }
+    <link rel="stylesheet" href="assets/plugins/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/plugins/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="assets/plugins/flag-icons/css/flag-icons.min.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-social/bootstrap-social.css">
 
-        .form-control-plaintext {
-            padding: 0;
-        }
+    <link rel="stylesheet" href="assets/plugins/jvectormap-next/jquery-jvectormap.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/plugins/gritter/css/jquery.gritter.css">
+    <link rel="stylesheet" href="assets/plugins/nvd3/build/nv.d3.css">
+    <link rel="stylesheet" href="assets/plugins/datepickk/dist/datepickk.min.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="assets/plugins/tag-it/css/jquery.tagit.css">
+    <link rel="stylesheet" href="assets/plugins/summernote/dist/summernote-lite.css">
+    <link rel="stylesheet" href="assets/plugins/jstree/dist/themes/default/style.min.css">
+    <link rel="stylesheet" href="assets/plugins/intro.js/minified/introjs.min.css">
 
-    </style>
+    <link rel="stylesheet" href="assets/plugins/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="assets/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
+    <link rel="stylesheet" href="assets/plugins/spectrum-colorpicker2/dist/spectrum.min.css">
+    <link rel="stylesheet" href="assets/plugins/select-picker/dist/picker.min.css">
+    <link rel="stylesheet" href="assets/plugins/switchery/dist/switchery.min.css">
+    <link rel="stylesheet" href="assets/plugins/abpetkov-powerange/dist/powerange.min.css">
+
+    <link rel="stylesheet" href="assets/css/vendor.min.css">
+    <link rel="stylesheet" href="assets/css/default/app.min.css">
+
+    <link rel="stylesheet" href="assets/css/custom.css">
+
 </head>
-<body class="theme-cyan">
+<body class="pace-top">
+
 <div id="loader" class="app-loader">
     <span class="spinner"></span>
 </div>
-<form>
-    <div id="app" class="app app-sidebar-fixed">
-        <div class="app-sidebar-mobile-backdrop">
-            <a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a>
+
+<div id="app" class="app app-header-fixed app-content-full-height prevent-app-header-padding">
+
+    <div id="header" class="app-header">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">
+                <img src="assets/ico/64.png" alt="Brand Image"/>
+                <b class="me-3px"> Last Hammer </b> Framework
+            </a>
         </div>
-        <div id="content" class="app-content">
-            <ol class="breadcrumb float-xl-end">
-                <li class="breadcrumb-item">LH-2 System</li>
-                <li class="breadcrumb-item active">Setup</li>
-            </ol>
-            <h1 class="page-header">Setup Form <small>Config ADP</small></h1>
-            <hr class="mb-4">
+    </div>
+
+
+    <div id="content" class="app-content app-content-add-right-padding">
+
+        <ol class="breadcrumb float-xl-end">
+            <li class="breadcrumb-item">LH-2 System</li>
+            <li class="breadcrumb-item active">Setup</li>
+        </ol>
+
+        <h1 class="page-header">Setup Form <small>pre-Configuration <i class="fa fa-circle-question"
+                                                                       data-bs-toggle="tooltip"
+                                                                       data-bs-placement="auto"
+                                                                       data-bs-html="true"
+                                                                       data-bs-title="Pre-confirmation is important, if you want to finish later you can do it from <b>url/Admin</b>"></i>
+        </small></h1>
+
+        <hr class="mb-4">
+
+        <form>
             <div class="row">
-                <div style="width: 230px">
-                    <div class="w-200px d-none d-xl-block my-n4 py-4 text-end mb-3">
-                        <img src="assets/img/logo/lh-2-logo.png" class="mw-100">
-                    </div>
-                    <nav class="navbar navbar-sticky d-none d-xl-block my-n4 py-4 text-end mt-lg-3 h-75">
+                <div style="width: 180px">
+
+                    <nav class="navbar navbar-sticky d-none d-xl-block my-n4 py-4 text-end mt-lg-3 h-75 w-150px">
                         <nav class="nav" id="bsSpyTarget">
                             <a class="nav-link active" href="#general" data-toggle="scroll-to">General</a>
                             <a class="nav-link" href="#session" data-toggle="scroll-to">Session</a>
+                            <a class="nav-link" href="#email" data-toggle="scroll-to">Email</a>
+                            <a class="nav-link" href="#ftp" data-toggle="scroll-to">FTP</a>
                             <a class="nav-link" href="#database" data-toggle="scroll-to">Database</a>
+                            <a class="nav-link" href="#admin-settings" data-toggle="scroll-to">Save Setting</a>
                         </nav>
                     </nav>
+
                 </div>
                 <div class="col-xl-8" id="bsSpyContent">
+
                     <div id="general" class="mb-4 pb-3">
+
                         <h4 class="d-flex align-items-center mb-2">
                             <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
-                                  data-icon="solar:user-bold-duotone"></span>
-                            General
+                                  data-icon="line-md:account-small"></span> General
                             <input type="hidden" name="step-1" value="false">
                             <span id="step-1-text" class="ms-3 text-success hide"> Step #1 Complete!!!</span>
                         </h4>
+
                         <p>Application settings and owner.</p>
+
                         <div class="card">
                             <div class="list-group list-group-flush fw-bold">
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="company-name">Company Name</label>
@@ -83,10 +122,11 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalCompanyName" data-bs-toggle="modal"
+                                        <a href="#modal-company-name" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="company-owner">Company Owner</label>
@@ -98,7 +138,7 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalCompanyOwner" data-bs-toggle="modal"
+                                        <a href="#modal-company-owner" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
@@ -114,11 +154,10 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalProjectName" data-bs-toggle="modal"
+                                        <a href="#modal-project-name" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
-
 
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
@@ -130,10 +169,11 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalLicense" data-bs-toggle="modal"
+                                        <a href="#modal-license" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="protocol">Protocol</label>
@@ -148,6 +188,7 @@
                                            role="button" aria-disabled="true">Automatically Detected</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="domain">Domain for access</label>
@@ -162,6 +203,7 @@
                                            role="button" aria-disabled="true">Automatically Detected</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="lang">Default language</label>
@@ -179,9 +221,10 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalLang" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
+                                        <a href="#modal-lang" data-bs-toggle="modal" class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <label for="entry">Entry</label>
@@ -192,25 +235,32 @@
                                         </div>
                                     </div>
                                     <div class="w-125px">
-                                        <a href="#modalEntryView" data-bs-toggle="modal"
+                                        <a href="#modal-entry-view" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
+
                     <div id="session" class="mb-4 pb-3">
+
                         <h4 class="d-flex align-items-center mb-2 mt-3">
                             <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
-                                  data-icon="solar:clock-circle-line-duotone"></span>
+                                  data-icon="svg-spinners:clock"></span>
                             Session
                             <input type="hidden" name="step-2" value="false">
                             <span id="step-2-text" class="ms-3 text-success hide"> Step #2 Complete!!!</span>
                         </h4>
+
                         <p>let's configure how the sessions will work.</p>
+
                         <div class="card">
                             <div class="list-group list-group-flush fw-bold">
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-name">Web Session Name</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -220,12 +270,16 @@
                                                    readonly/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
                                         <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold"
                                            role="button" aria-disabled="true">Automatically Detected</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-inactivity"> Evaluate Session Inactivity</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -235,12 +289,16 @@
                                                    required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
                                         <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold"
                                            role="button" aria-disabled="true">Automatically Security</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-lifetime">Session Life Time</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -250,12 +308,16 @@
                                                    readonly required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
-                                        <a href="#modalSessionLifeTime" data-bs-toggle="modal"
+                                        <a href="#modal-session-life-time" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-activity-expire">Session Activity Expire</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -265,12 +327,16 @@
                                                    readonly required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
-                                        <a href="#modalSessionActivityExpire" data-bs-toggle="modal"
+                                        <a href="#modal-session-activity-expire" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-secure">Session Secure</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -280,12 +346,16 @@
                                                    required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
                                         <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold"
                                            role="button" aria-disabled="true">Automatically Security</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-http-only">Session HTTP Only</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -295,12 +365,16 @@
                                                    required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
                                         <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold"
                                            role="button" aria-disabled="true">Automatically Security</a>
                                     </div>
+
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
+
                                     <div class="flex-fill">
                                         <label for="session-same-site">Session Same Site</label>
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
@@ -310,71 +384,145 @@
                                                    required/>
                                         </div>
                                     </div>
+
                                     <div class="w-125px">
                                         <a class="btn btn-link text-decoration-none w-125px text-success text-end disabled fw-bold"
                                            role="button" aria-disabled="true">Automatically Security</a>
                                     </div>
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
-                    <div id="database" class="mb-4 pb-3">
+
+                    <div id="email" class="mb-4 pb-3">
+
                         <h4 class="d-flex align-items-center mb-2 mt-3">
                             <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
-                                  data-icon="solar:clock-circle-line-duotone"></span>
-                            Database
+                                  data-icon="line-md:email-twotone"></span> E-Mail
                             <input type="hidden" name="step-3" value="false">
                             <span id="step-3-text" class="ms-3 text-success hide"> Step #3 Complete!!!</span>
+                            <a href="#modal-add-email" data-bs-toggle="modal"
+                               class="btn btn-primary btn-xs ms-auto ml-1"><i class="fa fa-cog"></i></a>
                         </h4>
-                        <p>let's configure how the System would be connected to the database system.</p>
+
+                        <p>Let's configure how the email client works.</p>
+
                         <div class="card">
+                            <div class="list-group list-group-flush fw-bold" id="email-content">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="ftp" class="mb-4 pb-3">
+
+                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
+                                  data-icon="arcticons:andftp"></span> FTP Interfaces
+                            <input type="hidden" name="step-4" value="false">
+                            <span id="step-4-text" class="ms-3 text-success hide"> Step #4 Complete!!!</span>
+                            <a href="#modal-add-ftp" data-bs-toggle="modal" class="btn btn-primary btn-xs ms-auto ml-1"><i
+                                    class="fa fa-cog"></i></a>
+                        </h4>
+
+                        <p>Here you configure your ftp connections.</p>
+
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold" id="ftp-content">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="database" class="mb-4 pb-3">
+
+                        <h4 class="d-flex align-items-center mb-2 mt-3">
+                            <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
+                                  data-icon="solar:database-line-duotone"></span> Database
+
+                            <input type="hidden" name="step-5" value="false">
+                            <span id="step-5-text" class="ms-3 text-success hide"> Step #5 Complete!!!</span>
+
+                            <a href="#modal-add-database" data-bs-toggle="modal"
+                               class="btn btn-primary btn-xs ms-auto ml-1"><i class="fa fa-cog"></i></a>
+
+                        </h4>
+
+                        <p>let's configure how the System would be connected to the database system.</p>
+
+                        <div class="card">
+                            <div class="list-group list-group-flush fw-bold" id="database-content">
+
+                            </div>
+
+                            <!--
                             <div class="list-group list-group-flush fw-bold">
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
+
                                         <label for="database-con1-db-name">Connection #1</label>
+
                                         <div class="text-body text-opacity-60 d-flex align-items-center">
                                             <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
                                             <input id="database-con1-db-name" name="json-database-con1-db-name"
                                                    class="form-control-plaintext" type="text" value="Click on Edit"
                                                    readonly required/>
                                         </div>
+
                                         <div class="text-body text-opacity-60 d-flex align-items-center mt-1 mb-1">
                                             <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <label for="database-con1-db-host"></label>
                                             <input id="database-con1-db-host" name="json-database-con1-db-host"
                                                    class="form-control-plaintext" type="text" value="Click on Edit"
                                                    readonly required/>
                                         </div>
+
                                         <div class="text-body text-opacity-60 d-flex align-items-center mt-1  mb-1">
                                             <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <label for="database-con1-db-user"></label>
                                             <input id="database-con1-db-user" name="json-database-con1-db-user"
                                                    class="form-control-plaintext" type="text" value="Click on Edit"
                                                    readonly required/>
                                         </div>
+
                                         <div class="text-body text-opacity-60 d-flex align-items-center mt-1">
                                             <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
+                                            <label for="database-con1-db-pass"></label>
                                             <input id="database-con1-db-pass" name="json-database-con1-db-pass"
                                                    class="form-control-plaintext" type="password" value=""
-                                                   autocomplete="off"
-                                                   placeholder="*******" readonly required/>
+                                                   autocomplete="off" placeholder="*******" readonly required/>
                                         </div>
+
                                     </div>
+
                                     <div class="w-125px">
-                                        <a href="#modalDataBase" data-bs-toggle="modal"
+                                        <a href="#modal-database" data-bs-toggle="modal"
                                            class="btn btn-secondary w-125px">Edit</a>
                                     </div>
+
                                 </div>
                             </div>
+                            -->
                         </div>
                     </div>
-                    <div id="adminSettings" class="mb-4 pb-3">
+
+                    <div id="admin-settings" class="mb-4 pb-3">
+
                         <h4 class="d-flex align-items-center mb-2 mt-3">
                             <span class="iconify fs-24px me-2 text-body text-opacity-75 my-n1"
                                   data-icon="solar:restart-bold-duotone"></span>
                             Control settings
                         </h4>
+
                         <p>Validate, Save or Reset all website setting to factory default setting.</p>
+
                         <div class="card">
                             <div class="list-group list-group-flush fw-bold">
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <div>(Step: #1) Validate Settings</div>
@@ -386,6 +534,7 @@
                                         <a href="#" class="btn btn-outline-green w-125px">Validate</a>
                                     </div>
                                 </div>
+
                                 <div class="list-group-item d-flex align-items-center">
                                     <div class="flex-fill">
                                         <div>(Step: #2) Save Settings</div>
@@ -398,459 +547,636 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top" data-toggle="scroll-to-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
-    </div>
 
-</form>
-<!-- Modals -->
-<form>
-    <div class="modal fade" id="modalCompanyName">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Company Name or Individual</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-company-name">Set the Name</label>
-                        <div class="row">
-                            <div class="col-12">
-                                <input id="i-company-name" name="i-company-name" class="form-control opacity-50"
-                                       placeholder="Company Inc. LTD. | John Doe" value="">
                             </div>
                         </div>
                     </div>
-                    <div id="a-company-name" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> It is important to define the name of the company or individual person that
-                        implements this system, since this information must generally appear in
-                        documents
-                        that you generate officially.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-company-name" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalCompanyOwner">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Company Owner or Individual</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-company-owner">Set the Name</label>
-                        <div class="row">
-                            <div class="col-12">
-                                <input id="i-company-owner" name="i-company-owner" class="form-control opacity-50"
-                                       placeholder="Company Inc. LTD. | John Doe" value="">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="a-company-owner" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> It is important to define the name of the company owner or individual person
-                        that implements this system, since this information must generally appear in
-                        documents that you generate officially.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-company-owner" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalProjectName">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit the Project Name</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-project-name">Set the Project Name</label>
-                        <div class="row">
-                            <div class="col-12">
-                                <input id="i-project-name" name="i-project-name" class="form-control opacity-50"
-                                       placeholder="Last Hammer Framework" value="">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="a-project-name" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> Here we must define the project name for this system, since this information
-                        should generally appear in documents that you officially generate and in the title/description
-                        of the page/hml.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-project-name" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalLicense">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit License </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-license">Set the License Key for support service</label>
-                        <div class="row align-items-center">
-                            <div class="col-9">
-                                <input id="i-license" name="i-license" class="form-control opacity-50"
-                                       placeholder="1234-ABCD-1234-ABCD" value="FREE-FREE-FREE-FREE" readonly>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="free-license" type="hidden"/>
-                                    <input class="form-check-input" id="free-license" name="free-license"
-                                           type="checkbox" checked/>
-                                    <label class="form-check-label" for="free-license">for Free</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="a-license" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div id="a-license2" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> License error, license must be 19 characters long, example: 1234-ABCD-1234-ABCD.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> You do not need a License, unless you directly require integration support
-                        or specialized training in implementations.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-license" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalLang">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Language</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-lang">Set the default Language</label>
-                        <div class="row align-items-center">
-                            <div class="col-7">
-                                <select class="form-select" name="i-lang" id="i-lang">
-                                    <option value="en" selected>English (default)</option>
-                                    <option value="es">Español</option>
-                                    <option value="fr">Française</option>
-                                    <option value="de">Deutsch</option>
-                                    <option value="zh">中國人</option>
-                                    <option value="hi">हिंदी</option>
-                                </select>
-                            </div>
-                            <div class="col-5">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="multi-language" type="hidden"/>
-                                    <input class="form-check-input" id="multi-language" name="multi-language"
-                                           type="checkbox" checked/>
-                                    <label class="form-check-label" for="multi-language">Enable multi-language</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b>
-                        <p> The default language of the platform is English. Please note that the system includes by
-                            default the dictionaries of the languages selected for the platform and the
-                            administration system. You must decide if you want to support multiple languages at this
-                            time. Also consider that you should implement the template and dictionary system to
-                            expand the capabilities of using multiple languages, as well as including new languages.</p>
-                        <p class="mb-0"> The default language of the platform will be used as a last resort, the
-                            priority in Language detection is as follows:<br>
-                            1. Language set by end user as default.<br>
-                            2. language detected on the end user's operating system.<br>
-                            3. language set by default on the platform.</p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-lang" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalEntryView">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Page/View for Users </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="i-entry">Set the Default Page/View for Users</label>
-                        <div class="row align-items-center">
-                            <div class="col-7">
-                                <select class="form-select" id="i-entry" name="i-entry">
-                                    <option value="User-Access" selected>Login (Default)</option>
-                                    <option value="Dashboard">Dashboard</option>
-                                    <option value="Store">Store</option>
-                                    <option value="Home">Home</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b>
-                        <p> It is important to establish a home or entry page by placing one of these by default, it
-                            will make it easier for users to understand the main purpose of this application or
-                            site.</p>
-                        <p class="mb-0">Keep in mind that if you select Dashboard, Home or Store, you will need to
-                            develop its content unlike the other entry points.</p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-entry" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalSessionLifeTime">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Set Time for Session</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-session-lifetime-days">Days</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="number" id="i-session-lifetime-days" name="i-session-lifetime-days"
-                                           class="form-control opacity-50" placeholder="30" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-session-lifetime-hours">Hours</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="number" id="i-session-lifetime-hours" name="i-session-lifetime-hours"
-                                           class="form-control opacity-50" placeholder="24" value="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="a-session-lifetime" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum
-                        value of 1 hour.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> Now it's time to set the duration of the default session started, this is
-                        mainly for browser data in general. all values will be recalculated and converted
-                        to
-                        seconds. the minimum value is 1 hour.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-lifetime" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalSessionActivityExpire">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Set Time for Session</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-session-activity-expire-days">Days</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="number" id="i-session-activity-expire-days"
-                                           name="i-session-activity-expire-days" class="form-control opacity-50"
-                                           placeholder="30" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-session-activity-expire-hours">Hours</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="number" id="i-session-activity-expire-hours"
-                                           name="i-session-activity-expire-hours" class="form-control opacity-50"
-                                           placeholder="24" value="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="a-session-activity-expire" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum
-                        value of 1 hour.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> Now it's time to set the duration of the default session activity, this is
-                        mainly for user data in general. all values will be recalculated and converted to
-                        seconds. the minimum value is 1 hour.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-activity-expire" type="button" class="btn btn-theme">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modalDataBase">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Setup Database Credential</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-database-name">DB Name</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" id="i-database-name" name="i-database-name"
-                                           class="form-control opacity-50" placeholder="db-name" value="">
+            </div>
+        </form>
+
+
+        <form>
+
+            <div class="modal fade" id="modal-company-name">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Company Name or Individual</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="i-company-name">Set the Name</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input id="i-company-name" name="i-company-name" class="form-control opacity-50"
+                                               placeholder="Company Inc. LTD. | John Doe" value="">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-database-host">DB Host</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" id="i-database-host" name="i-database-host"
-                                           class="form-control opacity-50" placeholder="localhost | 127.0.0.1" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-database-user">DB User</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" id="i-database-user" name="i-database-user"
-                                           class="form-control opacity-50" placeholder="root" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="i-database-password">DB Password</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="password" id="i-database-password" name="i-database-password"
-                                           class="form-control opacity-50" placeholder="********" value=""
-                                           autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 offset-6 mb-3">
-                            <div class="password-meter">
-                                <div class="meter-section rounded me-2"></div>
-                                <div class="meter-section rounded me-2"></div>
-                                <div class="meter-section rounded me-2"></div>
-                                <div class="meter-section rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 d-grid gap-2 d-block">
-                            <button type="button" name="test-bd-connection" class="btn btn-primary mb-2">Test Database
-                                Connection
-                            </button>
-                            <input type="hidden" name="test-bd-connection-result" value="false">
-                        </div>
-                        <div class="col-6">
-                            <div id="a-database-con1-connection-error"
-                                 class="alert alert-danger alert-dismissible hide mb-3">
-                                <b>Error!!!</b>
+                            <div id="a-company-name" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
                                 <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                             </div>
-                            <div id="a-database-con1-connection-success"
-                                 class="alert alert-success alert-dismissible hide mb-3">
-                                <b>Success!!!</b>
-                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> It is important to define the name of the company or individual
+                                person that
+                                implements this system, since this information must generally appear in
+                                documents
+                                that you generate officially.
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-company-name" type="button" class="btn btn-theme">Save This</button>
+                        </div>
                     </div>
-                    <div id="a-database-con1-config" class="alert alert-danger alert-dismissible hide mb-3">
-                        <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a minimum
-                        value of 1 hour.
-                        <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                    </div>
-                    <div class="alert bg-body">
-                        <b>Please note:</b> In this section we are going to configure our connection to our database so
-                        that the system can establish the minimum structures necessary for its
-                        configuration.<br><br>
-
-                        Keep in mind that the password field has minimum requirements:<br>
-                        - Use 8 or more characters.<br>
-                        - with a mix of letters, numbers & symbols.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button name="b-save-database-con1" type="button" class="btn btn-theme">Save changes</button>
                 </div>
             </div>
-        </div>
-    </div>
-</form>
 
-<script defer data-cfasync="false" src="assets/js/email-decode.min.js" type="text/javascript"></script>
-<script defer src="assets/js/vendor.min.js" type="text/javascript"></script>
-<script defer src="assets/js/app.min.js" type="text/javascript"></script>
-<script defer src="assets/js/iconify.min.js" type="text/javascript"></script>
-<script defer src="assets/js/plugins/sweetalert2.all.min.js" type="text/javascript"></script>
-<script defer src="assets/js/axios.min.js" type="text/javascript"></script>
-<script defer src="assets/js/installer.js" type="text/javascript"></script>
+            <div class="modal fade" id="modal-company-owner">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Company Owner or Individual</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="i-company-owner">Set the Name</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input id="i-company-owner" name="i-company-owner"
+                                               class="form-control opacity-50"
+                                               placeholder="Company Inc. LTD. | John Doe" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="a-company-owner" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> It is important to define the name of the company owner or
+                                individual person
+                                that implements this system, since this information must generally appear in
+                                documents that you generate officially.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-company-owner" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-project-name">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit the Project Name</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="i-project-name">Set the Project Name</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input id="i-project-name" name="i-project-name" class="form-control opacity-50"
+                                               placeholder="Last Hammer Framework" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="a-project-name" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> Here we must define the project name for this system, since this
+                                information
+                                should generally appear in documents that you officially generate and in the
+                                title/description
+                                of the page/hml.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-project-name" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-license">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit License </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row align-items-center mb-3">
+                                <label class="form-label" for="i-license">Set the License Key for support
+                                    service</label>
+                                <div class="col-12">
+
+                                    <div class="input-group mb-10px">
+                                        <input type="text" id="i-license" name="i-license" class="form-control"
+                                               placeholder="1234-ABCD-1234-ABCD" value="FREE-FREE-FREE-FREE"
+                                               readonly>
+                                        <div class="input-group-text">
+                                            <input name="free-license" type="hidden"/>
+                                            <label for="free-license"></label>
+                                            <input id="free-license" name="free-license" type="checkbox"
+                                                   class="form-check-input" checked>
+                                        </div>
+                                        <span class="input-group-text">Check for Free</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="a-license" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> You cannot keep this field empty, validate entering correct and real data.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div id="a-license2" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> License error, license must be 19 characters long, example:
+                                1234-ABCD-1234-ABCD.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> You do not need a License, unless you directly require integration
+                                support
+                                or specialized training in implementations.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-license" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-lang">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Language</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="i-lang">Set the default Language</label>
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <select class="form-select" name="i-lang" id="i-lang">
+                                            <option value="en" selected>English (default)</option>
+                                            <option value="es">Español</option>
+                                            <option value="fr">Française</option>
+                                            <option value="de">Deutsch</option>
+                                            <option value="zh">中國人</option>
+                                            <option value="hi">हिंदी</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="multi-language" type="hidden"/>
+                                            <input class="form-check-input" id="multi-language" name="multi-language"
+                                                   type="checkbox" checked/>
+                                            <label class="form-check-label" for="multi-language">Enable
+                                                multi-language</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b>
+                                <p> The default language of the platform is English. Please note
+                                    that the system includes by default the dictionaries of the languages selected for
+                                    the platform and the administration system. You must decide if you want to support
+                                    multiple languages at this time. Also consider that you should implement the
+                                    template and dictionary system to expand the capabilities of using multiple
+                                    languages, as well as including new languages.</p>
+                                <p class="mb-0"> The default language of the platform will be used as a last resort, the
+                                    priority in Language detection is as follows:<br>
+                                    1. Language set by end user as default.<br>
+                                    2. language detected on the end user's operating system.<br>
+                                    3. language set by default on the platform.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-lang" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-entry-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Page/View for Users </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="i-entry">Set the Default Page/View for Users</label>
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <select class="form-select" id="i-entry" name="i-entry">
+                                            <option value="User-Access" selected>Login (Default)</option>
+                                            <option value="Dashboard">Dashboard</option>
+                                            <option value="Store">Store</option>
+                                            <option value="Home">Home</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b>
+                                <p> It is important to establish a home or entry page by placing one of these by
+                                    default, it
+                                    will make it easier for users to understand the main purpose of this application or
+                                    site.</p>
+                                <p class="mb-0">Keep in mind that if you select Dashboard, Home or Store, you will need
+                                    to
+                                    develop its content unlike the other entry points.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-entry" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-session-life-time">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Set Time for Session</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-session-lifetime-days">Days</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="number" id="i-session-lifetime-days"
+                                                   name="i-session-lifetime-days"
+                                                   class="form-control opacity-50" placeholder="30" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-session-lifetime-hours">Hours</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="number" id="i-session-lifetime-hours"
+                                                   name="i-session-lifetime-hours"
+                                                   class="form-control opacity-50" placeholder="24" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="a-session-lifetime" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a
+                                minimum
+                                value of 1 hour.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> Now it's time to set the duration of the default session started,
+                                this is
+                                mainly for browser data in general. all values will be recalculated and converted
+                                to
+                                seconds. the minimum value is 1 hour.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-lifetime" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-session-activity-expire">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Set Time for Session</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-session-activity-expire-days">Days</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="number" id="i-session-activity-expire-days"
+                                                   name="i-session-activity-expire-days" class="form-control opacity-50"
+                                                   placeholder="30" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-session-activity-expire-hours">Hours</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="number" id="i-session-activity-expire-hours"
+                                                   name="i-session-activity-expire-hours"
+                                                   class="form-control opacity-50"
+                                                   placeholder="24" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="a-session-activity-expire" class="alert alert-danger alert-dismissible hide mb-3">
+                                <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or have a
+                                minimum
+                                value of 1 hour.
+                                <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
+                            </div>
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b> Now it's time to set the duration of the default session activity,
+                                this is
+                                mainly for user data in general. all values will be recalculated and converted to
+                                seconds. the minimum value is 1 hour.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-save-activity-expire" type="button" class="btn btn-theme">Save This</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-add-email">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New E-Mail Client Sender</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-name">Name</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-name" name="i-mail-name"
+                                                   class="form-control opacity-50" placeholder="Google Sender" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-host">Host</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-host" name="i-mail-name"
+                                                   class="form-control opacity-50" placeholder="smtp.gmail.com"
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-port">Port</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="number" id="i-mail-port" name="i-mail-port"
+                                                   class="form-control opacity-50" placeholder="587" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-user">User</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-user" name="i-mail-user"
+                                                   class="form-control opacity-50" placeholder="fulanito_73" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-password">Password</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-password"
+                                                   name="i-mail-password" class="form-control opacity-50"
+                                                   placeholder="************" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-re-password">Re-Password</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-re-password"
+                                                   name="i-mail-password" class="form-control opacity-50"
+                                                   placeholder="************" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-default">Default (support e-mail)</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-default"
+                                                   name="i-mail-default" class="form-control opacity-50"
+                                                   placeholder="support@host.com::Name"
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-prefix">Prefix on Subject (default all
+                                        e-mail)</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" id="i-mail-prefix"
+                                                   name="i-mail-prefix" class="form-control opacity-50"
+                                                   placeholder="[TEST]"
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="i-mail-protocol">Select Protocol</label>
+                                    <select class="form-select" name="i-mail-protocol" id="i-mail-protocol">
+                                        <option value="tls" selected>TLS</option>
+                                        <option value="ssl">SSL</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="form-label" for="i-mail-auth">Authentication</label>
+                                            <div class="form-check form-switch form-check-inline">
+                                                <input name="i-mail-auth" type="hidden"/>
+                                                <input class="form-check-input" type="checkbox" id="i-mail-auth"
+                                                       name="i-mail-auth" checked="">
+                                                <label class="form-check-label" for="i-mail-auth"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="form-label" for="i-mail-debug">Debug</label>
+                                            <div class="form-check form-switch form-check-inline">
+                                                <input name="i-mail-debug" type="hidden"/>
+                                                <input class="form-check-input" type="checkbox" id="i-mail-debug"
+                                                       name="i-mail-debug" checked="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="form-label" for="i-mail-test">Test</label>
+                                            <div class="form-check form-switch form-check-inline">
+                                                <input name="i-mail-test" type="hidden"/>
+                                                <input class="form-check-input" type="checkbox" id="i-mail-test"
+                                                       name="i-mail-test" checked="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="alert bg-body font-monospace">
+                                <b>Please note:</b>
+                                <p>Now it's time to configure our email sending system, here you can add a configuration
+                                    and run tests.</p>
+                                <p>This is mainly for sending notifications or any use you want to give it within your
+                                    development.</p>
+                                <p>Also keep in mind that some email platforms require a different configuration than
+                                    this.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <button name="b-add-mail" type="button" class="btn btn-theme">Add This Sender</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div id="footer" class="app-footer m-0">
+            &copy; 2024 Icaros Net - All Rights Reserved
+            <span class="pull-right">
+                <a href="#" class="btn-scroll-to-top" data-click="scroll-top">
+                    <i class="fa fa-arrow-up"></i> <span class="hidden-xs">Back to Top</span>
+                </a>
+            </span>
+        </div>
+
+    </div>
+
+    <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top" data-toggle="scroll-to-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+</div>
+
+<script defer type="text/javascript" src="assets/plugins/datepickk/dist/datepickk.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/gritter/js/jquery.gritter.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.canvaswrapper.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.colorhelpers.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.saturated.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.browser.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.drawSeries.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.uiConstants.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.time.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.resize.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.pie.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.crosshair.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.categories.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.navigate.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.touchNavigate.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.hover.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.touch.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.selection.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.symbol.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.legend.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/d3/d3.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/nvd3/build/nv.d3.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jvectormap-next/jquery-jvectormap.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jvectormap-content/world-mill.js"></script>
+<script defer type="text/javascript" src="assets/plugins/apexcharts/dist/apexcharts.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/moment/min/moment.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script defer type="text/javascript"
+        src="assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/tag-it/js/tag-it.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/summernote/dist/summernote-lite.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/clipboard/dist/clipboard.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/highlightjs/cdn-assets/highlight.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/iconify-icon/iconify.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jstree/dist/jstree.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/intro.js/minified/intro.min.js"></script>
+
+<script defer type="text/javascript" src="assets/plugins/select2/dist/js/select2.min.js"></script>
+<script defer type="text/javascript"
+        src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery.maskedinput/src/jquery.maskedinput.js"></script>
+<script defer type="text/javascript" src="assets/plugins/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/select-picker/dist/picker.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/switchery/dist/switchery.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/abpetkov-powerange/dist/powerange.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<script defer type="text/javascript" src="assets/js/run/axios.min.js"></script>
+
+<script type="text/javascript" src="assets/js/theme/vendor.min.js"></script>
+<script type="text/javascript" src="assets/js/theme/app.min.js"></script>
+
+<!--<script type="text/javascript" src="assets/js/installer.js"></script> -->
+<script type="module" src="assets/js/common.js"></script>
+
+<!--<script type="text/javascript" src="assets/js/bk/rocket-loader.min.js"></script>-->
 
 </body>
 </html>

@@ -29,7 +29,7 @@ use Repository\Default\{
     Dashboard as Dashboard,
     Help as Help,
     Home as Home,
-    Notfound as Notfound,
+    NotFound as NotFound,
     PrivacyPolicies as PrivacyPolicies,
     Product as Product,
     Services as Services,
@@ -107,10 +107,9 @@ class RouteDictionaryController
     {
         return match (mb_strtolower($this->getPath())) {
             '/home' => Home\Back\Main::getInstance(),
-            '/notfound' => NotFound\Back\Main::getInstance(),
-
-            /*
             '/user-access' => UserAccess\Back\Main::getInstance(),
+            /*
+
             '/user-logout' => UserLogout\Back\Main::getInstance(),
             '/user-activation' => UserActivation\Back\Main::getInstance(),
             '/dashboard' => Dashboard\Back\Main::getInstance(),
@@ -122,10 +121,11 @@ class RouteDictionaryController
             '/product' => Product\Back\Main::getInstance(),
             '/services' => Services\Back\Main::getInstance(),
             */
+
             '/admin' => Admin\Back\Main::getInstance(),
             '/demo1' => Demo1\Back\Main::getInstance(),
             '/demo2' => Demo2\Back\Main::getInstance(),
-            //default => Notfound\Back\Main::getInstance(),
+            default => NotFound\Back\Main::getInstance(),
         };
     }
 
