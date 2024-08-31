@@ -2,7 +2,7 @@ import {HandlerUtilities} from "./handler-utilities.js";
 
 export class HandlerConsoleOutput {
 
-    constructor(length = 40) {
+    constructor(length = 10) {
         this.length = length;
     }
 
@@ -21,7 +21,7 @@ export class HandlerConsoleOutput {
     async defaultMGS(select, text = "Message not set", error = null) {
 
         const messages = {
-            'init': async () => await this.out("Welcome to Last Hammer System. \n If you see this message it is located in the browser's command console.", 1),
+            'init': async () => await this.out("Welcome to Last Hammer.\n  If you see this message it is located in the browser's command console.", 1),
             'loader': async () => await this.out(this.formatMessage(text, '> Starting'), 2),
             'end-loader': async () => await this.out(this.formatMessage(text, '> Loaded!!!'), 2),
             'error': async () => await this.out(this.formatError(text, error), 3),
@@ -41,7 +41,7 @@ export class HandlerConsoleOutput {
     }
 
     formatMessage(text, suffix) {
-        return text + '\n' + HandlerUtilities.padRightWithDashes(' ', this.length) + suffix;
+        return text + '\n ' + HandlerUtilities.padRightWithDashes(' ', this.length) + suffix;
     }
 
     formatError(text, error) {

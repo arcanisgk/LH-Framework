@@ -27,5 +27,21 @@ export class HandlerUtilities {
 
         return array;
     }
+
+    static findModalParent(target) {
+
+        const panelBody = target.closest('.panel-body');
+        if (panelBody.length > 0) {
+            return {target: panelBody, length: 1};
+        }
+
+        const modalBody = target.closest('.modal-body');
+        if (modalBody.length > 0) {
+            return {target: target.parents('.modal-body'), length: 1};
+        }
+
+        return {length: 0};
+    }
+
 }
 
