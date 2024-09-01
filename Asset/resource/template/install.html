@@ -171,6 +171,7 @@
                                                 <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
                                                 <input id="license" name="json-license" class="form-control-plaintext"
                                                        type="text" value="FREE-FREE-FREE-FREE" readonly required/>
+                                                <input name="json-chk-license" type="hidden" value=""/>
                                             </div>
                                         </div>
                                         <div class="w-125px">
@@ -572,6 +573,7 @@
 
             <form>
 
+                
                 <div class="modal fade" id="modal-company-name">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -591,8 +593,8 @@
                                     </div>
                                 </div>
                                 <div id="a-company-name" class="alert alert-danger alert-dismissible hide mb-3">
-                                    <b>Error:</b> You cannot keep this field empty, validate entering correct and real
-                                    data.
+                                    <b>Error:</b> The information provided does not have the minimum expected (8
+                                    characters).
                                     <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                 </div>
                                 <div class="alert bg-body">
@@ -629,8 +631,8 @@
                                     </div>
                                 </div>
                                 <div id="a-company-owner" class="alert alert-danger alert-dismissible hide mb-3">
-                                    <b>Error:</b> You cannot keep this field empty, validate entering correct and real
-                                    data.
+                                    <b>Error:</b> The information provided does not have the minimum expected (8
+                                    characters).
                                     <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                 </div>
                                 <div class="alert bg-body">
@@ -667,8 +669,8 @@
                                     </div>
                                 </div>
                                 <div id="a-project-name" class="alert alert-danger alert-dismissible hide mb-3">
-                                    <b>Error:</b> You cannot keep this field empty, validate entering correct and real
-                                    data.
+                                    <b>Error:</b> The information provided does not have the minimum expected (4
+                                    characters).
                                     <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                 </div>
                                 <div class="alert bg-body">
@@ -705,9 +707,9 @@
                                                    placeholder="1234-ABCD-1234-ABCD" value="FREE-FREE-FREE-FREE"
                                                    readonly>
                                             <div class="input-group-text">
-                                                <input name="free-license" type="hidden"/>
-                                                <label for="free-license"></label>
-                                                <input id="free-license" name="free-license" type="checkbox"
+                                                <input name="chk-license" type="hidden"/>
+                                                <label for="chk-license"></label>
+                                                <input id="chk-license" name="chk-license" type="checkbox"
                                                        class="form-check-input" checked>
                                             </div>
                                             <span class="input-group-text">Check for Free</span>
@@ -715,13 +717,7 @@
                                     </div>
                                 </div>
                                 <div id="a-license" class="alert alert-danger alert-dismissible hide mb-3">
-                                    <b>Error:</b> You cannot keep this field empty, validate entering correct and real
-                                    data.
-                                    <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
-                                </div>
-                                <div id="a-license2" class="alert alert-danger alert-dismissible hide mb-3">
-                                    <b>Error:</b> License error, license must be 19 characters long, example:
-                                    1234-ABCD-1234-ABCD.
+                                    <b>Error:</b> You licence data is wrong, validate entering correct and real data.
                                     <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                 </div>
                                 <div class="alert bg-body">
@@ -1328,6 +1324,7 @@
                         </div>
                     </div>
                 </div>
+
             </form>
         </div>
         <div id="footer" class="app-footer m-0">

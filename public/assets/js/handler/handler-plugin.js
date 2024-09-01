@@ -54,6 +54,7 @@ export class HandlerPlugin {
 
     handlerSpyScroll(elements) {
         elements.forEach(element => {
+
             const target = element.getAttribute('data-spy-target');
             const sections = document.querySelectorAll(`[data-spy-content='${target}'] > div`);
             const navLinks = element.querySelectorAll('a');
