@@ -42,6 +42,21 @@
     background-color: #009900;
 }
 
+.vh-80 {
+    height: calc(80vh - 100px) !important;
+}
+
+
+.blink {
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .app-content-add-right-padding {
         margin-right: 0;

@@ -1,26 +1,43 @@
 DirectoryIndex index.php
 IndexIgnore *
+
+<FilesMatch "^assets/audio/.*\.ogg$">
+    Require all granted
+</FilesMatch>
+
+<IfModule mod_autoindex.c>
+    <FilesMatch "^assets/audio/.*\.ogg$">
+        Options +Indexes
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_negotiation.c>
     Options -MultiViews
 </IfModule>
-<FilesMatch "\.(json|xml|log|txt)$">
+
+<FilesMatch "\.(json|xml|log|txt|html|ogg)$">
     Order Deny,Allow
     Deny from all
     Allow from all
     Satisfy Any
 </FilesMatch>
+
 <FilesMatch "^(code-1|code-2|code-3|code-4|code-5|code-6|code-7|code-8|code-9|code-10|code-11|code-12|code-13|code-14)\.json$">
     Require all granted
 </FilesMatch>
+
 <FilesMatch "(sitemap\.xml|robots\.txt)">
     Require all granted
 </FilesMatch>
+
 <FilesMatch "^(index|setup)\.php$">
     Require all granted
 </FilesMatch>
+
 <Files "assetlinks.json">
     Allow from all
 </Files>
+
 <Files "manifest.json">
     Allow from all
 </Files>
@@ -82,9 +99,11 @@ IndexIgnore *
     AddType text/vtt                                    vtt
     AddType text/x-component                            htc
 </IfModule>
+
 <IfModule mod_mime.c>
   AddDefaultCharset utf-8
 </IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
@@ -93,7 +112,11 @@ IndexIgnore *
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
-    RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json)$ [NC]
+    RewriteCond %{REQUEST_URI} ^/assets/audio/ [NC,OR]
+    RewriteCond %{REQUEST_URI} \.ogg$ [NC]
+    RewriteRule ^ - [L]
+
+    RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json|html|ogg)$ [NC]
     RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
 
     RewriteCond %{DOCUMENT_ROOT}/setup.php -f
@@ -109,8 +132,11 @@ IndexIgnore *
     RewriteCond %{REQUEST_FILENAME} !-l
     RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
+
 php_value display_errors On
+
 php_value date.timezone America/Panama
+
 <IfModule php_module>
     php_value auto_prepend_file "./../Asset/Framework/Error/BugCatcher.php"
 </IfModule>

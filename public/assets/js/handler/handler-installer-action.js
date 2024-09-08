@@ -1,7 +1,22 @@
+/**
+ * Last Hammer Framework 2.0
+ * JavaScript Version (ES6+).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 import {HandlerDOM} from "./handler-dom.js";
 
 export class HandlerInstallerAction {
     static processSaveAction(values, fields, config) {
+
         fields.forEach(field => {
             const jsonInput = document.querySelector(`input[name='${field.jsonInputName}']`);
             if (jsonInput) {
@@ -15,25 +30,61 @@ export class HandlerInstallerAction {
         }
     }
 
-    static processAddAction(values, config) {
+    static processAddAction(values, fields, config) {
         if (!config || !config.targetElement) return;
 
-        const {targetElement, separator = ',', onAdd} = config;
-        const newValue = Object.values(values).join(separator);
+        const container = document.getElementById(config.container);
+        if (!container) return;
 
-        const targetInput = document.querySelector(targetElement);
-        if (targetInput) {
-            if (targetInput.value) {
-                targetInput.value += '\n' + newValue;
-            } else {
-                targetInput.value = newValue;
+        const uniqueId = Date.now();
+        const configType = config.targetElement.replace('json-', '').replace('[]', '');
+        //const label = `${configType.charAt(0).toUpperCase() + configType.slice(1)} Configuration`;
+
+        let name = '';
+        const configValue = fields.map(field => {
+            if (field.password) {
+                return '***';
             }
-        } else {
-            HandlerDOM.createNewTextArea(targetElement, newValue);
+            if ('principal' in field && field.principal) {
+                name = values[field.inputSettingName];
+            }
+            return values[field.inputSettingName];
+        }).join(',');
+
+        const newItem = document.createElement('div');
+        newItem.className = 'list-group-item d-flex align-items-center';
+        newItem.innerHTML = `
+            <div class="flex-fill">
+                <label for="${configType}-info-${uniqueId}">${config.label}: ${name}</label>
+                <div class="text-body text-opacity-60 d-flex align-items-center">
+                    <i class="fa fa-circle fs-6px mt-1px fa-fw text-success me-2"></i>
+                    <input id="${configType}-info-${uniqueId}" name="${config.targetElement}[]" class="form-control-plaintext text-truncate" type="text" value="${configValue}" readonly/>
+                </div>
+            </div>
+            <div class="w-125px">
+                <a href="#${config.editModalId}" data-bs-toggle="modal" class="btn btn-secondary w-125px">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                </a>
+            </div>
+        `;
+
+        const passwordFields = fields.filter(field => field.password);
+        passwordFields.forEach(field => {
+            const passwordInput = document.createElement('input');
+            passwordInput.type = 'hidden';
+            passwordInput.name = `${config.targetElement.replace('[]', '')}-password[]`;
+            passwordInput.value = values[field.inputSettingName];
+            newItem.appendChild(passwordInput);
+        });
+
+        container.appendChild(newItem);
+
+        if (config && config.onAdd) {
+            config.onAdd(values);
         }
 
-        if (onAdd) {
-            onAdd(values, newValue);
-        }
+
     }
+
+
 }

@@ -1,21 +1,39 @@
-import {LoadExternalScripts} from "./loader-script.js";
+/**
+ * Last Hammer Framework 2.0
+ * JavaScript Version (ES6+).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 import {ControllerUI} from "./controller-ui.js";
 import {HandlerConsoleOutput} from "./handler/handler-console-output.js";
 import {HandlerGlobalSetting} from "./handler/handler-global-setting.js";
 import {HandlerInstaller} from "./handler/handler-installer.js";
 
 
-async function initializeApplication() {
+/**
+ * Initializes the application
+ *
+ * @return {Promise<void>}
+ */
+async function initApp() {
     try {
         await HandlerConsoleOutput.defaultMGS('init');
-        await (new LoadExternalScripts()).loadScriptInit();
-        HandlerGlobalSetting.Init();
+
+        await HandlerGlobalSetting.init();
+
         const controllerUI = new ControllerUI();
         await controllerUI.initializeUI();
 
-        await (new HandlerInstaller()).Init();
-
-        //await HandlerConsoleOutput.debugOut(HandlerGlobalSetting.getAllSettings());
+        const handlerInstaller = new HandlerInstaller();
+        await handlerInstaller.init();
 
     } catch (error) {
         await HandlerConsoleOutput.defaultMGS('error', 'Deploy Interfaces', error);
@@ -23,7 +41,7 @@ async function initializeApplication() {
 }
 
 if (document.readyState !== 'loading') {
-    await initializeApplication();
+    await initApp();
 } else {
-    document.addEventListener('DOMContentLoaded', initializeApplication);
+    document.addEventListener('DOMContentLoaded', initApp);
 }

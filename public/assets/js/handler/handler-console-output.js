@@ -1,16 +1,44 @@
+/**
+ * Last Hammer Framework 2.0
+ * JavaScript Version (ES6+).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 import {HandlerUtilities} from "./handler-utilities.js";
 
 export class HandlerConsoleOutput {
 
+    /**
+     * Constructor for HandlerConsoleOutput
+     * @param {number} length - The length of the output
+     */
     constructor(length = 10) {
         this.length = length;
     }
 
+    /**
+     * Static method to create a new instance and call debugOut
+     * @param {*} args - The arguments to pass to debugOut
+     * @returns {Promise<void>}
+     */
     static async debugOut(args) {
         const instance = new HandlerConsoleOutput();
         await instance.debugOut(args);
     }
 
+    /**
+     * Debug output method
+     * @param {*} args - The arguments to output
+     * @returns {Promise<void>}
+     */
     async debugOut(args) {
         console.group('LH Javascript Debug Interface');
         await this.out(this.variableAnalyzer(args), 2);
@@ -18,6 +46,13 @@ export class HandlerConsoleOutput {
         console.groupEnd();
     }
 
+    /**
+     * Default message output method
+     * @param {string} select - The type of message to output
+     * @param {string} text - The text to output
+     * @param {*} error - The error to output
+     * @returns {Promise<void>}
+     */
     async defaultMGS(select, text = "Message not set", error = null) {
 
         const messages = {
@@ -35,24 +70,49 @@ export class HandlerConsoleOutput {
 
     }
 
+    /**
+     * Static method to create a new instance and call defaultMGS
+     * @param {string} select - The type of message to output
+     * @param {string} text - The text to output
+     * @param {*} error - The error to output
+     * @returns {Promise<void>}
+     */
     static async defaultMGS(select, text = "Message not set", error = null) {
         const instance = new HandlerConsoleOutput();
         await instance.defaultMGS(select, text, error);
     }
 
+    /**
+     * Format a message with a suffix
+     * @param {string} text - The text to format
+     * @param {string} suffix - The suffix to add
+     * @returns {string}
+     */
     formatMessage(text, suffix) {
         return text + '\n ' + HandlerUtilities.padRightWithDashes(' ', this.length) + suffix;
     }
 
+    /**
+     * Format an error message
+     * @param {string} text - The text to format
+     * @param {*} error - The error to format
+     * @returns {string}
+     */
     formatError(text, error) {
         let errorMessage = `${text}\nDetail: Error: not defined`;
         if (error) {
             const details = error.stack || 'No stack trace available';
             errorMessage = `${text}\n ${details}`;
         }
-        return 'Error: ' + errorMessage;
+        return `Error: ${errorMessage}`;
     }
 
+    /**
+     * Output a message
+     * @param {string} msg - The message to output
+     * @param {number|string} type - The type of output
+     * @returns {Promise<void>}
+     */
     async out(msg, type) {
         if (['log', 'info', 'warn', 'error'].includes(type) && typeof console[type] === 'function') {
             console[type](msg);
@@ -63,6 +123,12 @@ export class HandlerConsoleOutput {
         }
     }
 
+    /**
+     * Custom output method
+     * @param {string} msg - The message to output
+     * @param {number} type - The type of output
+     * @returns {Promise<void>}
+     */
     async customOutput(msg, type) {
 
         let host = window.location.origin;
@@ -126,11 +192,16 @@ export class HandlerConsoleOutput {
         }
     }
 
+    /**
+     * Analyze a variable
+     * @param {*} value - The value to analyze
+     * @returns {string}
+     */
     variableAnalyzer(value) {
         const type = typeof value;
 
         const formatters = {
-            'object': (val) => {
+            object: (val) => {
 
                 if (val === null) {
                     return null;
@@ -150,12 +221,12 @@ export class HandlerConsoleOutput {
 
                 return 'unknown type';
             },
-            'function': (val) => `Function: ${val.toString()}`,
-            'symbol': (val) => `Symbol: ${val.toString()}`,
-            'undefined': () => "undefined",
-            'string': (val) => `string: ${val}`,
-            'number': (val) => `number: ${val}`,
-            'boolean': (val) => `boolean: ${val}`,
+            function: (val) => `Function: ${val.toString()}`,
+            symbol: (val) => `Symbol: ${val.toString()}`,
+            undefined: () => "undefined",
+            string: (val) => `string: ${val}`,
+            number: (val) => `number: ${val}`,
+            boolean: (val) => `boolean: ${val}`,
         };
 
         const formatter = formatters[type] || ((val) => `${type}: ${val}`);
@@ -163,3 +234,5 @@ export class HandlerConsoleOutput {
 
     }
 }
+
+export default HandlerConsoleOutput;

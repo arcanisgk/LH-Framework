@@ -60,6 +60,17 @@
                 <b class="me-3px"> Last Hammer </b> Framework
             </a>
         </div>
+        <div class="navbar-nav">
+            <div class="navbar-item me-3">
+                <a href="#modal-error-view" class="navbar-link d-flex align-items-center me-3 fs-3"
+                   data-bs-toggle="modal">
+                    Error Viewer <i class="fa-solid fa-circle-exclamation fs-3 ms-2"></i>
+
+                </a>
+            </div>
+        </div>
+
+
     </div>
 
     <div id="content" class="app-content app-content-add-right-padding d-flex flex-column p-0">
@@ -311,10 +322,14 @@
                                     <div class="list-group-item d-flex align-items-center">
 
                                         <div class="flex-fill">
-                                            <label for="session-lifetime">Session Life Time</label>
+                                            <label for="session-lifetime-days">Session Life Time</label>
+                                            <label for="session-lifetime-hours"></label>
                                             <div class="text-body text-opacity-60 d-flex align-items-center">
                                                 <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <input id="session-lifetime" name="json-session-lifetime"
+                                                <input id="session-lifetime-days" name="json-session-lifetime-days"
+                                                       class="form-control-plaintext" type="text" value="Click on Edit"
+                                                       readonly required/>
+                                                <input id="session-lifetime-hours" name="json-session-lifetime-hours"
                                                        class="form-control-plaintext" type="text" value="Click on Edit"
                                                        readonly required/>
                                             </div>
@@ -331,12 +346,20 @@
                                     <div class="list-group-item d-flex align-items-center">
 
                                         <div class="flex-fill">
-                                            <label for="session-activity-expire">Session Activity Expire</label>
+                                            <label for="session-activity-expire-days">Session Activity Expire</label>
+                                            <label for="session-activity-expire-hours"></label>
                                             <div class="text-body text-opacity-60 d-flex align-items-center">
                                                 <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <input id="session-activity-expire" name="json-session-activity-expire"
+                                                <input id="session-activity-expire-days"
+                                                       name="json-session-activity-expire-days"
                                                        class="form-control-plaintext" type="text" value="Click on Edit"
                                                        readonly required/>
+                                                <input id="session-activity-expire-hours"
+                                                       name="json-session-activity-expire-hours"
+                                                       class="form-control-plaintext" type="text" value="Click on Edit"
+                                                       readonly required/>
+
+
                                             </div>
                                         </div>
 
@@ -425,6 +448,7 @@
                             <div class="card">
                                 <div class="list-group list-group-flush fw-bold" id="email-content">
 
+
                                 </div>
                             </div>
 
@@ -473,54 +497,6 @@
 
                                 </div>
 
-                                <!--
-                                <div class="list-group list-group-flush fw-bold">
-                                    <div class="list-group-item d-flex align-items-center">
-                                        <div class="flex-fill">
-
-                                            <label for="database-con1-db-name">Connection #1</label>
-
-                                            <div class="text-body text-opacity-60 d-flex align-items-center">
-                                                <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <input id="database-con1-db-name" name="json-database-con1-db-name"
-                                                       class="form-control-plaintext" type="text" value="Click on Edit"
-                                                       readonly required/>
-                                            </div>
-
-                                            <div class="text-body text-opacity-60 d-flex align-items-center mt-1 mb-1">
-                                                <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <label for="database-con1-db-host"></label>
-                                                <input id="database-con1-db-host" name="json-database-con1-db-host"
-                                                       class="form-control-plaintext" type="text" value="Click on Edit"
-                                                       readonly required/>
-                                            </div>
-
-                                            <div class="text-body text-opacity-60 d-flex align-items-center mt-1  mb-1">
-                                                <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <label for="database-con1-db-user"></label>
-                                                <input id="database-con1-db-user" name="json-database-con1-db-user"
-                                                       class="form-control-plaintext" type="text" value="Click on Edit"
-                                                       readonly required/>
-                                            </div>
-
-                                            <div class="text-body text-opacity-60 d-flex align-items-center mt-1">
-                                                <i class="fa fa-circle fs-6px mt-1px fa-fw text-body text-opacity-25 me-2"></i>
-                                                <label for="database-con1-db-pass"></label>
-                                                <input id="database-con1-db-pass" name="json-database-con1-db-pass"
-                                                       class="form-control-plaintext" type="password" value=""
-                                                       autocomplete="off" placeholder="*******" readonly required/>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="w-125px">
-                                            <a href="#modal-database" data-bs-toggle="modal"
-                                               class="btn btn-secondary w-125px"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                -->
                             </div>
                         </div>
 
@@ -539,19 +515,7 @@
 
                                     <div class="list-group-item d-flex align-items-center">
                                         <div class="flex-fill">
-                                            <div>(Step: #1) Validate Settings</div>
-                                            <div class="text-body text-opacity-60">
-                                                This action will validate all the current system setting.
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn btn-outline-green w-125px">Validate</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="list-group-item d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div>(Step: #2) Save Settings</div>
+                                            <div>Save Settings</div>
                                             <div class="text-body text-opacity-60">
                                                 This action will save all the current system setting.
                                             </div>
@@ -568,12 +532,8 @@
 
                     </div>
                 </div>
-            </form>
 
 
-            <form>
-
-                
                 <div class="modal fade" id="modal-company-name">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -867,7 +827,8 @@
                                 <div class="alert bg-body">
                                     <b>Please note:</b> Now it's time to set the duration of the default session
                                     started, this is mainly for browser data in general. all values will be recalculated
-                                    and converted to seconds. the minimum value is 1 hour.
+                                    and converted to seconds. the minimum value is 1 hour, if you choose use days it
+                                    will override hours.
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -932,7 +893,7 @@
                 </div>
 
                 <div class="modal fade" id="modal-add-email">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Add New E-Mail Client Sender</h5>
@@ -948,7 +909,13 @@
                                             <div class="col-12">
                                                 <input type="text" id="i-mail-name" name="i-mail-name"
                                                        class="form-control opacity-50" placeholder="Google Sender"
-                                                       value="">
+                                                       value="Google Sender">
+                                            </div>
+                                            <div id="a-mail-name"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection name must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -957,9 +924,15 @@
                                         <label class="form-label" for="i-mail-host">Host</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-mail-host" name="i-mail-name"
+                                                <input type="text" id="i-mail-host" name="i-mail-host"
                                                        class="form-control opacity-50" placeholder="smtp.gmail.com"
-                                                       value="">
+                                                       value="smtp.gmail.com">
+                                            </div>
+                                            <div id="a-mail-host"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The host connecting to the mail system is not correct.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -973,7 +946,13 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <input type="number" id="i-mail-port" name="i-mail-port"
-                                                       class="form-control opacity-50" placeholder="587" value="">
+                                                       class="form-control opacity-50" placeholder="587" value="587">
+                                            </div>
+                                            <div id="a-mail-port"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> Please enter a connection to the correct email system.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -984,7 +963,13 @@
                                             <div class="col-12">
                                                 <input type="text" id="i-mail-user" name="i-mail-user"
                                                        class="form-control opacity-50" placeholder="fulanito_73"
-                                                       value="">
+                                                       value="fulanito_73">
+                                            </div>
+                                            <div id="a-mail-user"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> You must enter a username for the email system.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -997,9 +982,24 @@
                                         <label class="form-label" for="i-mail-password">Password</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-mail-password"
-                                                       name="i-mail-password" class="form-control opacity-50"
-                                                       placeholder="************" value="">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-mail-password"
+                                                           name="i-mail-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-mail-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password does not meet the minimum requirements.<br>
+                                                Must contain at least one of the following symbols: ".@*_"<br>
+                                                Must contain at least one uppercase letter<br>
+                                                Must contain at least one lowercase letter<br>
+                                                Must contain at least one number<br>
+                                                Must be at least 13 characters long<br>
+                                                <button type="button" class="btn-close"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1008,9 +1008,19 @@
                                         <label class="form-label" for="i-mail-re-password">Re-Password</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-mail-re-password"
-                                                       name="i-mail-password" class="form-control opacity-50"
-                                                       placeholder="************" value="">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-mail-re-password"
+                                                           name="i-mail-re-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-mail-re-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password is not identical to the previous one.
+                                                <button type="button" class="btn-close"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1026,7 +1036,14 @@
                                                 <input type="text" id="i-mail-default"
                                                        name="i-mail-default" class="form-control opacity-50"
                                                        placeholder="support@host.com::Name"
-                                                       value="">
+                                                       value="icarosnet@gmail.com::wnunez">
+                                            </div>
+                                            <div id="a-mail-default"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> We recommend using a real email name for sending email by
+                                                default.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1039,7 +1056,7 @@
                                                 <input type="text" id="i-mail-prefix"
                                                        name="i-mail-prefix" class="form-control opacity-50"
                                                        placeholder="[TEST]"
-                                                       value="">
+                                                       value="[TEST]">
                                             </div>
                                         </div>
                                     </div>
@@ -1056,7 +1073,13 @@
                                             <option value="ssl">SSL</option>
                                         </select>
                                     </div>
-
+                                    <div id="a-mail-protocol"
+                                         class="col-6 alert alert-danger alert-dismissible hide mb-3">
+                                        <b>Error:</b> It is vitally important to choose a protocol, make sure it is
+                                        correct.
+                                        <button type="button"
+                                                class="btn btn-sm btn-close remove-shadow"></button>
+                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-4">
@@ -1105,7 +1128,7 @@
                 </div>
 
                 <div class="modal fade" id="modal-add-ftp">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Add FTP Connection</h5>
@@ -1115,13 +1138,21 @@
 
                                 <div class="row">
 
+
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="i-ftp-name">Name</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-ftp-name" name="i-ftp-name"
-                                                       class="form-control opacity-50" placeholder="FTP Local"
-                                                       value="">
+                                                <input type="text" id="i-ftp-name"
+                                                       name="i-ftp-name" class="form-control opacity-50"
+                                                       placeholder="FTP Local"
+                                                       value="FTP Local">
+                                            </div>
+                                            <div id="a-ftp-name"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection name must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1130,9 +1161,16 @@
                                         <label class="form-label" for="i-ftp-host">Host</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-ftp-host" name="i-ftp-host"
-                                                       class="form-control opacity-50" placeholder="127.0.0.1"
-                                                       value="">
+                                                <input type="text" id="i-ftp-host"
+                                                       name="i-ftp-host" class="form-control opacity-50"
+                                                       placeholder="127.0.0.1"
+                                                       value="127.0.0.1">
+                                            </div>
+                                            <div id="a-ftp-host"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection Host must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1145,8 +1183,16 @@
                                         <label class="form-label" for="i-ftp-port">Port</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="number" id="i-ftp-port" name="i-ftp-port"
-                                                       class="form-control opacity-50" placeholder="21" value="">
+                                                <input type="text" id="i-ftp-port"
+                                                       name="i-ftp-port" class="form-control opacity-50"
+                                                       placeholder="21"
+                                                       value="21">
+                                            </div>
+                                            <div id="a-ftp-port"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection Port must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1155,12 +1201,20 @@
                                         <label class="form-label" for="i-ftp-user">User</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-ftp-user" name="i-ftp-user"
-                                                       class="form-control opacity-50" placeholder="fulanito_73"
-                                                       value="">
+                                                <input type="text" id="i-ftp-user"
+                                                       name="i-ftp-user" class="form-control opacity-50"
+                                                       placeholder="fulanito_73"
+                                                       value="fulanito_73">
+                                            </div>
+                                            <div id="a-ftp-user"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection User must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
+
 
                                 </div>
 
@@ -1170,9 +1224,24 @@
                                         <label class="form-label" for="i-ftp-password">Password</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-ftp-password"
-                                                       name="i-ftp-password" class="form-control opacity-50"
-                                                       placeholder="************" value="">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-ftp-password"
+                                                           name="i-ftp-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-ftp-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password does not meet the minimum requirements.<br>
+                                                Must contain at least one of the following symbols: ".@*_"<br>
+                                                Must contain at least one uppercase letter<br>
+                                                Must contain at least one lowercase letter<br>
+                                                Must contain at least one number<br>
+                                                Must be at least 13 characters long<br>
+                                                <button type="button" class="btn-close"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1181,9 +1250,19 @@
                                         <label class="form-label" for="i-ftp-re-password">Re-Password</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-ftp-re-password"
-                                                       name="i-ftp-re-password" class="form-control opacity-50"
-                                                       placeholder="************" value="">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-ftp-re-password"
+                                                           name="i-ftp-re-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-ftp-re-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password is not identical to the previous one.
+                                                <button type="button" class="btn-close"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -1192,6 +1271,7 @@
 
                                 <div class="row">
 
+
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="i-ftp-path">Default Path (On Server)</label>
                                         <div class="row">
@@ -1199,18 +1279,39 @@
                                                 <input type="text" id="i-ftp-path"
                                                        name="i-ftp-path" class="form-control opacity-50"
                                                        placeholder="/path/dir"
-                                                       value="">
+                                                       value="/path/dir">
+                                            </div>
+                                            <div id="a-ftp-path"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> add the default path to the system example "/".
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-6 mb-3">
-                                        <div class="form-check form-switch">
-                                            <input name="i-ftp-mode" type="hidden"/>
-                                            <input class="form-check-input" type="checkbox" id="i-ftp-mode"
-                                                   name="i-ftp-mode" checked>
-                                            <label class="form-check-label" for="i-ftp-mode">Enable Passive Mode</label>
+                                        <label class="form-label" for="i-ftp-path">Connection mode</label>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    <input name="i-ftp-mode" type="hidden"/>
+                                                    <input class="form-check-input" type="checkbox" id="i-ftp-mode"
+                                                           name="i-ftp-mode" checked>
+                                                    <label class="form-check-label" for="i-ftp-mode">Enable Passive
+                                                        Mode</label>
+                                                </div>
+                                            </div>
+                                            <div id="a-ftp-mode"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> If you want you can add the connection mode.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="alert bg-body">
@@ -1232,7 +1333,7 @@
                 </div>
 
                 <div class="modal fade" id="modal-add-database">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Setup Database Credential</h5>
@@ -1240,67 +1341,156 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+
+
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="i-database-name">DB Name</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-database-name" name="i-database-name"
-                                                       class="form-control opacity-50" placeholder="db-name" value="">
+                                                <input type="text" id="i-database-name"
+                                                       name="i-database-name" class="form-control opacity-50"
+                                                       placeholder="DB Mirror"
+                                                       value="DB Mirror">
+                                            </div>
+                                            <div id="a-database-name"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection name must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="i-database-host">DB Host</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-database-host" name="i-database-host"
-                                                       class="form-control opacity-50"
-                                                       placeholder="localhost | 127.0.0.1" value="">
+                                                <input type="text" id="i-database-host"
+                                                       name="i-database-host" class="form-control opacity-50"
+                                                       placeholder="127.0.0.1"
+                                                       value="127.0.0.1">
+                                            </div>
+                                            <div id="a-database-host"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> The connection Host must not be empty.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="row">
+
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="i-database-user">DB User</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="text" id="i-database-user" name="i-database-user"
-                                                       class="form-control opacity-50" placeholder="root" value="">
+                                                <input type="text" id="i-database-user"
+                                                       name="i-database-user" class="form-control opacity-50"
+                                                       placeholder="fulanito_73"
+                                                       value="fulanito_73">
+                                            </div>
+                                            <div id="a-database-user"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> you need to set a User to get connected to the database.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-6 mb-3">
-                                        <label class="form-label" for="i-database-password">DB Password</label>
+                                        <label class="form-label" for="i-database-port">Port</label>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="password" id="i-database-password"
-                                                       name="i-database-password"
-                                                       class="form-control opacity-50" placeholder="********" value=""
-                                                       autocomplete="off">
+                                                <input type="text" id="i-database-port"
+                                                       name="i-database-port" class="form-control opacity-50"
+                                                       placeholder="3306"
+                                                       value="3306">
+                                            </div>
+                                            <div id="a-database-port"
+                                                 class="col-12 alert alert-danger alert-dismissible hide mb-3">
+                                                <b>Error:</b> you need to set a Port to get connected to the database.
+                                                <button type="button"
+                                                        class="btn btn-sm btn-close remove-shadow"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="i-database-password">Password</label>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-database-password"
+                                                           name="i-database-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-database-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password does not meet the minimum requirements.<br>
+                                                Must contain at least one of the following symbols: ".@*_"<br>
+                                                Must contain at least one uppercase letter<br>
+                                                Must contain at least one lowercase letter<br>
+                                                Must contain at least one number<br>
+                                                Must be at least 13 characters long<br>
+                                                <button type="button" class="btn-close"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="i-database-re-password">Re-Password</label>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <input type="password" id="i-database-re-password"
+                                                           name="i-database-re-password" class="form-control opacity-50"
+                                                           placeholder="************" value="*@1Qazxsw22">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="a-database-re-password"
+                                                 class="col-11 alert alert-warning alert-dismissible fade hide m-2 blink">
+                                                <b>Error:</b> This password is not identical to the previous one.
+                                                <button type="button" class="btn-close"></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-6 d-grid gap-2 d-block">
-                                        <button type="button" name="test-bd-connection" class="btn btn-primary mb-2">
+                                        <button type="button" name="test-database-connection"
+                                                class="btn btn-primary mb-2">
                                             Test Database Connection
                                         </button>
-                                        <input type="hidden" name="test-bd-connection-result" value="false">
+                                        <input type="hidden" name="test-database-connection-result" value="false">
                                     </div>
                                     <div class="col-6">
-                                        <div id="a-database-con1-connection-error"
+                                        <div id="a-database-con-connection-error"
                                              class="alert alert-danger alert-dismissible hide mb-3">
                                             <b>Error!!!</b>
                                             <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                         </div>
-                                        <div id="a-database-con1-connection-success"
+                                        <div id="a-database-con-connection-success"
                                              class="alert alert-success alert-dismissible hide mb-3">
                                             <b>Success!!!</b>
                                             <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="a-database-con1-config" class="alert alert-danger alert-dismissible hide mb-3">
+                                <div id="a-database-con-config" class="alert alert-danger alert-dismissible hide mb-3">
                                     <b>Error:</b> The session fields cannot be empty, you must fill in at least 1 or
                                     have a minimum value of 1 hour.
                                     <button type="button" class="btn btn-sm btn-close remove-shadow"></button>
@@ -1309,7 +1499,6 @@
                                     <b>Please note:</b> In this section we are going to configure our connection to our
                                     database so that the system can establish the minimum structures necessary for its
                                     configuration.<br><br>
-
                                     Keep in mind that the password field has minimum requirements:<br>
                                     - Use 8 or more characters.<br>
                                     - with a mix of letters, numbers & symbols.
@@ -1317,15 +1506,115 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                                <button name="b-save-database-con1" type="button" class="btn btn-theme">Add This
-                                    Database Connection
+                                <button name="b-add-database" type="button" class="btn btn-theme">Add This Database
+                                    Connection
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="modal fade" id="modal-error-view">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Error Viewer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <button type="button" id="reload-btn"
+                                                    class="btn btn-outline-primary d-block">Reload Error
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <iframe id="error-viewer" class="w-100 vh-80"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="welcome">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Welcome to Last Hammer Framework</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>A typical dashboard framework provides a set of tools and components to build
+                                    web-based dashboards. These frameworks often focus on the following key areas:</p>
+                                <ul>
+                                    <li><strong>Pre-built UI Components:</strong> Ready-to-use elements like charts,
+                                        graphs, tables, widgets, and navigation menus to display data visually. These
+                                        components are responsive and customizable.
+                                    </li>
+                                    <li><strong>Data Integration:</strong> Easy integration with various data sources
+                                        (e.g., APIs, databases, CSV files) and supports dynamic data binding to update
+                                        the dashboard in real-time.
+                                    </li>
+                                    <li><strong>Layouts and Templates:</strong> Customizable layout templates for
+                                        arranging components and content in a structured way, often with a grid system
+                                        or drag-and-drop functionality.
+                                    </li>
+                                    <li><strong>Theming and Customization:</strong> Options to apply different themes
+                                        and styles to match the branding of your application, allowing for visual
+                                        consistency and personalization.
+                                    </li>
+                                    <li><strong>Interactivity:</strong> Supports interactive elements like filters,
+                                        search bars, drill-downs, and user input forms to make the dashboard more
+                                        engaging and user-friendly.
+                                    </li>
+                                    <li><strong>Authentication and Access Control:</strong> Implements user
+                                        authentication and role-based access controls to manage who can view or modify
+                                        specific sections of the dashboard.
+                                    </li>
+                                    <li><strong>Backend Integration:</strong> Includes server-side integration, allowing
+                                        you to connect to databases, handle user sessions, and process data securely.
+                                    </li>
+                                    <li><strong>Responsive Design:</strong> Ensures that the dashboard is accessible and
+                                        functional across different devices and screen sizes, including mobile devices.
+                                    </li>
+                                    <li><strong>Performance Optimization:</strong> Features like lazy loading, data
+                                        caching, and efficient rendering techniques to make the dashboard smooth and
+                                        fast.
+                                    </li>
+                                    <li><strong>Plugins and Extensions:</strong> Many frameworks offer plugin
+                                        architectures or third-party integrations, allowing you to extend the
+                                        functionality of the dashboard with additional tools like data visualization
+                                        libraries (e.g., D3.js, Chart.js).
+                                    </li>
+                                </ul>
+                                <p>Overall, a dashboard framework simplifies the process of building complex,
+                                    data-driven applications by providing pre-built components, integrations, and
+                                    customization options.</p>
+                                <div class="container">
+                                    <div class="row align-items-end">
+                                        <div class="d-grid gap-2 col-6 mx-auto">
+                                            <button type="button" id="play"
+                                                    class="btn btn-outline-indigo btn-lg d-block"
+                                                    data-bs-dismiss="modal">Continue
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
+
         </div>
         <div id="footer" class="app-footer m-0">
             &copy; 2024 Icaros Net | Last Hammer Framework - All Rights Reserved
@@ -1341,8 +1630,57 @@
     <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top" data-toggle="scroll-to-top">
         <i class="fa fa-angle-up"></i>
     </a>
-
 </div>
+
+
+<script defer type="text/javascript" src="assets/plugins/datepickk/dist/datepickk.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/gritter/js/jquery.gritter.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.canvaswrapper.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.colorhelpers.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.saturated.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.browser.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.drawSeries.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.uiConstants.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.time.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.resize.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.pie.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.crosshair.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.categories.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.navigate.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.touchNavigate.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.hover.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.touch.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.selection.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.symbol.js"></script>
+<script defer type="text/javascript" src="assets/plugins/flot/source/jquery.flot.legend.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/d3/d3.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/nvd3/build/nv.d3.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jvectormap-next/jquery-jvectormap.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jvectormap-content/world-mill.js"></script>
+<script defer type="text/javascript" src="assets/plugins/apexcharts/dist/apexcharts.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/moment/min/moment.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script defer type="text/javascript" src="assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/tag-it/js/tag-it.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/summernote/dist/summernote-lite.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/clipboard/dist/clipboard.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/highlightjs/cdn-assets/highlight.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/iconify-icon/iconify.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jstree/dist/jstree.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/intro.js/minified/intro.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/select2/dist/js/select2.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/jquery.maskedinput/src/jquery.maskedinput.js"></script>
+<script defer type="text/javascript" src="assets/plugins/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/select-picker/dist/picker.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/switchery/dist/switchery.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/abpetkov-powerange/dist/powerange.min.js"></script>
+<script defer type="text/javascript" src="assets/plugins/parsleyjs/dist/parsley.min.js"></script>
 
 <script type="text/javascript" src="assets/js/theme/vendor.min.js"></script>
 <script type="text/javascript" src="assets/js/theme/app.min.js"></script>

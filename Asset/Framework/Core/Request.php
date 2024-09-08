@@ -72,11 +72,11 @@ class Request
         $result = [];
         if (is_array($data)) {
             foreach ($data as $key => $value) {
-                if (Variable::getInstance()->isJson($value)) {
+                if (is_array($value)) {
+                    $result[$key] = $this->evaluateSuperGlobal($value);
+                } elseif (Variable::getInstance()->isJson($value)) {
                     $jsonObj      = json_decode($value, true);
                     $result[$key] = $this->evaluateSuperGlobal($jsonObj);
-                } elseif (is_array($value)) {
-                    $result[$key] = $this->evaluateSuperGlobal($value);
                 } else {
                     if (strcasecmp($value, "true") === 0 || strcasecmp($value, "false") === 0) {
                         $result[$key] = filter_var($value, FILTER_VALIDATE_BOOLEAN);

@@ -2,5 +2,6 @@
 /.git/
 /vendor/*
 /Asset/resource/config/*.json
+/Asset/resource/config/backup/
 /Repository/Project/*
 *.log

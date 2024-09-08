@@ -1,12 +1,29 @@
+/**
+ * Last Hammer Framework 2.0
+ * JavaScript Version (ES6+).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 import {HandlerAudio} from "./handler-audio.js";
-import {HandlerUtilities} from "./handler-utilities.js";
 
 export class HandlerGlobalSetting {
 
     static settings = {};
 
-    static Init() {
+    static async init() {
 
+        const handlerAudio = new HandlerAudio();
+        await handlerAudio.initialize();
+
+        let sounds = handlerAudio.getAllAudio();
 
         this.settings = {
             preventOutForm: true,
@@ -30,8 +47,9 @@ export class HandlerGlobalSetting {
             },
             modifiedField: [],
             sound: true,
-            soundClick: HandlerUtilities.convertDataURIToBinary(HandlerAudio.audio.error),
+            soundList: sounds
         };
+
     }
 
     static getSetting(key) {
@@ -53,7 +71,7 @@ export class HandlerGlobalSetting {
     }
 
     static resetSettings() {
-        this.Init(); // Reinicia llamando al método Init
+        this.init(); // Reinicia llamando al método Init
     }
 
 }

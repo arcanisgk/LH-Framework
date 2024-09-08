@@ -1,3 +1,17 @@
+/**
+ * Last Hammer Framework 2.0
+ * JavaScript Version (ES6+).
+ *
+ * @see https://github.com/arcanisgk/LH-Framework
+ *
+ * @author    Walter Nuñez (arcanisgk/founder) <icarosnet@gmail.com>
+ * @copyright 2017 - 2024
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note      This program is distributed in the hope that it will be useful
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 import {HandlerConsoleOutput} from "./handler-console-output.js";
 import {HandlerUtilities} from "./handler-utilities.js";
 
@@ -6,6 +20,11 @@ export class HandlerPlugin {
     output = new HandlerConsoleOutput();
 
     elementSelectors = [
+        {
+            selector: `input[type='password']`, init: (elements) => {
+                this.handlerPasswordView(elements);
+            }
+        },
         {
             selector: '[data-lh-pl="spy"]', init: (elements) => {
                 this.handlerSpyScroll(elements);
@@ -93,6 +112,38 @@ export class HandlerPlugin {
 
             scrollContainer.addEventListener('scroll', handleScroll);
             navLinks.forEach(link => link.addEventListener('click', e => handleClick(e, link)));
+        });
+    }
+
+
+    handlerPasswordView(elements) {
+        elements.forEach(element => {
+
+
+            const button = Array.from(element.parentElement.querySelectorAll('button')).find(btn => {
+                const icon = btn.querySelector('i');
+                return icon && icon.className.includes('fa-eye');
+            });
+
+            if (button) {
+                let isPasswordVisible = false;
+
+                button.addEventListener('click', function () {
+
+                    if (isPasswordVisible) {
+                        element.type = 'password';
+
+                        button.querySelector('i').className = 'fa-solid fa-eye';
+                    } else {
+                        element.type = 'text';
+
+                        button.querySelector('i').className = 'fa-solid fa-eye-slash';
+                    }
+
+                    isPasswordVisible = !isPasswordVisible;
+                });
+            }
+
         });
     }
 

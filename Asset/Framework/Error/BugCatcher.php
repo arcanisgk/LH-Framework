@@ -335,7 +335,9 @@ class BugCatcher
         if ($this->isCLI()) {
             echo $this->getCLIOutput($errorArray);
         } else {
-            echo $this->getWebOutput($errorArray);
+            $ouput = $this->getWebOutput($errorArray);
+            file_put_contents($_SERVER["DOCUMENT_ROOT"].'/error.html', $ouput);
+            echo $ouput;
         }
         $this->clearLastError();
     }
