@@ -132,6 +132,7 @@ export class HandlerScriptLoader {
         try {
 
             await this.loadMultipleScripts(requirementScript);
+            jQuery.migrateMute = true;
             await this.loadMultipleScripts(mainPluginScript);
             await this.loadMultipleScripts(extendedPluginScript);
             await this.loadMultipleScripts(onExecutionScripts);
