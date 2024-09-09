@@ -16,6 +16,7 @@ import {ControllerUI} from "./controller-ui.js";
 import {HandlerConsoleOutput} from "./handler/handler-console-output.js";
 import {HandlerGlobalSetting} from "./handler/handler-global-setting.js";
 import {HandlerInstaller} from "./handler/handler-installer.js";
+import {HandlerScriptLoader} from "./handler/handler-script-loader.js";
 
 
 /**
@@ -29,8 +30,14 @@ async function initApp() {
 
         await HandlerGlobalSetting.init();
 
+        const scriptLoader = new HandlerScriptLoader();
+
+        await scriptLoader.loadAllAssets();
+
         const controllerUI = new ControllerUI();
         await controllerUI.initializeUI();
+
+        await scriptLoader.loadDynamicScript();
 
         const handlerInstaller = new HandlerInstaller();
         await handlerInstaller.init();

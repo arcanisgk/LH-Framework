@@ -223,7 +223,7 @@ class FrontResourceController
     {
         $this->htmlAssets = [
             'CSS' => [sprintf(/** @lang html */ '<link rel="stylesheet" href="%s">', $this->getLink('css'))],
-            'JS'  => [sprintf(/** @lang html */ '<script defer src="%s"></script>', $this->getLink('js'))],
+            'JS'  => [],
         ];
     }
 
