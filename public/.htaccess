@@ -119,13 +119,13 @@ IndexIgnore *
     RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json|html|ogg)$ [NC]
     RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
 
-    RewriteCond %{DOCUMENT_ROOT}/setup.php -f
-    RewriteCond %{REQUEST_URI} !^/setup$
-    RewriteCond %{REQUEST_URI} !^/setup\.php$
-    RewriteRule ^.*$ /setup [R=301,L,NE,NC]
+    #RewriteCond %{DOCUMENT_ROOT}/setup.php -f
+    #RewriteCond %{REQUEST_URI} !^/setup$
+    #RewriteCond %{REQUEST_URI} !^/setup\.php$
+    #RewriteRule ^.*$ /setup [R=301,L,NE,NC]
 
-    RewriteCond %{DOCUMENT_ROOT}/setup.php -f
-    RewriteRule ^setup$ /setup.php [NC,L]
+    #RewriteCond %{DOCUMENT_ROOT}/setup.php -f
+    #RewriteRule ^setup$ /setup.php [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

@@ -134,9 +134,9 @@ export class HandlerConsoleOutput {
         let host = window.location.origin;
 
         const config = {
-            1: {imageUrl: `${host}/assets/ico/info.png`, textColor: 'green'},
-            2: {imageUrl: `${host}/assets/ico/info.png`, textColor: 'blue'},
-            3: {imageUrl: `${host}/assets/ico/error.png`, textColor: 'orange'}
+            1: {imageUrl: `${host}/assets/img/ico/info.png`, textColor: 'green'},
+            2: {imageUrl: `${host}/assets/img/ico/info.png`, textColor: 'blue'},
+            3: {imageUrl: `${host}/assets/img/ico/error.png`, textColor: 'orange'}
         };
 
         const {imageUrl, textColor} = config[type] || {};

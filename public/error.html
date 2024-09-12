@@ -108,21 +108,21 @@
         </tr>
         <tr class="row-1">
             <td class="col1">Description:</td>
-            <td class="col2">file_get_contents(/var/www/html/lh-2.dock/Asset/resource/config/app.json): Failed to open stream: No such file or directory</td>
+            <td class="col2">Undefined array key "CSS"</td>
         </tr>
         <tr class="row-1">
             <td class="col1">File:</td>
-            <td class="col2">/var/www/html/lh-2.dock/Asset/Helper/Installer/Installation.php</td>
+            <td class="col2">/var/www/html/lh-2.dock/Asset/Framework/View/DeploymentView.php</td>
         </tr>
         <tr class="row-1">
             <td></td>
             <td>
-                <b>Line: </b>227                <b>Level: </b>2                <b>Time: </b>1725726294            </td>
+                <b>Line: </b>136                <b>Level: </b>2                <b>Time: </b>1726174886            </td>
         </tr>
         <tr class="row-3">
             <td class="col1 top">BackTrace Log:</td>
             <td class="col2">
-                <div class="container-track">/var/www/html/lh-2.dock/Asset/Helper/Installer/Installation.php 227 calling Method: file_get_contents('/var/www/html/lh-2.dock/Asset/resource/config/app.json')<br>/var/www/html/lh-2.dock/Asset/Helper/Installer/Installation.php 104 calling Method: setJSON()<br>/var/www/html/lh-2.dock/Asset/Helper/Installer/Installation.php 43 calling Method: __construct()<br>/var/www/html/lh-2.dock/Asset/resource/function/init_loader.php 41 calling Method: getInstance()<br>/var/www/html/lh-2.dock/public/setup.php 27 calling Method: install()</div>
+                <div class="container-track">/var/www/html/lh-2.dock/Asset/Framework/View/DeploymentView.php 113 calling Method: fullBuild()<br>/var/www/html/lh-2.dock/Asset/Framework/Controller/RouteController.php 77 calling Method: showContent(Asset\Framework\Controller\ResponseController)<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 120 calling Method: execute()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 70 calling Method: run()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 63 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 35 calling Method: run()</div>
             </td>
         </tr>
         <tr class="row-3">
@@ -137,34 +137,37 @@
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
- * @author    Walter Nuñez (arcanisgk/original founder) &lt;icarosnet@gmail.com&gt;
- * @copyright 2017-2024
+ * @author    Walter Nuñez (arcanisgk/founder) &lt;icarosnet@gmail.com&gt;
+ * @copyright 2017 - 2024
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note      This program is distributed in the hope that it will be useful
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Helper\Installer</span><span style="color: #007700">;
+</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Framework\View</span><span style="color: #007700">;
 
-use </span><span style="color: #0000BB">Asset</span><span style="color: #007700">\{</span><span style="color: #0000BB">Framework\Core\Database</span><span style="color: #007700">, </span><span style="color: #0000BB">Framework\Core\Files</span><span style="color: #007700">};
-use </span><span style="color: #0000BB">PHPMailer\PHPMailer\Exception</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Controller\ResponseController</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Core\Files</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Exception</span><span style="color: #007700">;
 
 </span><span style="color: #FF8000">/**
- * Class Installation
- * A simple for the installation and setup of adp
+ * Class that handles:
+ *
+ * @package Asset\Framework\Core;
  */
-</span><span style="color: #007700">class </span><span style="color: #0000BB">Installation
+</span><span style="color: #007700">class </span><span style="color: #0000BB">DeploymentView
 </span><span style="color: #007700">{
+
     </span><span style="color: #FF8000">/**
-     * @var Installation|null Singleton instance of the Installation.
+     * @var DeploymentView|null Singleton instance of the class: DeploymentView.
      */
     </span><span style="color: #007700">private static ?</span><span style="color: #0000BB">self $instance </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * Get the singleton instance of Installation.
+     * Get the singleton instance of teh class DeploymentView.
      *
-     * @return Installation The singleton instance.
+     * @return DeploymentView The singleton instance.
      */
     </span><span style="color: #007700">public static function </span><span style="color: #0000BB">getInstance</span><span style="color: #007700">(): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
@@ -175,218 +178,138 @@ use </span><span style="color: #0000BB">PHPMailer\PHPMailer\Exception</span><spa
         return </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">$instance</span><span style="color: #007700">;
     }
 
-
-    private array </span><span style="color: #0000BB">$templateConfEmail
-        </span><span style="color: #007700">= [
-            </span><span style="color: #DD0000">"mail_name"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_host"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_port"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_user"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_password"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_password_re"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_default"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_test_smg"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_protocol"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_authentication"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_debug"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"mail_test"</span><span style="color: #007700">,
-        ];
-
-
-    private array </span><span style="color: #0000BB">$templateConfFTP
-        </span><span style="color: #007700">= [
-            </span><span style="color: #DD0000">"ftp_name"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_host"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_port"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_user"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_password"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_password_re"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_path"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"ftp_passive_mode"</span><span style="color: #007700">,
-        ];
-
-    private array </span><span style="color: #0000BB">$templateConfDatabase
-        </span><span style="color: #007700">= [
-            </span><span style="color: #DD0000">"db_name"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"db_host"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"db_port"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"db_user"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"db_password"</span><span style="color: #007700">,
-            </span><span style="color: #DD0000">"db_password_re"</span><span style="color: #007700">,
-        ];
-
     </span><span style="color: #FF8000">/**
-     *
+     * DeploymentView constructor.
      */
     </span><span style="color: #007700">public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()
     {
-        if (isset(</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">)) {
-            if (isset(</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'Data-Base-Test'</span><span style="color: #007700">])) {
-                </span><span style="color: #0000BB">$dbParams </span><span style="color: #007700">= [
-                    </span><span style="color: #DD0000">'host' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'i-database-host'</span><span style="color: #007700">],
-                    </span><span style="color: #DD0000">'db'   </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'i-database-name'</span><span style="color: #007700">],
-                    </span><span style="color: #DD0000">'user' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'i-database-user'</span><span style="color: #007700">],
-                    </span><span style="color: #DD0000">'pass' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'i-database-password'</span><span style="color: #007700">],
-                ];
-                echo </span><span style="color: #0000BB">Database</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">testConnection</span><span style="color: #007700">(</span><span style="color: #0000BB">$dbParams</span><span style="color: #007700">) ? </span><span style="color: #DD0000">'true' </span><span style="color: #007700">: </span><span style="color: #DD0000">'false'</span><span style="color: #007700">;
-            } else {
-                echo </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setJSON</span><span style="color: #007700">() ? </span><span style="color: #DD0000">'true' </span><span style="color: #007700">: </span><span style="color: #DD0000">'false'</span><span style="color: #007700">;
-            }
-        } else {
-            </span><span style="color: #0000BB">$templatePath </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'install.html'</span><span style="color: #007700">]);
-            echo </span><span style="color: #0000BB">Files</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">fileLoader</span><span style="color: #007700">(</span><span style="color: #0000BB">$templatePath</span><span style="color: #007700">);
-        }
+
+    }
+
+
+    </span><span style="color: #FF8000">/**
+     * @var array
+     */
+    </span><span style="color: #007700">private array </span><span style="color: #0000BB">$templates </span><span style="color: #007700">= [];
+
+    </span><span style="color: #FF8000">/**
+     * @var array
+     */
+    </span><span style="color: #007700">private array </span><span style="color: #0000BB">$data </span><span style="color: #007700">= [];
+
+    </span><span style="color: #FF8000">/**
+     * @return array
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getTemplates</span><span style="color: #007700">(): array
+    {
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">templates</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @param array $configArray
-     * @param array $passwordArray
-     * @param array $nodes
-     * @return array
+     * @param array $templates
      */
-    </span><span style="color: #007700">function </span><span style="color: #0000BB">replacePlaceholdersWithPasswords</span><span style="color: #007700">(
-        array </span><span style="color: #0000BB">$configArray</span><span style="color: #007700">,
-        array </span><span style="color: #0000BB">$passwordArray</span><span style="color: #007700">,
-        </span><span style="color: #0000BB">string $type</span><span style="color: #007700">,
-        array </span><span style="color: #0000BB">$nodes
-    </span><span style="color: #007700">): array {
-        </span><span style="color: #0000BB">$result        </span><span style="color: #007700">= [];
-        </span><span style="color: #0000BB">$stringArray   </span><span style="color: #007700">= [];
-        </span><span style="color: #0000BB">$passwordIndex </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;
-
-        foreach (</span><span style="color: #0000BB">$configArray </span><span style="color: #007700">as </span><span style="color: #0000BB">$index </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$config</span><span style="color: #007700">) {
-            </span><span style="color: #0000BB">$config </span><span style="color: #007700">= </span><span style="color: #0000BB">preg_replace_callback</span><span style="color: #007700">(</span><span style="color: #DD0000">'/\*\*\*/'</span><span style="color: #007700">, function () use (&amp;</span><span style="color: #0000BB">$passwordIndex</span><span style="color: #007700">, </span><span style="color: #0000BB">$passwordArray</span><span style="color: #007700">) {
-                return </span><span style="color: #0000BB">$passwordArray</span><span style="color: #007700">[</span><span style="color: #0000BB">$passwordIndex</span><span style="color: #007700">++];
-            }, </span><span style="color: #0000BB">$config</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">); </span><span style="color: #FF8000">// Limitamos a 2 reemplazos
-
-            </span><span style="color: #0000BB">$stringArray</span><span style="color: #007700">[</span><span style="color: #0000BB">$index</span><span style="color: #007700">] = </span><span style="color: #0000BB">$config</span><span style="color: #007700">;
-        }
-
-        foreach (</span><span style="color: #0000BB">$stringArray </span><span style="color: #007700">as </span><span style="color: #0000BB">$index </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$config</span><span style="color: #007700">) {
-            </span><span style="color: #0000BB">$ArrayString </span><span style="color: #007700">= </span><span style="color: #0000BB">explode</span><span style="color: #007700">(</span><span style="color: #DD0000">','</span><span style="color: #007700">, </span><span style="color: #0000BB">$config</span><span style="color: #007700">);
-            </span><span style="color: #0000BB">$configArray </span><span style="color: #007700">= [];
-            foreach (</span><span style="color: #0000BB">$nodes </span><span style="color: #007700">as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$nodeName</span><span style="color: #007700">) {
-                </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">$ArrayString</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">];
-                </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">is_numeric</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) &amp;&amp; !</span><span style="color: #0000BB">str_contains</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #DD0000">'.'</span><span style="color: #007700">)
-                    ? (int)</span><span style="color: #0000BB">$value
-                    </span><span style="color: #007700">: (</span><span style="color: #0000BB">$value </span><span style="color: #007700">=== </span><span style="color: #DD0000">'true' </span><span style="color: #007700">|| </span><span style="color: #0000BB">$value </span><span style="color: #007700">=== </span><span style="color: #DD0000">'false'
-                        </span><span style="color: #007700">? </span><span style="color: #0000BB">filter_var</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_VALIDATE_BOOLEAN</span><span style="color: #007700">)
-                        : </span><span style="color: #0000BB">$value</span><span style="color: #007700">);
-
-                </span><span style="color: #0000BB">$configArray</span><span style="color: #007700">[</span><span style="color: #0000BB">$nodeName</span><span style="color: #007700">] = </span><span style="color: #0000BB">$value</span><span style="color: #007700">;
-            }
-            </span><span style="color: #0000BB">$result</span><span style="color: #007700">[</span><span style="color: #0000BB">$type</span><span style="color: #007700">.(</span><span style="color: #0000BB">$index </span><span style="color: #007700">+ </span><span style="color: #0000BB">1</span><span style="color: #007700">)] = </span><span style="color: #0000BB">$configArray</span><span style="color: #007700">;
-        }
-
-        return </span><span style="color: #0000BB">$result</span><span style="color: #007700">;
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setTemplates</span><span style="color: #007700">(array </span><span style="color: #0000BB">$templates</span><span style="color: #007700">): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">templates </span><span style="color: #007700">= </span><span style="color: #0000BB">$templates</span><span style="color: #007700">;
     }
 
+    </span><span style="color: #FF8000">/**
+     * @return array
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getData</span><span style="color: #007700">(): array
+    {
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">data</span><span style="color: #007700">;
+    }
 
-    private function </span><span style="color: #0000BB">setJSON</span><span style="color: #007700">(): </span><span style="color: #0000BB">bool
+    </span><span style="color: #FF8000">/**
+     * @param array $data
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setData</span><span style="color: #007700">(array </span><span style="color: #0000BB">$data</span><span style="color: #007700">): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">data </span><span style="color: #007700">= </span><span style="color: #0000BB">$data</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param ResponseController|null $response
+     * @return void
+     * @throws Exception
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">showContent</span><span style="color: #007700">(?</span><span style="color: #0000BB">ResponseController $response</span><span style="color: #007700">): </span><span style="color: #0000BB">void
     </span><span style="color: #007700">{
 
-
-        </span><span style="color: #0000BB">$session_lifetime </span><span style="color: #007700">= (</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-lifetime-hours'</span><span style="color: #007700">] * </span><span style="color: #0000BB">3600</span><span style="color: #007700">) + (</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-lifetime-days'</span><span style="color: #007700">] * </span><span style="color: #0000BB">86400</span><span style="color: #007700">);
-
-        </span><span style="color: #0000BB">$session_activity_expire </span><span style="color: #007700">= (</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-activity-expire-hours'</span><span style="color: #007700">] * </span><span style="color: #0000BB">3600</span><span style="color: #007700">) + (</span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-activity-expire-days'</span><span style="color: #007700">] * </span><span style="color: #0000BB">86400</span><span style="color: #007700">);
-
-        </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-mail-conf'</span><span style="color: #007700">] = </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">replacePlaceholdersWithPasswords</span><span style="color: #007700">(
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-mail-conf'</span><span style="color: #007700">],
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-mail-conf-password'</span><span style="color: #007700">],
-            </span><span style="color: #DD0000">'mail'</span><span style="color: #007700">,
-            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">templateConfEmail
-        </span><span style="color: #007700">);
-
-
-        </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-ftp-conf'</span><span style="color: #007700">] = </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">replacePlaceholdersWithPasswords</span><span style="color: #007700">(
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-ftp-conf'</span><span style="color: #007700">],
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-ftp-conf-password'</span><span style="color: #007700">],
-            </span><span style="color: #DD0000">'ftp'</span><span style="color: #007700">,
-            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">templateConfFTP
-        </span><span style="color: #007700">);
-
-
-        </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-database-conf'</span><span style="color: #007700">] = </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">replacePlaceholdersWithPasswords</span><span style="color: #007700">(
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-database-conf'</span><span style="color: #007700">],
-            </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-database-conf-password'</span><span style="color: #007700">],
-            </span><span style="color: #DD0000">'db'</span><span style="color: #007700">,
-            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">templateConfDatabase
-        </span><span style="color: #007700">);
-
-        try {
-            </span><span style="color: #0000BB">$filePaths </span><span style="color: #007700">= [
-                </span><span style="color: #DD0000">'app.json'     </span><span style="color: #007700">=&gt; [
-                    </span><span style="color: #DD0000">'company' </span><span style="color: #007700">=&gt; [
-                        </span><span style="color: #DD0000">'company_name'  </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-company-name'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'company_owner' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-company-owner'</span><span style="color: #007700">],
-                    ],
-                    </span><span style="color: #DD0000">'project' </span><span style="color: #007700">=&gt; [
-                        </span><span style="color: #DD0000">'project_name'   </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-project-name'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'project_config' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">true</span><span style="color: #007700">,
-                    ],
-                    </span><span style="color: #DD0000">'host'    </span><span style="color: #007700">=&gt; [
-                        </span><span style="color: #DD0000">'domain'   </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-domain'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'lang'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-lang'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'m-lang'   </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-m-lang'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'protocol' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-protocol'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'entry'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-entry'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'license'  </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-license'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'free'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-chk-license'</span><span style="color: #007700">],
-                    ],
-                ],
-                </span><span style="color: #DD0000">'session.json' </span><span style="color: #007700">=&gt; [
-                    </span><span style="color: #DD0000">'session' </span><span style="color: #007700">=&gt; [
-                        </span><span style="color: #DD0000">'session_name'            </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-name'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'session_inactivity'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-inactivity'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'session_lifetime'        </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$session_lifetime</span><span style="color: #007700">,
-                        </span><span style="color: #DD0000">'session_activity_expire' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$session_activity_expire</span><span style="color: #007700">,
-                        </span><span style="color: #DD0000">'session_secure'          </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-secure'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'session_httponly'        </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-http-only'</span><span style="color: #007700">],
-                        </span><span style="color: #DD0000">'session_same_site'       </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-session-same-site'</span><span style="color: #007700">] ? </span><span style="color: #DD0000">'Strict' </span><span style="color: #007700">: </span><span style="color: #DD0000">'Lax'</span><span style="color: #007700">,
-                    ],
-                ],
-                </span><span style="color: #DD0000">'mail.json'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-mail-conf'</span><span style="color: #007700">],
-                </span><span style="color: #DD0000">'ftp.json'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-ftp-conf'</span><span style="color: #007700">],
-                </span><span style="color: #DD0000">'json.json'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'json-database-conf'</span><span style="color: #007700">],
-            ];
-            
-            foreach (</span><span style="color: #0000BB">$filePaths </span><span style="color: #007700">as </span><span style="color: #0000BB">$fileName </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$postData</span><span style="color: #007700">) {
-
-                </span><span style="color: #0000BB">$filePath </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'config'</span><span style="color: #007700">, </span><span style="color: #0000BB">$fileName</span><span style="color: #007700">]);
-                </span><span style="color: #0000BB">$config   </span><span style="color: #007700">= </span><span style="color: #0000BB">json_decode</span><span style="color: #007700">(</span><span style="color: #0000BB">file_get_contents</span><span style="color: #007700">(</span><span style="color: #0000BB">$filePath</span><span style="color: #007700">), </span><span style="color: #0000BB">true</span><span style="color: #007700">);    </span><span style="color: #FF8000">// error detected in this line!!!
-                </span><span style="color: #0000BB">$config   </span><span style="color: #007700">= </span><span style="color: #0000BB">array_replace_recursive</span><span style="color: #007700">(</span><span style="color: #0000BB">$config</span><span style="color: #007700">, </span><span style="color: #0000BB">$postData</span><span style="color: #007700">);
-
-                </span><span style="color: #0000BB">array_walk_recursive</span><span style="color: #007700">(</span><span style="color: #0000BB">$config</span><span style="color: #007700">, function (&amp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">) {
-                    if (!</span><span style="color: #0000BB">is_bool</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) &amp;&amp; !</span><span style="color: #0000BB">is_int</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">)) {
-                        </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">mb_convert_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">, </span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">));
-                    }
-                });
-
-                </span><span style="color: #0000BB">file_put_contents</span><span style="color: #007700">(
-                    </span><span style="color: #0000BB">$filePath</span><span style="color: #007700">,
-                    </span><span style="color: #0000BB">json_encode</span><span style="color: #007700">(
-                        </span><span style="color: #0000BB">$config</span><span style="color: #007700">,
-                        </span><span style="color: #0000BB">JSON_HEX_TAG </span><span style="color: #007700">| </span><span style="color: #0000BB">JSON_HEX_APOS </span><span style="color: #007700">| </span><span style="color: #0000BB">JSON_HEX_QUOT </span><span style="color: #007700">| </span><span style="color: #0000BB">JSON_HEX_AMP </span><span style="color: #007700">| </span><span style="color: #0000BB">JSON_UNESCAPED_UNICODE </span><span style="color: #007700">| </span><span style="color: #0000BB">JSON_PRETTY_PRINT
-                    </span><span style="color: #007700">)
-                );
-
-            }
-
-            </span><span style="color: #0000BB">$sourceFile      </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'public'</span><span style="color: #007700">, </span><span style="color: #DD0000">'setup.php'</span><span style="color: #007700">]);
-            </span><span style="color: #0000BB">$destinationFile </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'recicle_bin'</span><span style="color: #007700">, </span><span style="color: #DD0000">'setup.php'</span><span style="color: #007700">]);
-
-            if (!</span><span style="color: #0000BB">copy</span><span style="color: #007700">(</span><span style="color: #0000BB">$sourceFile</span><span style="color: #007700">, </span><span style="color: #0000BB">$destinationFile</span><span style="color: #007700">)) {
-                throw new </span><span style="color: #0000BB">Exception</span><span style="color: #007700">(</span><span style="color: #DD0000">'Failed to copy setup.php'</span><span style="color: #007700">);
-            }
-
-            if (!</span><span style="color: #0000BB">unlink</span><span style="color: #007700">(</span><span style="color: #0000BB">$sourceFile</span><span style="color: #007700">)) {
-                throw new </span><span style="color: #0000BB">Exception</span><span style="color: #007700">(</span><span style="color: #DD0000">'Failed to delete setup.php'</span><span style="color: #007700">);
-            }
-
-            return </span><span style="color: #0000BB">true</span><span style="color: #007700">;
-        } catch (</span><span style="color: #0000BB">Exception $e</span><span style="color: #007700">) {
-            return </span><span style="color: #0000BB">false</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">(</span><span style="color: #0000BB">$response</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getData</span><span style="color: #007700">());
+        if (!isset(</span><span style="color: #0000BB">$_SESSION</span><span style="color: #007700">[</span><span style="color: #DD0000">'BUILD_UP'</span><span style="color: #007700">])) {
+            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fullBuild</span><span style="color: #007700">();
         }
+
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return void
+     * @throws Exception
+     */
+    </span><span style="color: #007700">private function </span><span style="color: #0000BB">fullBuild</span><span style="color: #007700">(): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">{
+
+        </span><span style="color: #0000BB">$file </span><span style="color: #007700">= </span><span style="color: #0000BB">Files</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
+        </span><span style="color: #0000BB">$dir  </span><span style="color: #007700">= </span><span style="color: #0000BB">$file</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getAbsolutePath</span><span style="color: #007700">(
+            </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'index.html'</span><span style="color: #007700">])
+        );
+
+        </span><span style="color: #0000BB">$dir_tpl_icon         </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'icon_link.html'</span><span style="color: #007700">]);
+        </span><span style="color: #0000BB">$dir_tpl_css          </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'styles_link.html'</span><span style="color: #007700">]);
+        </span><span style="color: #0000BB">$dir_tpl_html_content </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'html_content.html'</span><span style="color: #007700">]);
+        </span><span style="color: #0000BB">$dir_tpl_app_setting  </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'app_setting.html'</span><span style="color: #007700">]);
+        </span><span style="color: #0000BB">$dir_tpl_js           </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'template'</span><span style="color: #007700">, </span><span style="color: #DD0000">'javascript_link.html'</span><span style="color: #007700">]);
+
+        </span><span style="color: #0000BB">$css </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #DD0000">''</span><span style="color: #007700">, </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getData</span><span style="color: #007700">()[</span><span style="color: #DD0000">'assets'</span><span style="color: #007700">][</span><span style="color: #DD0000">'CSS'</span><span style="color: #007700">]);    </span><span style="color: #FF8000">// error detected in this line!!!
+        </span><span style="color: #0000BB">$js  </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #DD0000">''</span><span style="color: #007700">, </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getData</span><span style="color: #007700">()[</span><span style="color: #DD0000">'assets'</span><span style="color: #007700">][</span><span style="color: #DD0000">'JS'</span><span style="color: #007700">]);
+
+        </span><span style="color: #0000BB">$icon_link </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir_tpl_icon</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+        </span><span style="color: #0000BB">$styles_link </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir_tpl_css</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">([</span><span style="color: #DD0000">'view_css' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$css</span><span style="color: #007700">])
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+        </span><span style="color: #0000BB">$app_setting </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir_tpl_app_setting</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+        </span><span style="color: #0000BB">$javascript_link </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir_tpl_js</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">([</span><span style="color: #DD0000">'view_js' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$js</span><span style="color: #007700">])
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+
+        </span><span style="color: #0000BB">$html_content </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir_tpl_html_content</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getData</span><span style="color: #007700">())
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+        </span><span style="color: #0000BB">$data </span><span style="color: #007700">= [
+            </span><span style="color: #DD0000">'lang'            </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">CONFIG</span><span style="color: #007700">[</span><span style="color: #DD0000">'APP'</span><span style="color: #007700">][</span><span style="color: #DD0000">'HOST'</span><span style="color: #007700">][</span><span style="color: #DD0000">'LANG'</span><span style="color: #007700">],
+            </span><span style="color: #DD0000">'html_tittle'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">CONFIG</span><span style="color: #007700">[</span><span style="color: #DD0000">'APP'</span><span style="color: #007700">][</span><span style="color: #DD0000">'PROJECT'</span><span style="color: #007700">][</span><span style="color: #DD0000">'PROJECT_NAME'</span><span style="color: #007700">],
+            </span><span style="color: #DD0000">'icon_link'       </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$icon_link</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'styles_link'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$styles_link</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'html_content'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$html_content</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'app_setting'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$app_setting</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'javascript_link' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$javascript_link</span><span style="color: #007700">,
+        ];
+
+        </span><span style="color: #0000BB">$html </span><span style="color: #007700">= </span><span style="color: #0000BB">RenderTemplateView</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$dir</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">(</span><span style="color: #0000BB">$data</span><span style="color: #007700">)
+            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">outHtml</span><span style="color: #007700">(
+            </span><span style="color: #0000BB">$html
+        </span><span style="color: #007700">);
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param string $content
+     * @return void
+     */
+    </span><span style="color: #007700">private function </span><span style="color: #0000BB">outHtml</span><span style="color: #007700">(</span><span style="color: #0000BB">string $content</span><span style="color: #007700">): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">{
+        echo </span><span style="color: #0000BB">$content</span><span style="color: #007700">;
     }
 }</span></code></pre></td>
         </tr>

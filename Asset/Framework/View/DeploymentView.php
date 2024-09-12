@@ -18,8 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\View;
 
-use Asset\Framework\Controller\ResponseController;
-use Asset\Framework\Core\Files;
+use Asset\Framework\{Controller\ResponseController, Core\Files};
 use Exception;
 
 /**
@@ -57,32 +56,10 @@ class DeploymentView
 
     }
 
-
-    /**
-     * @var array
-     */
-    private array $templates = [];
-
     /**
      * @var array
      */
     private array $data = [];
-
-    /**
-     * @return array
-     */
-    public function getTemplates(): array
-    {
-        return $this->templates;
-    }
-
-    /**
-     * @param array $templates
-     */
-    public function setTemplates(array $templates): void
-    {
-        $this->templates = $templates;
-    }
 
     /**
      * @return array
@@ -128,41 +105,21 @@ class DeploymentView
         );
 
         $dir_tpl_icon         = implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html']);
-        $dir_tpl_css          = implode(DS, [PD, 'Asset', 'resource', 'template', 'styles_link.html']);
         $dir_tpl_html_content = implode(DS, [PD, 'Asset', 'resource', 'template', 'html_content.html']);
         $dir_tpl_app_setting  = implode(DS, [PD, 'Asset', 'resource', 'template', 'app_setting.html']);
-        $dir_tpl_js           = implode(DS, [PD, 'Asset', 'resource', 'template', 'javascript_link.html']);
 
-        $css = implode('', $this->getData()['assets']['CSS']);
-        $js  = implode('', $this->getData()['assets']['JS']);
-
-        $icon_link = RenderTemplateView::getInstance()->setPath($dir_tpl_icon)
-            ->render();
-
-        $styles_link = RenderTemplateView::getInstance()->setPath($dir_tpl_css)
-            ->setData(['view_css' => $css])
-            ->render();
-
-        $app_setting = RenderTemplateView::getInstance()->setPath($dir_tpl_app_setting)
-            ->render();
-
-        $javascript_link = RenderTemplateView::getInstance()->setPath($dir_tpl_js)
-            ->setData(['view_js' => $js])
-            ->render();
-
-
+        $icon_link    = RenderTemplateView::getInstance()->setPath($dir_tpl_icon)->render();
+        $app_setting  = RenderTemplateView::getInstance()->setPath($dir_tpl_app_setting)->render();
         $html_content = RenderTemplateView::getInstance()->setPath($dir_tpl_html_content)
             ->setData($this->getData())
             ->render();
 
         $data = [
-            'lang'            => CONFIG['APP']['HOST']['LANG'],
-            'html_tittle'     => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
-            'icon_link'       => $icon_link,
-            'styles_link'     => $styles_link,
-            'html_content'    => $html_content,
-            'app_setting'     => $app_setting,
-            'javascript_link' => $javascript_link,
+            'lang'         => CONFIG['APP']['HOST']['LANG'],
+            'html_tittle'  => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
+            'icon_link'    => $icon_link,
+            'html_content' => $html_content,
+            'app_setting'  => $app_setting,
         ];
 
         $html = RenderTemplateView::getInstance()->setPath($dir)

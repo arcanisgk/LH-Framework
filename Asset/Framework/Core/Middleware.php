@@ -59,8 +59,8 @@ class Middleware
     public static function processMiddleware(): void
     {
 
-        if (!Config::checkFullConfig() && UR !== '/Admin') {
-            Request::getInstance()->redirect('/Admin');
+        if (!Config::checkFullConfig() && UR !== '/Setup') {
+            Request::getInstance()->redirect('/Setup');
         }
 
         if (!Authentication::check() && UR !== '/User-Access') {

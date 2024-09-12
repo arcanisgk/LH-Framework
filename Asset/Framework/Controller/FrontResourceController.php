@@ -18,8 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Controller;
 
-use Asset\Framework\Core\Error;
-use Asset\Framework\Core\Files;
+use Asset\Framework\Core\{Error, Files};
 use Exception;
 use ReflectionClass;
 use ReflectionException;
@@ -57,11 +56,6 @@ class FrontResourceController
     private string $path = '';
 
     /**
-     * @var array
-     */
-    private array $link = [];
-
-    /**
      * @var array Stores generated HTML assets.
      */
     private array $htmlAssets = [];
@@ -77,8 +71,7 @@ class FrontResourceController
             $dir          = $this->getDir($called_class);
             $this->setPath($dir)
                 ->deployJs()
-                ->deployCss()
-                ->generateLink();
+                ->deployCss();
         } catch (Exception $e) {
             Error::getInstance()->throwError($e->getMessage());
         }
@@ -125,27 +118,6 @@ class FrontResourceController
     }
 
     /**
-     * @param string $type
-     * @return string
-     */
-    public function getLink(string $type): string
-    {
-        return $this->link[$type];
-    }
-
-    /**
-     * @param string $type
-     * @param string $link
-     * @return FrontResourceController
-     */
-    private function setLink(string $type, string $link): FrontResourceController
-    {
-        $this->link[$type] = $link;
-
-        return $this;
-    }
-
-    /**
      * Deploys the JavaScript file.
      *
      * @return $this
@@ -158,11 +130,11 @@ class FrontResourceController
     /**
      * Deploys the CSS file.
      *
-     * @return $this
+     * @return void
      */
-    private function deployCss(): self
+    private function deployCss(): void
     {
-        return $this->deployResource('style', 'css');
+        $this->deployResource('style', 'css');
     }
 
 
@@ -183,8 +155,8 @@ class FrontResourceController
             $files->getAbsolutePath(PATHS['PUBLIC_SOURCES']."/$extension/work/$workDir/$type.$extension"),
         ];
 
-        $this->setLink($extension, "/assets/$extension/work/$workDir/$type.$extension")
-            ->deployFile($directories);
+        $this->deployFile($directories);
+
 
         return $this;
     }
@@ -212,19 +184,6 @@ class FrontResourceController
         if (!file_exists($destination) || filesize($source) !== filesize($destination)) {
             Files::getInstance()->fileCopy($directories);
         }
-    }
-
-    /**
-     * Generates and stores the HTML links for CSS and JS.
-     *
-     * @return void
-     */
-    private function generateLink(): void
-    {
-        $this->htmlAssets = [
-            'CSS' => [sprintf(/** @lang html */ '<link rel="stylesheet" href="%s">', $this->getLink('css'))],
-            'JS'  => [],
-        ];
     }
 
     /**

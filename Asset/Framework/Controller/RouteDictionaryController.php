@@ -22,6 +22,7 @@ use Asset\Framework\Interface\ControllerInterface;
 
 
 use Repository\Default\{
+    Setup as Setup,
     Demo1 as Demo1,
     Demo2 as Demo2,
     Admin as Admin,
@@ -106,8 +107,10 @@ class RouteDictionaryController
     public function resolveController(): ControllerInterface
     {
         return match (mb_strtolower($this->getPath())) {
+            '/setup' => Setup\Back\Main::getInstance(),
             '/home' => Home\Back\Main::getInstance(),
             '/user-access' => UserAccess\Back\Main::getInstance(),
+
             /*
 
             '/user-logout' => UserLogout\Back\Main::getInstance(),

@@ -1,4 +1,4 @@
-import {HandlerScriptLoader} from "../../handler/handler-script-loader.js";
+import {HandlerResourceLoader} from "../../handler/handler-resource-loader.js";
 
 async function loadExtraScript() {
     const demoScript = [
@@ -14,7 +14,7 @@ async function loadExtraScript() {
         {src: 'assets/demo/ui-tree.demo.js', defer: false, async: true},
 
     ];
-    await (new HandlerScriptLoader()).loadExtraScript(demoScript);
+    await (new HandlerResourceLoader()).loadExtraScript(demoScript);
 }
 
 

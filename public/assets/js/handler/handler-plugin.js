@@ -14,39 +14,59 @@
 
 import {HandlerConsoleOutput} from "./handler-console-output.js";
 import {HandlerUtilities} from "./handler-utilities.js";
+import {HandlerResourceLoader} from "./handler-resource-loader.js";
 
 export class HandlerPlugin {
 
     output = new HandlerConsoleOutput();
+    resources = new HandlerResourceLoader();
 
     elementSelectors = [
         {
-            selector: `input[type='password']`, init: (elements) => {
+            name: 'password',
+            assets: false,
+            selector: `input[type='password']`,
+            init: (elements) => {
                 this.handlerPasswordView(elements);
             }
         },
         {
-            selector: '[data-lh-pl="spy"]', init: (elements) => {
+            name: 'spy',
+            assets: false,
+            selector: '[data-lh-pl="spy"]',
+            init: (elements) => {
                 this.handlerSpyScroll(elements);
             }
         },
         {
-            selector: '[data-lh-pl="select"]', init: (elements) => {
+            name: 'select2',
+            assets: true,
+            selector: '[data-lh-pl="select"]',
+            init: (elements) => {
                 this.handlerSelect2(elements);
             }
         },
         {
-            selector: '[data-lh-pl="datatable"]', init: (elements) => {
+            name: 'datatable',
+            assets: true,
+            selector: '[data-lh-pl="datatable"]',
+            init: (elements) => {
                 this.handlerDatatable(elements);
             }
         },
         {
-            selector: '[data-lh-pl="summernote"]', init: (elements) => {
+            name: 'summernote',
+            assets: true,
+            selector: '[data-lh-pl="summernote"]',
+            init: (elements) => {
                 this.handlerSummerNote(elements);
             }
         },
         {
-            selector: '[data-lh-pl="dropzone"]', init: (elements) => {
+            name: 'dropzone',
+            assets: true,
+            selector: '[data-lh-pl="dropzone"]',
+            init: (elements) => {
                 this.handlerDropZone(elements);
             }
         },
@@ -56,18 +76,26 @@ export class HandlerPlugin {
         this.plugins = [];
     }
 
-    registerPlugin(selector, pluginInitCallback) {
-        this.plugins.push({selector, init: pluginInitCallback});
+    registerPlugin(plugin) {
+        this.plugins.push(plugin);
+    }
+
+    async defaultPluginSetting() {
+        
     }
 
     async initializePlugins() {
         await this.output.defaultMGS('loader', 'UI Plugin');
-        this.plugins.forEach(plugin => {
+        await this.defaultPluginSetting();
+        for (const plugin of this.plugins) {
             const elements = document.querySelectorAll(plugin.selector);
             if (elements.length > 0) {
+                if (plugin.assets) {
+                    await this.resources.loadAssets(plugin.name);
+                }
                 plugin.init(elements);
             }
-        });
+        }
         await this.output.defaultMGS('end-loader', 'UI Plugin');
     }
 

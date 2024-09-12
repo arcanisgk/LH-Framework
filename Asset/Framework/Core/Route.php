@@ -113,7 +113,6 @@ class Route
 
         foreach ($this->routes as $route) {
             if ($this->matchRoute($route['method'], $route['path'])) {
-
                 Middleware::processMiddleware();
                 [$controller, $method] = $route['handler'];
                 $instance = $controller::getInstance($route['path']);

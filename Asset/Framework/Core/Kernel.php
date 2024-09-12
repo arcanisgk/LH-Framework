@@ -60,7 +60,6 @@ class Kernel
             Session::getInstance()->handleSession();
             //Route::getInstance()->initRoute();
             //ex(isset($_POST), isset($_GET));
-
             Route::getInstance()->initialize();
 
 

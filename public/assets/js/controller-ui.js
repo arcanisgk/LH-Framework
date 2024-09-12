@@ -44,7 +44,7 @@ export class ControllerUI {
      */
     setupPlugins() {
         this.plugin.elementSelectors.forEach(plugin => {
-            this.plugin.registerPlugin(plugin.selector, plugin.init);
+            this.plugin.registerPlugin(plugin);
         });
     }
 
