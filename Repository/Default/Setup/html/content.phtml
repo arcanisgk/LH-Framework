@@ -19,7 +19,7 @@
 
     </div>
 
-    <div id="content" class="app-content app-content-add-right-padding d-flex flex-column p-0">
+    <div id="content" class="app-content d-flex flex-column p-0">
 
         <div class="app-content-padding flex-grow-1 overflow-hidden" data-scrollbar="true" data-height="100%"
              data-spy-scroll="slide1">
@@ -38,7 +38,7 @@
 
             <hr class="mb-4">
 
-            <form>
+            <form method="post" action="/Setup">
                 <div class="row">
                     <div style="width: 180px">
 
@@ -467,7 +467,8 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" name="b-save-json" class="btn btn-red w-125px">Save
+                                            <button type="button" name="event" value="save" class="btn btn-red w-125px">
+                                                Save
                                             </button>
                                         </div>
                                     </div>

@@ -27,7 +27,7 @@ export class HandlerResourceList {
 
             {typeR: 'css', src: 'assets/lib/theme/main/app.min.css'},
 
-            {typeR: 'css', src: 'assets/lib/theme/main/custom.css'},
+            {typeR: 'css', src: 'assets/css/custom.css'},
 
             /*JS Files Require for System*/
             {typeR: 'js', src: 'assets/lib/pace/pace.min.js'},

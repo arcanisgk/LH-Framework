@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Exception;
+
 /**
  * Class Files
  * A simple ...
@@ -125,6 +127,18 @@ class Files
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * @param string $directory
+     * @return void
+     * @throws Exception
+     */
+    public function ensureDirectoryExists(string $directory): void
+    {
+        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+            throw new Exception("Directory '$directory' was not created");
         }
     }
 

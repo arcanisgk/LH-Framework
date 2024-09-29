@@ -20,13 +20,14 @@ export class HandlerResourceLoader {
     constructor() {
         this.loadedCss = new Set();
         this.loadedJs = new Set();
+        this.defaultConfig();
     }
 
     loadCss(src) {
         return new Promise((resolve, reject) => {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = `${src}`;//?${this.accelerator}`;
+            link.href = `${src}`;
             link.onload = () => resolve();
             link.onerror = () => reject(new Error(`Failed to load CSS: ${src}`));
             document.head.appendChild(link);
@@ -36,9 +37,13 @@ export class HandlerResourceLoader {
     loadJs({src, defer = true, type = 'text/javascript', async = true} = {}) {
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = `${src}`;//?${this.accelerator}`;
-            script.defer = defer;
-            script.async = async;
+            script.src = `${src}`;
+            if (defer) {
+                script.defer = defer;
+            }
+            if (async) {
+                script.async = async;
+            }
             script.type = type;
             script.onload = () => resolve();
             script.onerror = () => reject(new Error(`Failed to load JS: ${src}`));
@@ -61,8 +66,9 @@ export class HandlerResourceLoader {
 
         try {
             for (const resource of requirementScript) {
+
                 await this.loadResource(resource);
-                console.log('resource Loaded', resource);
+                //console.log('resource Loaded', resource);
             }
         } catch (error) {
             console.error('Error loading assets:', error);
@@ -75,7 +81,7 @@ export class HandlerResourceLoader {
         try {
             for (const resource of assetsScript) {
                 await this.loadResource(resource);
-                console.log('resource Loaded', resource);
+                //console.log('resource Loaded', resource);
             }
         } catch (error) {
             console.error('Error loading assets:', error);
@@ -85,14 +91,14 @@ export class HandlerResourceLoader {
     getScriptPath() {
         const path = window.location.pathname.split('/').pop().toLowerCase();
         const formattedPath = path.replace(/-/g, '');
-        return `assets/js/work/${formattedPath}/script.js`;//?${this.accelerator}`;
+        return {css: `assets/css/work/${formattedPath}/style.css`, js: `assets/js/work/${formattedPath}/script.js`};
     }
 
     async loadDynamicScript() {
         const scriptPath = this.getScriptPath();
         try {
-            await this.loadJs({src: scriptPath, type: 'module'});
-            console.log(`Script Loaded Successfully: ${scriptPath}`);
+            await this.loadCss(scriptPath.css);
+            await this.loadJs({src: scriptPath.js, type: 'module'});
         } catch (error) {
             console.warn(`Error loading assets: ${scriptPath}`, error);
         }
@@ -110,4 +116,11 @@ export class HandlerResourceLoader {
         return result;
     }
 
+    defaultConfig() {
+        window.paceOptions = {
+            eventLag: {
+                lagThreshold: 30,
+            },
+        };
+    }
 }

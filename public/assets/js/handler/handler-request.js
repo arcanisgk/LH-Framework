@@ -31,7 +31,20 @@ export class HandlerRequest {
                     'Content-Type': type || 'application/json'
                 }
             };
-            
+
+            axios.interceptors.request.use(config => {
+                Pace.restart();
+                return config;
+            }, error => {
+                return Promise.reject(error);
+            });
+
+            axios.interceptors.response.use(response => {
+                return response;
+            }, error => {
+                return Promise.reject(error);
+            });
+
             const response = await axios(config);
 
             console.log(response)

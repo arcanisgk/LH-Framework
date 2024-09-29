@@ -70,8 +70,8 @@ export class HandlerGlobalSetting {
         delete this.settings[key];
     }
 
-    static resetSettings() {
-        this.init(); // Reinicia llamando al método Init
+    static async resetSettings() {
+        await this.init();
     }
 
 }

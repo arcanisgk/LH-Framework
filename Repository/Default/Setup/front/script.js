@@ -11,13 +11,13 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
-import {HandlerConsoleOutput} from "../../handler/handler-console-output.js";
-import {HandlerModal} from "../../handler/handler-modal.js";
-import {HandlerDOM} from "../../handler/handler-dom.js";
-import {HandlerValidation} from "../../handler/handler-validation.js";
-import {HandlerInstallerAction} from "../../handler/handler-installer-action.js";
-import {HandlerAudio} from "../../handler/handler-audio.js";
-import {HandlerRequest} from "../../handler/handler-request.js";
+import {HandlerConsoleOutput} from '../../handler/handler-console-output.js';
+import {HandlerModal} from '../../handler/handler-modal.js';
+import {HandlerDOM} from '../../handler/handler-dom.js';
+import {HandlerValidation} from '../../handler/handler-validation.js';
+import {HandlerInstallerAction} from '../../handler/handler-installer-action.js';
+import {HandlerAudio} from '../../handler/handler-audio.js';
+import {HandlerRequest} from '../../handler/handler-request.js';
 
 
 export class HandlerInstaller {
@@ -253,11 +253,19 @@ export class HandlerInstaller {
     }
 
 
-    async saveJson() {
+    async eventTrigger(event) {
+        event.preventDefault();
+
         const inputElements = document.querySelectorAll('input[name^="json-"]');
         const form_data = new FormData();
         let error = false;
         let errorField = [];
+
+        const buttonClicked = event.submitter || event.target;
+        const eventValue = buttonClicked.value;
+
+        form_data.append('event', eventValue);
+
         inputElements.forEach(input => {
             let fieldName = input.name;
             let value = input.value;
@@ -273,9 +281,6 @@ export class HandlerInstaller {
             form_data.append(fieldName, value);
         });
         if (!error) {
-
-            //uri
-
             await HandlerRequest.request({
                 uri: window.location.href,
                 data: form_data,
@@ -328,9 +333,11 @@ export class HandlerInstaller {
         }
     }
 
-    async setupSaveJsonListener() {
-        const saveChangesJsonSave = document.querySelector("button[name='b-save-json']");
-        saveChangesJsonSave.addEventListener("click", async () => await this.saveJson());
+    async setupEventListener() {
+        const eventButtons = document.querySelectorAll("button[name='event']");
+        eventButtons.forEach(button => {
+            button.addEventListener("click", async (event) => await this.eventTrigger(event));
+        });
     }
 
 
@@ -675,7 +682,7 @@ export class HandlerInstaller {
             }
         });
 
-        await this.setupSaveJsonListener();
+        await this.setupEventListener();
     }
 
     async WelcomeInstaller() {

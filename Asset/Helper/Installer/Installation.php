@@ -189,12 +189,14 @@ class Installation
      */
     private function processMailConfig(): void
     {
-        $_POST['json-mail-conf'] = $this->replacePlaceholdersWithPasswords(
-            $_POST['json-mail-conf'] ?? [],
-            $_POST['json-mail-conf-password'] ?? [],
-            'mail',
-            $this->templateConfEmail
-        );
+        foreach ($_POST['json-mail-conf'] as $key => $mailData) {
+            $_POST['json-mail-conf'][$key] = $this->replacePlaceholdersWithPasswords(
+                $_POST['json-mail-conf'][$key] ?? [],
+                $_POST['json-mail-conf-password'][$key] ?? [],
+                'mail',
+                $this->templateConfEmail
+            );
+        }
     }
 
     /**
@@ -283,7 +285,7 @@ class Installation
      * @return void
      * @throws Exception
      */
-    private function ensureDirectoryExists(string $directory): void
+    public function ensureDirectoryExists(string $directory): void
     {
         if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
             throw new Exception("Directory '$directory' was not created");

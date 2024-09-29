@@ -18,12 +18,14 @@ declare(strict_types=1);
 
 namespace Repository\Default\UserAccess\Back;
 
+use Asset\Framework\Controller\EventController;
+
 /**
  * Class that handles:
  *
  * @package Repository\Default\UserAccess\Back;
  */
-class Event
+class Event extends EventController
 {
 
     /**
@@ -45,15 +47,85 @@ class Event
         return self::$instance;
     }
 
+    /**
+     * @var mixed|null
+     */
+    private mixed $event = null;
 
-    public array $response = [];
+    /**
+     * @var bool
+     */
+    public bool $event_exists = false;
 
     /**
      * Event constructor.
      */
     public function __construct()
     {
+        parent::__construct();
+        if (isset($_POST) && !empty($_POST)) {
+            $this->event_exists = true;
+            $this->event        = $_POST['event'];
+        }
+    }
 
+    /**
+     * @var Main
+     */
+    public Main $main;
+
+    /**
+     * @var array
+     */
+    public array $data = [];
+
+    /**
+     * @param Main $main
+     * @return $this
+     */
+    public function setMain(Main $main): self
+    {
+        $this->main = $main;
+
+        return $this;
+    }
+
+    /**
+     * @return $this|null
+     */
+    public function listenerEvent(): ?self
+    {
+        if ($this->event !== null) {
+
+            call_user_func([$this, $this->event]);
+
+            $this->data = $this->getResponseData(
+                $this->main->input,
+                $this->main->smg
+            );
+        }
+
+        return $this;
+    }
+
+    private function login()
+    {
+        ex_c('Test de login');
+    }
+
+    private function register()
+    {
+        ex_c('Test de register');
+    }
+
+    private function loginWithGoogle()
+    {
+        ex_c('Test de loginWithGoogle');
+    }
+
+    private function loginWithFacebook()
+    {
+        ex_c('Test de loginWithFacebook');
     }
 
 }

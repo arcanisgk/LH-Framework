@@ -55,13 +55,15 @@ class Kernel
     public function run(): void
     {
         if (!IS_CLI) {
+
             //ex('|||====>>>> Kernel Run ))))');
             Config::getInstance()->loadConfiguration();
             Session::getInstance()->handleSession();
             //Route::getInstance()->initRoute();
             //ex(isset($_POST), isset($_GET));
-            Route::getInstance()->initialize();
 
+
+            Route::getInstance()->initialize();
 
         } else {
             //Ejecutar como CLI

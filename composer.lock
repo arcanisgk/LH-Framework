@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f04838829c55b3f43c69912e4fb9e7f",
+    "content-hash": "c7d657593231a633c343c8625eeca637",
     "packages": [
         {
             "name": "arcanisgk/web-cli-detector",
@@ -136,9 +136,9 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.3",
-        "ext-json": "*",
         "ext-mbstring": "*",
         "ext-xml": "*",
+        "ext-json": "*",
         "ext-pdo": "*"
     },
     "platform-dev": [],

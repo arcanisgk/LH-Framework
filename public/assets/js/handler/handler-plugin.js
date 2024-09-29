@@ -80,13 +80,8 @@ export class HandlerPlugin {
         this.plugins.push(plugin);
     }
 
-    async defaultPluginSetting() {
-        
-    }
-
     async initializePlugins() {
         await this.output.defaultMGS('loader', 'UI Plugin');
-        await this.defaultPluginSetting();
         for (const plugin of this.plugins) {
             const elements = document.querySelectorAll(plugin.selector);
             if (elements.length > 0) {
@@ -227,4 +222,5 @@ export class HandlerPlugin {
     handlerDropZone(elements) {
         console.log(elements);
     }
+
 }

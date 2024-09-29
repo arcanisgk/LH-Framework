@@ -28,6 +28,7 @@ use Repository\Default\{
     Admin as Admin,
     Contact as Contact,
     Dashboard as Dashboard,
+    Calendar as Calendar,
     Help as Help,
     Home as Home,
     NotFound as NotFound,
@@ -110,7 +111,8 @@ class RouteDictionaryController
             '/setup' => Setup\Back\Main::getInstance(),
             '/home' => Home\Back\Main::getInstance(),
             '/user-access' => UserAccess\Back\Main::getInstance(),
-
+            '/dashboard' => Dashboard\Back\Main::getInstance(),
+            '/calendar' => Calendar\Back\Main::getInstance(),
             /*
 
             '/user-logout' => UserLogout\Back\Main::getInstance(),

@@ -46,9 +46,9 @@ class Request
     }
 
     /**
-     * @return void
+     * @return Request
      */
-    public function CleanSuperGlobal(): void
+    public function CleanSuperGlobal(): self
     {
         if (isset($_POST) && empty($_POST)) {
             unset($_POST);
@@ -60,6 +60,8 @@ class Request
         } else {
             $_GET = $this->evaluateSuperGlobal($_GET);
         }
+
+        return $this;
     }
 
     /**
@@ -121,5 +123,11 @@ class Request
         exit;
     }
 
-
+    /**
+     * @return void
+     */
+    public function ContentType(): void
+    {
+        $_SERVER["CONTENT_TYPE"] = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : null;
+    }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * @var string $source
- * @var array  $errorArray
+ * @var array $errorArray
  */
 
 ?>
@@ -19,7 +19,7 @@ declare(strict_types=1);
         echo $errorArray['class']; ?> | Error Control Software</title>
     <style>
 
-        @import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+        @import url(/assets/css/firacode/fira_code.css);
 
         body {
             font-family: "Roboto", arial, sans-serif;

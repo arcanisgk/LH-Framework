@@ -61,11 +61,15 @@ class Middleware
 
         if (!Config::checkFullConfig() && UR !== '/Setup') {
             Request::getInstance()->redirect('/Setup');
+        } elseif (Config::checkFullConfig() && UR === '/Setup' && UR !== CONFIG['APP']['HOST']['ENTRY']) {
+            Request::getInstance()->redirect(CONFIG['APP']['HOST']['ENTRY']);
         }
 
         if (!Authentication::check() && UR !== '/User-Access') {
             Request::getInstance()->redirect('/User-Access');
         }
+
+        //User::getInstance()->getUserStatus();
 
     }
 }

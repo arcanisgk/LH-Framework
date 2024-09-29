@@ -40,11 +40,6 @@ class Route
     private array $routes = [];
 
     /**
-     * @var array
-     */
-    private array $middlewares = [];
-
-    /**
      * Get the singleton instance of Route.
      *
      * @return Route The singleton instance.
@@ -57,7 +52,6 @@ class Route
 
         return self::$instance;
     }
-
 
     /**
      * @return void

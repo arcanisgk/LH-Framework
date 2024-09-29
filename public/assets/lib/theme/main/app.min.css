@@ -15212,7 +15212,7 @@ fieldset:disabled .btn {
     --bs-app-header-divider-bg: #dee2e6;
     --bs-app-sidebar-bg: #ffffff;
     --bs-app-sidebar-bg-rgb: 255, 255, 255;
-    --bs-app-sidebar-bg-transparent: url(images/cover-sidebar.jpg);
+    --bs-app-sidebar-bg-transparent: url(../../../img/defaut/cover-sidebar.jpg);
     --bs-app-sidebar-profile-bg: #20252a;
     --bs-app-sidebar-profile-bg-rgb: 32, 37, 42;
     --bs-app-sidebar-profile-color: #ffffff;
@@ -16346,7 +16346,7 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(images/cover-sidebar-user.jpg);
+    background-image: url(../../../img/default/cover-sidebar-user.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }

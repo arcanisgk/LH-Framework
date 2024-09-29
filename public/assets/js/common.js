@@ -12,7 +12,7 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-import {ControllerUI} from "./controller-ui.js";
+import {ControllerUI} from "./handler/controller-ui.js";
 import {HandlerConsoleOutput} from "./handler/handler-console-output.js";
 import {HandlerGlobalSetting} from "./handler/handler-global-setting.js";
 import {HandlerResourceLoader} from "./handler/handler-resource-loader.js";

@@ -17,7 +17,7 @@ declare(strict_types=1);
  */
 
 use Asset\Framework\Core\{Argument, Log, Request};
-use Asset\Helper\{AutoloaderClass, Installer\Installation};
+use Asset\Helper\AutoloaderClass;
 use IcarosNet\WebCLIToolKit\WebCLIDetector;
 
 require_once implode(DS, [PD, 'Asset', 'Helper', 'AutoloaderClass.php']);
@@ -34,9 +34,6 @@ if (WebCLIDetector::getInstance()->isCLI()) {
     require_once implode(DS, [PD, 'Asset', 'Framework', 'Error', 'BugCatcher.php']);
 }
 
-Request::getInstance()->CleanSuperGlobal();
-
-function install(): void
-{
-    Installation::getInstance();
-}
+Request::getInstance()
+    ->CleanSuperGlobal()
+    ->ContentType();

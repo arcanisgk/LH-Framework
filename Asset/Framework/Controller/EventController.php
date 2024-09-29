@@ -45,14 +45,69 @@ class EventController
         return self::$instance;
     }
 
-    public array $response = [];
-
     /**
      * EventController constructor.
      */
     public function __construct()
     {
-
+        $this->setResponseError(false);
     }
 
+    /**
+     * @var array
+     */
+    public array $response = [];
+
+    /**
+     * @var bool
+     */
+    private bool $response_error;
+
+    /**
+     * @return bool
+     */
+    public function isResponseError(): bool
+    {
+        return $this->response_error;
+    }
+
+    /**
+     * @param bool $response_error
+     */
+    public function setResponseError(bool $response_error): void
+    {
+        $this->response_error = $response_error;
+    }
+
+    /**
+     * @param string $target
+     * @param string $data
+     * @param bool $type
+     * @return void
+     */
+    public function setResponse(string $target, string $data, bool $type = false): void
+    {
+        $this->setResponseError($type);
+        $this->response = ['target' => $target, 'content' => $data];
+    }
+
+    /**
+     * @param $fields
+     * @param $message
+     * @return array
+     */
+    public function getResponseData($fields, $message): array
+    {
+        $response_data = [];
+        $error         = $this->isResponseError() ? 'danger' : 'success';
+        foreach (array_merge($fields, $message) as $key => $data) {
+            if ($this->response['target'] == $key) {
+                $response_data[$key] = '<label class="text-'.$error.' fw-bold">'.$this->response['content'].'</label>';
+            } else {
+                $response_data[$key] = $data;
+            }
+        }
+
+        return $response_data;
+    }
 }

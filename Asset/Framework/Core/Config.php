@@ -53,6 +53,7 @@ class Config
      */
     public static function checkFullConfig(): bool
     {
+
         return (CONFIG['APP']['PROJECT']['PROJECT_CONFIG'] === true);
     }
 

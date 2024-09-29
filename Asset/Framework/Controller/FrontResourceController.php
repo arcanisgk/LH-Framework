@@ -136,8 +136,7 @@ class FrontResourceController
     {
         $this->deployResource('style', 'css');
     }
-
-
+    
     /**
      * Deploys a resource file (JS or CSS) by type.
      *

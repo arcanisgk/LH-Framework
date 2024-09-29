@@ -36,7 +36,6 @@ use Exception;
 class Main extends FrontResourceController implements ControllerInterface
 {
 
-
     /**
      * @var Main|null Singleton instance of the class: Main.
      */
@@ -69,12 +68,12 @@ class Main extends FrontResourceController implements ControllerInterface
     /**
      * @var FormInput|null
      */
-    private ?FormInput $input;
+    public ?FormInput $input;
 
     /**
      * @var FormSMG|null
      */
-    private ?FormSMG $smg;
+    public ?FormSMG $smg;
 
     /**
      * Main constructor.
@@ -84,11 +83,14 @@ class Main extends FrontResourceController implements ControllerInterface
     {
         parent::__construct();
         $this->response = ResponseController::getInstance();
-        $this->event    = EventController::getInstance();
+        $this->event    = Event::getInstance()->setMain($this);
         $this->input    = FormInput::getInstance();
         $this->smg      = FormSMG::getInstance();
         $this->input->setInput($this->form_input);
         $this->smg->setSMG($this->form_smg);
+        if ($this->event->event_exists) {
+            $this->response->setData($this->event->listenerEvent());
+        }
     }
 
     /**

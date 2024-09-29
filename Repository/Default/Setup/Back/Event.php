@@ -18,12 +18,15 @@ declare(strict_types=1);
 
 namespace Repository\Default\Setup\Back;
 
+use Asset\Framework\Controller\EventController;
+use Asset\Framework\Core\Installation;
+
 /**
  * Class that handles:
  *
  * @package Repository\Default\Setup\Back;
  */
-class Event
+class Event extends EventController
 {
 
     /**
@@ -45,15 +48,115 @@ class Event
         return self::$instance;
     }
 
+    /**
+     * @var mixed|null
+     */
+    private mixed $event = null;
 
-    public array $response = [];
+    /**
+     * @var bool
+     */
+    public bool $event_exists = false;
 
     /**
      * Event constructor.
      */
     public function __construct()
     {
+        parent::__construct();
+        if (isset($_POST) && !empty($_POST)) {
+            $this->event_exists = true;
+            $this->event        = $_POST['event'];
+        }
+    }
 
+    /**
+     * @var Main
+     */
+    public Main $main;
+
+    /**
+     * @var array
+     */
+    public array $data = [];
+
+    /**
+     * @param Main $main
+     * @return $this
+     */
+    public function setMain(Main $main): self
+    {
+        $this->main = $main;
+
+        return $this;
+    }
+
+    /**
+     * @return $this|null
+     */
+    public function listenerEvent(): ?self
+    {
+
+        if ($this->event !== null) {
+
+            call_user_func([$this, $this->event]);
+
+            $this->data = $this->getResponseData(
+                $this->main->input,
+                $this->main->smg
+            );
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return void
+     */
+    private function save(): void
+    {
+
+        Installation::getInstance()->saveSetting();
+
+        ex_c('End of Save');
+
+    }
+
+    /**
+     * @return void
+     */
+    private function databaseTest(): void
+    {
+
+    }
+
+    /**
+     * @return void
+     */
+    private function mailTest(): void
+    {
+
+        /*
+        $dbParams = [
+            'host' => $_POST['i-database-host'],
+            'db'   => $_POST['i-database-name'],
+            'user' => $_POST['i-database-user'],
+            'pass' => $_POST['i-database-password'],
+        ];
+
+        return Database::getInstance()->testConnection($dbParams);
+        */
+
+        ex_c('Test de mailTest');
+    }
+
+    /**
+     * @return void
+     */
+    private function ftpTest(): void
+    {
+        ex_c('Test de ftpTest');
     }
 
 }
