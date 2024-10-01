@@ -26,7 +26,7 @@ use Asset\Framework\Controller\{
 use Asset\Framework\View\{
     FormInput,
     FormSMG,
-    RenderTemplateView
+    RenderTemplate
 };
 use Asset\Framework\Core\Files;
 use Asset\Framework\Interface\ControllerInterface;
@@ -117,9 +117,11 @@ class Main extends FrontResourceController implements ControllerInterface
      */
     public function process(): ResponseController
     {
-        $form = RenderTemplateView::getInstance()
+
+        $form = RenderTemplate::getInstance()
             ->setInput($this->input)
             ->setSMG($this->smg)
+            ->setDic(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../dic/view.json'))
             ->setEventResponse($this->event->response)
             ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/content.phtml'))
             ->setData()

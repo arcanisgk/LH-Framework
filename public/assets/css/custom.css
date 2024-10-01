@@ -162,3 +162,7 @@
     background: linear-gradient(45deg, #CD7F32, #8B4513);
     border: 2px solid #CD7F32;
 }
+
+.dev-mode-btn {
+    top: 40% !important;
+}

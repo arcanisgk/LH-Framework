@@ -70,10 +70,26 @@ export class HandlerPlugin {
                 this.handlerDropZone(elements);
             }
         },
+        {
+            name: 'dev-mode',
+            assets: false,
+            selector: '[data-lh-pl="dev-mode"]',
+            init: (elements) => {
+                this.handlerDevMode(elements);
+            }
+        },
     ];
 
     constructor() {
         this.plugins = [];
+    }
+
+    getPlOptions(options) {
+        return options.split(', ').reduce((obj, par) => {
+            const [key, value] = par.split(': ').map(element => element.trim());
+            obj[key] = value;
+            return obj;
+        }, {});
     }
 
     registerPlugin(plugin) {
@@ -138,7 +154,6 @@ export class HandlerPlugin {
         });
     }
 
-
     handlerPasswordView(elements) {
         elements.forEach(element => {
 
@@ -181,10 +196,15 @@ export class HandlerPlugin {
         const deploySelect2 = sel => {
 
             destroySelect2(sel);
+            let extraOptions = {};
+            if (sel.options) {
+                extraOptions = this.getPlOptions(sel.options);
+            }
 
             let option = {
                 width: sel.width,
                 dropdownAutoWidth: true,
+                ...extraOptions
             }
 
             let parent = HandlerUtilities.findModalParent(sel.target);
@@ -205,8 +225,10 @@ export class HandlerPlugin {
             let sel = {
                 'target': target,
                 'width': target.attr("data-width") || '100px',
-                'required': target.prop('required') || false
+                'required': target.prop('required') || false,
+                'options': target.attr("data-lh-pl-options") || false,
             }
+
             deploySelect2(sel);
         });
     }
@@ -222,5 +244,14 @@ export class HandlerPlugin {
     handlerDropZone(elements) {
         console.log(elements);
     }
+
+    handlerDevMode(elements) {
+        console.log(elements);
+        const modalDevView = document.getElementById('modal-dev-view');
+        modalDevView.addEventListener('shown.bs.modal', function () {
+            console.log('El modal ya es visible.');
+        });
+    }
+
 
 }

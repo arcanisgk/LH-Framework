@@ -1,0 +1,52 @@
+{
+  "translations": {
+    "es": {
+      "lang": "es",
+      "label-setting": "Configuración de la aplicación",
+      "label-lang": "Idioma",
+      "label-color-theme": "Selector de color",
+      "label-mode-theme": "Modo Oscuro",
+      "label-mode-explain": "Ajuste la apariencia para reducir el resplandor y darle un descanso a sus ojos.",
+      "label-fix-header": "Fijar la Barra Superior",
+      "label-fix-sidebar": "Fijar Barra de Menu",
+      "label-grid-sidebar": "Cuadricula Barra de Menu",
+      "button-label-reset-setting": "Restablecer la Configuración Local"
+    },
+    "en": {
+      "lang": "en",
+      "label-setting": "App Settings",
+      "label-lang": "Language",
+      "label-color-theme": "Color Theme Selector",
+      "label-mode-theme": "Dark Mode",
+      "label-mode-explain": "Adjust the appearance to reduce glare and give your eyes a break.",
+      "label-fix-header": "Header Fixed",
+      "label-fix-sidebar": "Sidebar Fixed",
+      "label-grid-sidebar": "Sidebar Grid",
+      "button-label-reset-setting": "Reset Local Configuration"
+    },
+    "fr": {
+      "lang": "fr",
+      "label-setting": "Paramètres de l'App",
+      "label-lang": "Langue",
+      "label-color-theme": "Sélecteur de Thème de Couleur",
+      "label-mode-theme": "Mode Sombre",
+      "label-mode-explain": "Ajustez l'apparence pour réduire l'éblouissement et donner un repos à vos yeux.",
+      "label-fix-header": "En-tête Fixe",
+      "label-fix-sidebar": "Barre Latérale Fixe",
+      "label-grid-sidebar": "Barre Latérale en Grille",
+      "button-label-reset-setting": "Réinitialiser les Paramètres Local"
+    },
+    "pt": {
+      "lang": "pt",
+      "label-setting": "Configurações do App",
+      "label-lang": "Idioma",
+      "label-color-theme": "Seletor de Tema de Cor",
+      "label-mode-theme": "Modo Escuro",
+      "label-mode-explain": "Ajuste a aparência para reduzir o brilho e dar um descanso aos seus olhos.",
+      "label-fix-header": "Cabeçalho Fixo",
+      "label-fix-sidebar": "Barra Lateral Fixa",
+      "label-grid-sidebar": "Barra Lateral em Grade",
+      "button-label-reset-setting": "Redefinir o Armazenamento Local"
+    }
+  }
+}

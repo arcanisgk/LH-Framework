@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{lang}}">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
@@ -46,6 +46,8 @@
     <div class="spinner-loader"></div>
 </div>
 {{html_content}}
+{{app_setting}}
+{{dev_mode}}
 <script>
     async function setLoaderVisibility(visible) {
         document.getElementById('screen-loader').style.display = visible ? 'flex' : 'none';
@@ -54,7 +56,7 @@
     (async () => {
         await setLoaderVisibility(true);
     })();
-    
+
 </script>
 <script type="module" src="assets/js/common.js"></script>
 </body>

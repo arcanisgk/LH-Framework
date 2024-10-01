@@ -78,13 +78,19 @@ export class HandlerResourceLoader {
     async loadAssets(name) {
         const assetsScript = HandlerResourceList.getCommonPlugin(name);
 
-        try {
-            for (const resource of assetsScript) {
-                await this.loadResource(resource);
-                //console.log('resource Loaded', resource);
+        console.log(assetsScript);
+
+        if (assetsScript) {
+            try {
+                for (const resource of assetsScript) {
+                    await this.loadResource(resource);
+                    //console.log('resource Loaded', resource);
+                }
+            } catch (error) {
+                console.error('Error loading assets:', error);
             }
-        } catch (error) {
-            console.error('Error loading assets:', error);
+        } else {
+            console.log(`Asset not found: ${name}`);
         }
     }
 

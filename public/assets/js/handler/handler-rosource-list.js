@@ -69,7 +69,8 @@ export class HandlerResourceList {
                     {typeR: 'css', src: 'assets/lib/dropzone/dropzone.min.css'},
                     {typeR: 'js', src: 'assets/lib/dropzone/dropzone.full.min.js'},
                 ],
-            }
+            },
+
         };
 
         return assets[name]?.resources || null;

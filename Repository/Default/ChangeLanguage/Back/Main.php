@@ -16,26 +16,22 @@ declare(strict_types=1);
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace Repository\Default\Demo1\Back;
+namespace Repository\Default\ChangeLanguage\Back;
 
-use Asset\Framework\Controller\{
-    EventController,
-    FrontResourceController,
-    ResponseController
-};
-use Asset\Framework\View\{
-    FormInput,
-    FormSMG,
-    RenderTemplate
-};
+use Asset\Framework\Controller\EventController;
+use Asset\Framework\Controller\FrontResourceController;
+use Asset\Framework\Controller\ResponseController;
 use Asset\Framework\Core\Files;
 use Asset\Framework\Interface\ControllerInterface;
+use Asset\Framework\View\FormInput;
+use Asset\Framework\View\FormSMG;
+use Asset\Framework\View\RenderTemplate;
 use Exception;
 
 /**
  * Class that handles:
  *
- * @package Repository\Default\Demo1\Back;
+ * @package Repository\Default\ChangeLanguage\Back;
  */
 class Main extends FrontResourceController implements ControllerInterface
 {
@@ -72,12 +68,12 @@ class Main extends FrontResourceController implements ControllerInterface
     /**
      * @var FormInput|null
      */
-    private ?FormInput $input;
+    public ?FormInput $input;
 
     /**
      * @var FormSMG|null
      */
-    private ?FormSMG $smg;
+    public ?FormSMG $smg;
 
     /**
      * Main constructor.
@@ -87,11 +83,14 @@ class Main extends FrontResourceController implements ControllerInterface
     {
         parent::__construct();
         $this->response = ResponseController::getInstance();
-        $this->event    = EventController::getInstance();
+        $this->event    = Event::getInstance()->setMain($this);
         $this->input    = FormInput::getInstance();
         $this->smg      = FormSMG::getInstance();
         $this->input->setInput($this->form_input);
         $this->smg->setSMG($this->form_smg);
+        if ($this->event->event_exists) {
+            $this->response->setData($this->event->listenerEvent());
+        }
     }
 
     /**
@@ -107,7 +106,6 @@ class Main extends FrontResourceController implements ControllerInterface
      * @var array
      */
     private array $form_smg = [];
-
 
     /**
      * @return ResponseController
@@ -132,4 +130,5 @@ class Main extends FrontResourceController implements ControllerInterface
             ->setMail(false);
 
     }
+
 }

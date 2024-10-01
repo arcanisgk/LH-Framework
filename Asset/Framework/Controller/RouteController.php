@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Controller;
 
-use Asset\Framework\View\DeploymentView;
+use Asset\Framework\View\Deployment;
 use Repository\Default\Home as Home;
 use Exception;
 
@@ -74,7 +74,7 @@ class RouteController
                 ->resolveController();
 
             $response = $controller->process();
-            DeploymentView::getInstance()->showContent($response);
+            Deployment::getInstance()->showContent($response);
 
         } catch (Exception $e) {
             throw new Exception('Error executing controller: '.$e->getMessage());

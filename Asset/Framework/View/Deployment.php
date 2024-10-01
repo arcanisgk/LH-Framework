@@ -26,18 +26,18 @@ use Exception;
  *
  * @package Asset\Framework\Core;
  */
-class DeploymentView
+class Deployment
 {
 
     /**
-     * @var DeploymentView|null Singleton instance of the class: DeploymentView.
+     * @var Deployment|null Singleton instance of the class: Deployment.
      */
     private static ?self $instance = null;
 
     /**
-     * Get the singleton instance of teh class DeploymentView.
+     * Get the singleton instance of teh class Deployment.
      *
-     * @return DeploymentView The singleton instance.
+     * @return Deployment The singleton instance.
      */
     public static function getInstance(): self
     {
@@ -49,7 +49,7 @@ class DeploymentView
     }
 
     /**
-     * DeploymentView constructor.
+     * Deployment constructor.
      */
     public function __construct()
     {
@@ -107,10 +107,24 @@ class DeploymentView
         $dir_tpl_icon         = implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html']);
         $dir_tpl_html_content = implode(DS, [PD, 'Asset', 'resource', 'template', 'html_content.html']);
         $dir_tpl_app_setting  = implode(DS, [PD, 'Asset', 'resource', 'template', 'app_setting.html']);
+        $dir_tpl_dev_mode     = implode(DS, [PD, 'Asset', 'resource', 'template', 'dev_mode.html']);
 
-        $icon_link    = RenderTemplateView::getInstance()->setPath($dir_tpl_icon)->render();
-        $app_setting  = RenderTemplateView::getInstance()->setPath($dir_tpl_app_setting)->render();
-        $html_content = RenderTemplateView::getInstance()->setPath($dir_tpl_html_content)
+        $icon_link   = RenderTemplate::getInstance()->setPath($dir_tpl_icon)->render();
+        $app_setting = RenderTemplate::getInstance()->setPath($dir_tpl_app_setting)->render();
+
+
+        $app_setting = '';
+        if (CONFIG['ENVIRONMENT']['APP-SETTING'] === true) {
+            $app_setting = RenderTemplate::getInstance()->setPath($dir_tpl_app_setting)->render();
+        }
+
+        $dev_mode = '';
+        if (CONFIG['ENVIRONMENT']['DEV-TOOL'] === true) {
+            $dev_mode = RenderTemplate::getInstance()->setPath($dir_tpl_dev_mode)->render();
+        }
+
+
+        $html_content = RenderTemplate::getInstance()->setPath($dir_tpl_html_content)
             ->setData($this->getData())
             ->render();
 
@@ -120,9 +134,10 @@ class DeploymentView
             'icon_link'    => $icon_link,
             'html_content' => $html_content,
             'app_setting'  => $app_setting,
+            'dev_mode'     => $dev_mode,
         ];
 
-        $html = RenderTemplateView::getInstance()->setPath($dir)
+        $html = RenderTemplate::getInstance()->setPath($dir)
             ->setData($data)
             ->render();
 

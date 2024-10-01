@@ -25,7 +25,7 @@ use Asset\Framework\Core\Files;
 use Asset\Framework\Interface\ControllerInterface;
 use Asset\Framework\View\FormInput;
 use Asset\Framework\View\FormSMG;
-use Asset\Framework\View\RenderTemplateView;
+use Asset\Framework\View\RenderTemplate;
 use Exception;
 
 /**
@@ -113,7 +113,7 @@ class Main extends FrontResourceController implements ControllerInterface
      */
     public function process(): ResponseController
     {
-        $form = RenderTemplateView::getInstance()
+        $form = RenderTemplate::getInstance()
             ->setInput($this->input)
             ->setSMG($this->smg)
             ->setEventResponse($this->event->response)

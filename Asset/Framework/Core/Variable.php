@@ -61,5 +61,27 @@ class Variable
         return $result;
     }
 
+    /**
+     * @param $array
+     * @param $searchKey
+     * @return array|null
+     */
+    public static function findKeyInArray($array, $searchKey): ?array
+    {
+        foreach ($array as $key => $value) {
+            if ($key === $searchKey) {
+                return ['key' => $key, 'value' => $value];
+            }
+            if (is_array($value)) {
+                $result = self::findKeyInArray($value, $searchKey);
+            }
+            if (!empty($result)) {
+                return $result;
+            }
+        }
+
+        return null;
+    }
+
 
 }

@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\View;
 
-use Asset\Framework\Core\Files;
+use Asset\Framework\Core\{Files, Variable};
 use Exception;
 
 /**
@@ -26,11 +26,11 @@ use Exception;
  *
  * @package Asset\Framework\Core;
  */
-class RenderTemplateView
+class RenderTemplate
 {
 
     /**
-     * @var RenderTemplateView|null Singleton instance of the class: RenderTemplate.
+     * @var RenderTemplate|null Singleton instance of the class: RenderTemplate.
      */
     private static ?self $instance = null;
 
@@ -44,14 +44,17 @@ class RenderTemplateView
 
     private string $path = '';
 
+    private array $dictionary = [];
+
     private string $file_reader = '';
 
     private bool $recursive = false;
 
+
     /**
      * Get the singleton instance of teh class RenderTemplate.
      *
-     * @return RenderTemplateView The singleton instance.
+     * @return RenderTemplate The singleton instance.
      */
     public static function getInstance(): self
     {
@@ -62,16 +65,27 @@ class RenderTemplateView
         return self::$instance;
     }
 
+    public function __construct()
+    {
+        $defaultDic = Files::getInstance()->getAbsolutePath(
+            implode(DS, [PD, 'Asset', 'resource', 'dic', 'default.json'])
+        );
+        self::setDic($defaultDic);
+    }
+
+
     /**
      * @throws Exception
      */
     public function render(): string
     {
+
         $data = array_merge(
             $this->input ?? [],
             $this->smg ?? [],
             $this->event_response ?? [],
-            $this->data ?? []
+            $this->data ?? [],
+            $this->dictionary ?? [],
         );
 
         if ($this->recursive === false) {
@@ -84,6 +98,7 @@ class RenderTemplateView
 
             $this->file_reader = file_get_contents($this->path);
         }
+
 
         foreach ($data as $key => $content) {
 
@@ -184,9 +199,52 @@ class RenderTemplateView
         return $this;
     }
 
+    /**
+     * @param array $event_response
+     * @return $this
+     */
     public function setEventResponse(array $event_response): self
     {
         $this->event_response = $event_response;
+
+        return $this;
+    }
+
+
+    /**
+     * @param string $dic
+     * @return $this
+     */
+    public function setDic(string $dic): self
+    {
+
+        if (file_exists($dic)) {
+
+            $lang        = Lang::getLang();
+            $jsonContent = file_get_contents($dic);
+            $raw_dic     = json_decode($jsonContent, true);
+
+            if (isset($raw_dic['fixed']['files'])) {
+                foreach ($raw_dic['fixed']['files'] as $key => $path) {
+                    $this->dictionary[$key] = $path;
+                }
+            }
+
+            if (isset($raw_dic['fixed']['const'])) {
+                foreach ($raw_dic['fixed']['const'] as $key => $value) {
+                    $result = Variable::findKeyInArray(CONFIG, $value);
+                    if ($result !== null) {
+                        $this->dictionary[$key] = $result['value'];
+                    }
+                }
+            }
+
+            if (isset($raw_dic['translations'][$lang])) {
+                foreach ($raw_dic['translations'][$lang] as $key => $value) {
+                    $this->dictionary[$key] = $value;
+                }
+            }
+        }
 
         return $this;
     }

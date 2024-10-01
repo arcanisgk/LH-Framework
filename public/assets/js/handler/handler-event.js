@@ -13,6 +13,7 @@
  */
 
 export class HandlerEvents {
+
     constructor(formSelector) {
         this.form = document.querySelector(formSelector);
         if (this.form) {
