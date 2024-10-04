@@ -19,13 +19,8 @@ declare(strict_types=1);
 namespace Repository\Default\ChangeLanguage\Back;
 
 use Asset\Framework\Controller\EventController;
-use Asset\Framework\Controller\FrontResourceController;
-use Asset\Framework\Controller\ResponseController;
-use Asset\Framework\Core\Files;
-use Asset\Framework\Interface\ControllerInterface;
 use Asset\Framework\View\FormInput;
 use Asset\Framework\View\FormSMG;
-use Asset\Framework\View\RenderTemplate;
 use Exception;
 
 /**
@@ -33,7 +28,7 @@ use Exception;
  *
  * @package Repository\Default\ChangeLanguage\Back;
  */
-class Main extends FrontResourceController implements ControllerInterface
+class Main
 {
 
     /**
@@ -56,11 +51,6 @@ class Main extends FrontResourceController implements ControllerInterface
     }
 
     /**
-     * @var ResponseController|null
-     */
-    private ?ResponseController $response;
-
-    /**
      * @var EventController|null
      */
     private ?EventController $event;
@@ -81,54 +71,9 @@ class Main extends FrontResourceController implements ControllerInterface
      */
     public function __construct()
     {
-        parent::__construct();
-        $this->response = ResponseController::getInstance();
-        $this->event    = Event::getInstance()->setMain($this);
-        $this->input    = FormInput::getInstance();
-        $this->smg      = FormSMG::getInstance();
-        $this->input->setInput($this->form_input);
-        $this->smg->setSMG($this->form_smg);
+        $this->event = Event::getInstance()->setMain($this);
         if ($this->event->event_exists) {
-            $this->response->setData($this->event->listenerEvent());
+            $this->event->listenerEvent();
         }
     }
-
-    /**
-     * Declare on it inputs for form.
-     *
-     * @var array
-     */
-    private array $form_input = [];
-
-    /**
-     * Declare on it smg for input.
-     *
-     * @var array
-     */
-    private array $form_smg = [];
-
-    /**
-     * @return ResponseController
-     * @throws Exception
-     */
-    public function process(): ResponseController
-    {
-        $form = RenderTemplate::getInstance()
-            ->setInput($this->input)
-            ->setSMG($this->smg)
-            ->setEventResponse($this->event->response)
-            ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/content.phtml'))
-            ->setData()
-            ->setOthers(false, '')
-            ->render();
-
-        return $this->response->setData(['html_content' => $form, 'assets' => $this->getHtmlAssets()])
-            ->setShow(true)
-            ->setIn('html_content')
-            ->setRefresh(false)
-            ->setNav(false)
-            ->setMail(false);
-
-    }
-
 }

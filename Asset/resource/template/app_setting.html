@@ -7,15 +7,17 @@
 
         <div class="theme-panel-divider"></div>
         <div class="row mt-10px">
-            <label class="col-6 form-label col-form-label fw-bold" for="lang">{{label-lang}}</label>
-            <div class="col-6 d-flex">
-                <select class="form-control form-select" id="lang" data-lh-pl="select"
-                        data-lh-pl-options="minimumResultsForSearch: Infinity">
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="pt">Português</option>
-                </select>
+            <label class="col-4 form-label col-form-label fw-bold" for="lang">{{label-lang}}</label>
+            <div class="col-8">
+                <form action="/Change-Language" method="post">
+                    <select name="event" class="form-control form-select" id="lang" data-lh-pl="select"
+                            data-lh-pl-options="minimumResultsForSearch: Infinity" data-width="100%">
+                        <option value="en" {{lang-en-selected}}>English</option>
+                        <option value="es" {{lang-es-selected}}>Español</option>
+                        <option value="fr" {{lang-fr-selected}}>Français</option>
+                        <option value="pt" {{lang-pt-selected}}>Português</option>
+                    </select>
+                </form>
             </div>
         </div>
 

@@ -13,101 +13,142 @@
         <div class="login-container">
 
             <div class="login-header mb-30px">
-
                 <img src="{{owner-logo}}" class="rounded mx-auto d-block user-access-logo"
                      alt="Default">
             </div>
 
             <div class="login-content">
-                <form action="/User-Access" method="GET" class="fs-13px">
-                    <div class="form-floating mb-15px">
-                        <input type="text" autocomplete="on" class="form-control h-45px fs-13px"
-                               placeholder="{{placeholder-email}}"
-                               id="emailAddress">
-                        <label for="emailAddress"
-                               class="d-flex align-items-center fs-13px text-gray-600">{{label-email}}</label>
+                <form action="/User-Access" method="post" class="fs-13px">
+                    <div class="mb-3 d-none" id="login-smg">
                     </div>
-                    <div class="form-floating mb-15px">
-                        <input type="password" autocomplete="on" class="form-control h-45px fs-13px"
-                               placeholder="{{placeholder-password}}" id="password">
-                        <label for="password"
-                               class="d-flex align-items-center fs-13px text-gray-600">{{label-password}}</label>
+                    <div class="mb-3">
+                        <label class="mb-2" for="login-name">{{label-email}} <span class="text-danger">*</span></label>
+                        <input type="text" id="login-name" name="login-name" autocomplete="on"
+                               class="form-control fs-13px" placeholder="{{placeholder-email}}" required>
+                        <div class="d-none" id="login-name-smg"></div>
                     </div>
-                    <div class="form-check mb-30px">
-                        <input class="form-check-input" type="checkbox" value="1" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">
-                            {{label-remember-me}}
-                        </label>
+                    <div class="mb-3">
+                        <label class="mb-2" for="login-password">{{label-password}} <span
+                                    class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="password" id="login-password" name="login-password" autocomplete="on"
+                                   class="form-control fs-13px" placeholder="{{placeholder-password}}" required>
+                            <button type="button" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <div class="d-none" id="login-password-smg"></div>
                     </div>
-                    <div class="mb-15px">
-                        <button type="submit" class="btn btn-theme d-block h-45px w-100 btn-lg fs-14px">
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="login-remember" name="login-remember">
+                        <label class="form-check-label" for="login-remember">{{label-remember-me}}</label>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" name="event" value="login"
+                                class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">
                             {{button-label-login}}
                         </button>
+                        <button type="button"
+                                class="btn btn-outline-blue d-block w-100 btn-lg h-45px fs-13px mt-1 {{enable-user-service}}"
+                                data-bs-toggle="modal" data-bs-target="#modal-login-with-service">
+                            {{button-label-login-with-service}}
+                        </button>
                     </div>
-                    <div class="mb-40px pb-40px text-dark">
+                    <div class="mb-4 pb-5">
                         {{paragraph-0-0}} <a href="#" class="text-primary toggle-ua">{{paragraph-0-1}}</a>
                         {{paragraph-0-2}}
                     </div>
                     <hr class="bg-gray-600 opacity-2">
-                    <div class="text-gray-600 text-center mb-0">
-                        <a href="https://icaros.lh-2.net/" class="text-primary">&copy; Icaros Net - 2024</a>
-                    </div>
-                </form>
-            </div>
-
-            <div class="register-content d-none">
-                <form action="/User-Access" method="GET" class="fs-13px">
-                    <div class="mb-3">
-                        <label class="mb-2">{{label-name}} <span class="text-danger">*</span></label>
-                        <div class="row gx-3">
-                            <div class="col-md-6 mb-2 mb-md-0">
-                                <input type="text" autocomplete="on" class="form-control fs-13px"
-                                       placeholder="{{placeholder-first-name}}">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" autocomplete="on" class="form-control fs-13px"
-                                       placeholder="{{placeholder-last-name}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="mb-2">{{label-email}} <span class="text-danger">*</span></label>
-                        <input type="text" autocomplete="on" class="form-control fs-13px"
-                               placeholder="{{placeholder-email}}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="mb-2">{{label-re-email}} <span class="text-danger">*</span></label>
-                        <input type="text" autocomplete="on" class="form-control fs-13px"
-                               placeholder="{{placeholder-re-email}}">
-                    </div>
-                    <div class="mb-4">
-                        <label class="mb-2">{{label-password}} <span class="text-danger">*</span></label>
-                        <input type="password" autocomplete="off" class="form-control fs-13px"
-                               placeholder="{{placeholder-password}}">
-                    </div>
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" value="" id="agreementCheckbox">
-                        <label class="form-check-label" for="agreementCheckbox">
-                            {{paragraph-1-0}} <a href="/User-Terms">{{paragraph-1-1}}</a> {{paragraph-1-2}} <a
-                                    href="/Data-Policy">{{paragraph-1-3}}</a>, {{paragraph-1-4}} <a href="/Use-Cookies">{{paragraph-1-5}}</a>.
-                        </label>
-                    </div>
-                    <div class="mb-4">
-                        <button type="submit" class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">
-                            {{button-label-register}}
-                        </button>
-                    </div>
-                    <div class="mb-4 pb-5">
-                        {{paragraph-2-0}} <a class="text-primary toggle-ua" href="#">{{paragraph-2-1}}</a>
-                        {{paragraph-2-2}}.
-                    </div>
-                    <hr class="bg-gray-600 opacity-2">
                     <p class="text-center text-gray-600">
-                        <a href="https://icaros.lh-2.net/" class="text-primary">&copy; Icaros Net - 2024</a>
+                        <a href="https://icaros.lh-2.net/" target="_blank" class="text-primary">&copy; Icaros Net -
+                            2024</a>
                     </p>
                 </form>
             </div>
 
+            <div class="register-content d-none">
+                <form action="/User-Access" method="post" class="fs-13px">
+
+                    <div class="mb-3 d-none" id="register-smg">
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2" for="register-first-name">{{label-name}} <span class="text-danger">*</span></label>
+                        <label class="d-none" for="register-last-name"></label>
+                        <div class="row gx-3">
+                            <div class="col-md-6 mb-2 mb-md-0">
+                                <input type="text" autocomplete="on" class="form-control fs-13px"
+                                       placeholder="{{placeholder-first-name}}" id="register-first-name"
+                                       name="register-first-name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" autocomplete="on" class="form-control fs-13px"
+                                       placeholder="{{placeholder-last-name}}" id="register-last-name"
+                                       name="register-last-name" required>
+                            </div>
+                        </div>
+                        <div class="d-none" id="register-first-name-smg"></div>
+                        <div class="d-none" id="register-last-name-smg"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2" for="register-email">{{label-email}} <span
+                                    class="text-danger">*</span></label>
+                        <input type="text" autocomplete="on" class="form-control fs-13px"
+                               placeholder="{{placeholder-email}}" id="register-email" name="register-email" required>
+                        <div class="d-none" id="register-email-smg"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2" for="register-re-email">{{label-re-email}} <span
+                                    class="text-danger">*</span></label>
+                        <input type="text" autocomplete="on" class="form-control fs-13px"
+                               placeholder="{{placeholder-re-email}}" id="register-re-email" name="register-re-email"
+                               required>
+                        <div class="d-none" id="register-re-email-smg"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="mb-2" for="register-password">{{label-password}} <span
+                                    class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="password" id="register-password" name="register-password" autocomplete="on"
+                                   class="form-control fs-13px" placeholder="{{placeholder-password}}"
+                                   data-bs-toggle="tooltip" data-bs-html="true"
+                                   title="<div>{{label-rule-password-title}}<br><br>- {{label-rule-password-1}}<br>- {{label-rule-password-2}}<br>- {{label-rule-password-3}}<br>- {{label-rule-password-4}}<br>- {{label-rule-password-5}}"
+                                   required>
+                            <button type="button" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <div class="password-meter" data-lh-pl="password-strength"
+                             data-lh-pl-related="register-password"
+                             data-lh-pl-options="length:13,uppercase:true,lowercase:true,number:true,symbol:!@#%*">
+                        </div>
+                        <div class="d-none" id="register-password-smg"></div>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="register-agree-conditions"
+                               name="register-agree-conditions" required>
+                        <label for="register-agree-conditions" class="form-check-label">{{paragraph-1-0}} <a
+                                    href="/User-Terms" target="_blank">{{paragraph-1-1}}</a> {{paragraph-1-2}} <a
+                                    href="/Data-Policy" target="_blank">{{paragraph-1-3}}</a>, {{paragraph-1-4}} <a
+                                    href="/Use-Cookies" target="_blank">{{paragraph-1-5}}.</a>
+                        </label>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" name="event" value="register"
+                                class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">
+                            {{button-label-register}}
+                        </button>
+                        <button class="btn btn-outline-blue d-block w-100 btn-lg h-45px fs-13px mt-1 {{enable-user-service}}"
+                                data-bs-toggle="modal" data-bs-target="#modal-register-with-service" type="button">
+                            {{button-label-register-with-service}}
+                        </button>
+                    </div>
+                    <div class="mb-4 pb-5">
+                        {{paragraph-2-0}} <a class="text-primary toggle-ua" href="#">{{paragraph-2-1}}</a>
+                        {{paragraph-2-2}}
+                    </div>
+                    <hr class="bg-gray-600 opacity-2">
+                    <p class="text-center text-gray-600">
+                        <a href="https://icaros.lh-2.net/" target="_blank" class="text-primary">&copy; Icaros Net -
+                            2024</a>
+                    </p>
+                </form>
+            </div>
 
         </div>
 
@@ -117,4 +158,196 @@
         <i class="fa fa-angle-up"></i>
     </a>
 
+</div>
+
+<div class="modal fade" id="modal-register-with-service" tabindex="-1" aria-labelledby="socialModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="socialModalLabel">{{label-register-service}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <form action="/User-Access" method="post" class="fs-13px">
+                    <button class="btn btn-outline-google btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-google">
+                        <i class="fab fa-google"></i> {{button-label-register-service-google}}
+                    </button>
+                    <!--
+                    <button class="btn btn-outline-facebook btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-facebook">
+                        <i class="fab fa-facebook-f"></i> {{button-label-register-service-facebook}}
+                    </button>
+
+                    <button class="btn btn-outline-instagram btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-instagram">
+                        <i class="fab fa-instagram"></i> {{button-label-register-service-instagram}}
+                    </button>
+
+                    <button class="btn btn-outline-github btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-github">
+                        <i class="fab fa-github"></i> {{button-label-register-service-github}}
+                    </button>
+
+                    <button class="btn btn-outline-twitter btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-twitter">
+                        <i class="fab fa-twitter"></i> {{button-label-register-service-twitter}}
+                    </button>
+
+                    <button class="btn btn-outline-disqus btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-disqus">
+                        <i class="fas fa-comments"></i> {{button-label-register-service-disqus}}
+                    </button>
+
+                    <button class="btn btn-outline-foursquare btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-foursquare">
+                        <i class="fab fa-foursquare"></i> {{button-label-register-service-foursquare}}
+                    </button>
+
+                    <button class="btn btn-outline-linkedin btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-linkedin">
+                        <i class="fab fa-linkedin"></i> {{button-label-register-service-linkedin}}
+                    </button>
+
+                    <button class="btn btn-outline-apple btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-apple">
+                        <i class="fab fa-apple"></i> {{button-label-register-service-apple}}
+                    </button>
+
+                    <button class="btn btn-outline-microsoft btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-microsoft">
+                        <i class="fab fa-windows"></i> {{button-label-register-service-microsoft}}
+                    </button>
+
+                    <button class="btn btn-outline-steam btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-steam">
+                        <i class="fab fa-steam"></i> {{button-label-register-service-steam}}
+                    </button>
+
+                    <button class="btn btn-outline-dropbox btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-dropbox">
+                        <i class="fab fa-dropbox"></i> {{button-label-register-service-dropbox}}
+                    </button>
+
+                    <button class="btn btn-outline-spotify btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-spotify">
+                        <i class="fab fa-spotify"></i> {{button-label-register-service-spotify}}
+                    </button>
+
+                    <button class="btn btn-outline-twitch btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-twitch">
+                        <i class="fab fa-twitch"></i> {{button-label-register-service-twitch}}
+                    </button>
+
+                    <button class="btn btn-outline-slack btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-slack">
+                        <i class="fab fa-slack"></i> {{button-label-register-service-slack}}
+                    </button>
+
+                    <button class="btn btn-outline-auth0 btn-lg mb-2 w-100" type="button" name="event"
+                            value="register-service-auth0">
+                        <i class="fas fa-lock"></i> {{button-label-register-service-auth0}}
+                    </button>
+                    -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-login-with-service" tabindex="-1" aria-labelledby="socialModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="socialModalLabel">{{label-login-service}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <form action="/User-Access" method="post" class="fs-13px">
+                    <button class="btn btn-outline-google btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-google">
+                        <i class="fab fa-google"></i> {{button-label-login-service-google}}
+                    </button>
+                    <!--
+                    <button class="btn btn-outline-facebook btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-facebook">
+                        <i class="fab fa-facebook-f"></i> {{button-label-login-service-facebook}}
+                    </button>
+
+                    <button class="btn btn-outline-instagram btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-instagram">
+                        <i class="fab fa-instagram"></i> {{button-label-login-service-instagram}}
+                    </button>
+
+                    <button class="btn btn-outline-github btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-github">
+                        <i class="fab fa-github"></i> {{button-label-login-service-github}}
+                    </button>
+
+                    <button class="btn btn-outline-twitter btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-twitter">
+                        <i class="fab fa-twitter"></i> {{button-label-login-service-twitter}}
+                    </button>
+
+                    <button class="btn btn-outline-disqus btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-disqus">
+                        <i class="fas fa-comments"></i> {{button-label-login-service-disqus}}
+                    </button>
+
+                    <button class="btn btn-outline-foursquare btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-foursquare">
+                        <i class="fab fa-foursquare"></i> {{button-label-login-service-foursquare}}
+                    </button>
+
+                    <button class="btn btn-outline-linkedin btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-linkedin">
+                        <i class="fab fa-linkedin"></i> {{button-label-login-service-linkedin}}
+                    </button>
+
+                    <button class="btn btn-outline-apple btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-apple">
+                        <i class="fab fa-apple"></i> {{button-label-login-service-apple}}
+                    </button>
+
+                    <button class="btn btn-outline-microsoft btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-microsoft">
+                        <i class="fab fa-windows"></i> {{button-label-login-service-microsoft}}
+                    </button>
+
+                    <button class="btn btn-outline-steam btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-steam">
+                        <i class="fab fa-steam"></i> {{button-label-login-service-steam}}
+                    </button>
+
+                    <button class="btn btn-outline-dropbox btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-dropbox">
+                        <i class="fab fa-dropbox"></i> {{button-label-login-service-dropbox}}
+                    </button>
+
+                    <button class="btn btn-outline-spotify btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-spotify">
+                        <i class="fab fa-spotify"></i> {{button-label-login-service-spotify}}
+                    </button>
+
+                    <button class="btn btn-outline-twitch btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-twitch">
+                        <i class="fab fa-twitch"></i> {{button-label-login-service-twitch}}
+                    </button>
+
+                    <button class="btn btn-outline-slack btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-slack">
+                        <i class="fab fa-slack"></i> {{button-label-login-service-slack}}
+                    </button>
+
+                    <button class="btn btn-outline-auth0 btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-auth0">
+                        <i class="fas fa-lock"></i> {{button-label-login-service-auth0}}
+                    </button>
+                    -->
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -47,7 +47,11 @@ export class HandlerRequest {
 
             const response = await axios(config);
 
-            console.log(response)
+            console.log(response);
+
+            if (response.data.redirect) {
+                window.location.href = response.data.redirect;
+            }
 
             /*
              *
@@ -90,7 +94,6 @@ export class HandlerRequest {
 
         } catch (err) {
             console.error(err);
-
 
             // Si hay un error y se especifica manejarlo con SweetAlert
             if (error === 'Swal') {

@@ -19,7 +19,8 @@ declare(strict_types=1);
 namespace Repository\Default\ChangeLanguage\Back;
 
 use Asset\Framework\Controller\EventController;
-use Asset\Framework\Core\Installation;
+use Asset\Framework\Core\Request;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class that handles:
@@ -93,13 +94,17 @@ class Event extends EventController
 
     /**
      * @return $this|null
+     * @method void en()
+     * @method void es()
+     * @method void fr()
+     * @method void pt()
      */
     public function listenerEvent(): ?self
     {
 
-        if ($this->event !== null) {
+        if ($this->event !== null && method_exists($this, $this->event)) {
 
-            call_user_func([$this, $this->event]);
+            $this->{$this->event}();
 
             $this->data = $this->getResponseData(
                 $this->main->input,
@@ -110,53 +115,47 @@ class Event extends EventController
         return $this;
     }
 
-
     /**
      * @return void
+     * @used-by listenerEvent()
      */
-    private function save(): void
+    #[NoReturn] private function en(): void
     {
-
-        Installation::getInstance()->saveSetting();
-
-        ex_c('End of Save');
-
+        $_SESSION['SYSTEM']['LANG']              = 'en';
+        $_SESSION['USER']['PREFERENCES']['LANG'] = 'en';
+        Request::getInstance()->redirectToUri($_POST['uri_current']);
     }
 
     /**
      * @return void
+     * @used-by listenerEvent()
      */
-    private function databaseTest(): void
+    #[NoReturn] private function es(): void
     {
-
+        $_SESSION['SYSTEM']['LANG']              = 'es';
+        $_SESSION['USER']['PREFERENCES']['LANG'] = 'es';
+        Request::getInstance()->redirectToUri($_POST['uri_current']);
     }
 
     /**
      * @return void
+     * @used-by listenerEvent()
      */
-    private function mailTest(): void
+    #[NoReturn] private function fr(): void
     {
-
-        /*
-        $dbParams = [
-            'host' => $_POST['i-database-host'],
-            'db'   => $_POST['i-database-name'],
-            'user' => $_POST['i-database-user'],
-            'pass' => $_POST['i-database-password'],
-        ];
-
-        return Database::getInstance()->testConnection($dbParams);
-        */
-
-        ex_c('Test de mailTest');
+        $_SESSION['SYSTEM']['LANG']              = 'fr';
+        $_SESSION['USER']['PREFERENCES']['LANG'] = 'fr';
+        Request::getInstance()->redirectToUri($_POST['uri_current']);
     }
 
     /**
      * @return void
+     * @used-by listenerEvent()
      */
-    private function ftpTest(): void
+    #[NoReturn] private function pt(): void
     {
-        ex_c('Test de ftpTest');
+        $_SESSION['SYSTEM']['LANG']              = 'pt';
+        $_SESSION['USER']['PREFERENCES']['LANG'] = 'pt';
+        Request::getInstance()->redirectToUri($_POST['uri_current']);
     }
-
 }

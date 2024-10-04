@@ -11,21 +11,84 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
+import {HandlerRequest} from "./handler-request.js";
 
 export class HandlerEvents {
 
-    constructor(formSelector) {
-        this.form = document.querySelector(formSelector);
-        if (this.form) {
-            this.initialize();
+    constructor() {
+        this.events = [];
+        this.forms = document.querySelectorAll('form');
+    }
+
+    registerEvent(event) {
+        this.events.push(event);
+    }
+
+    async initializeEvents() {
+        if (this.forms.length > 0) {
+            this.forms.forEach((form, index) => {
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                });
+
+                const handleEvent = (event, form) => {
+                    //const elementValue = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+                    this.processEvent(event, form);
+                };
+
+                const buttons = form.querySelectorAll('button[type="button"][name="event"]');
+                const selects = form.querySelectorAll('select[name="event"]');
+                const checkboxes = form.querySelectorAll('input[type="checkbox"][name="event"]');
+
+                if (buttons.length > 0) {
+                    buttons.forEach(button => button.onclick = (event) => handleEvent(event, form));
+                }
+
+                if (selects.length > 0) {
+                    selects.forEach(select => select.onchange = (event) => handleEvent(event, form));
+                }
+
+                if (checkboxes.length > 0) {
+                    checkboxes.forEach(checkbox => checkbox.onchange = (event) => handleEvent(event, form));
+                }
+            })
         }
     }
 
-    initialize() {
-        this.form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            console.log("Formulario enviado");
-            // Aquí manejas la lógica del formulario
+
+    async processEvent(event, form) {
+        const action = form.action;
+        const inputElements = form.querySelectorAll('input, select, textarea');
+        const buttonClicked = event.submitter || event.target;
+        const eventValue = buttonClicked.value;
+        const formData = new FormData();
+        let valid = true;
+        formData.append('uri_current', window.location.pathname);
+        formData.append('uri_params', JSON.stringify(Object.fromEntries(new URLSearchParams(window.location.search))) || '');
+        formData.append('event', eventValue);
+
+        inputElements.forEach(input => {
+            let fieldName = input.name;
+            let value = input.type === 'checkbox' ? input.checked : input.value;
+            input.classList.remove('is-invalid');
+            if (input.hasAttribute('required') && !value) {
+                valid = false;
+                input.classList.add('is-invalid');
+                input.focus();
+                return;
+            }
+            formData.append(fieldName, value);
         });
+
+        if (valid) {
+            await HandlerRequest.request({
+                uri: action,
+                data: formData,
+                type: 'multipart/form-data',
+                method: 'post',
+                response: 'json',
+                error: 'json'
+            });
+        }
     }
 }

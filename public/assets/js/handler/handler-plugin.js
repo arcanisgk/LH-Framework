@@ -26,56 +26,64 @@ export class HandlerPlugin {
             name: 'password',
             assets: false,
             selector: `input[type='password']`,
-            init: (elements) => {
-                this.handlerPasswordView(elements);
+            init: async (elements) => {
+                await this.handlerPasswordView(elements);
             }
         },
         {
             name: 'spy',
             assets: false,
             selector: '[data-lh-pl="spy"]',
-            init: (elements) => {
-                this.handlerSpyScroll(elements);
+            init: async (elements) => {
+                await this.handlerSpyScroll(elements);
             }
         },
         {
             name: 'select2',
             assets: true,
             selector: '[data-lh-pl="select"]',
-            init: (elements) => {
-                this.handlerSelect2(elements);
+            init: async (elements) => {
+                await this.handlerSelect2(elements);
             }
         },
         {
             name: 'datatable',
             assets: true,
             selector: '[data-lh-pl="datatable"]',
-            init: (elements) => {
-                this.handlerDatatable(elements);
+            init: async (elements) => {
+                await this.handlerDatatable(elements);
             }
         },
         {
             name: 'summernote',
             assets: true,
             selector: '[data-lh-pl="summernote"]',
-            init: (elements) => {
-                this.handlerSummerNote(elements);
+            init: async (elements) => {
+                await this.handlerSummerNote(elements);
             }
         },
         {
             name: 'dropzone',
             assets: true,
             selector: '[data-lh-pl="dropzone"]',
-            init: (elements) => {
-                this.handlerDropZone(elements);
+            init: async (elements) => {
+                await this.handlerDropZone(elements);
+            }
+        },
+        {
+            name: 'password-strength',
+            assets: false,
+            selector: '[data-lh-pl="password-strength"]',
+            init: async (elements) => {
+                await this.handlerPasswordStrength(elements);
             }
         },
         {
             name: 'dev-mode',
             assets: false,
             selector: '[data-lh-pl="dev-mode"]',
-            init: (elements) => {
-                this.handlerDevMode(elements);
+            init: async (elements) => {
+                await this.handlerDevMode(elements);
             }
         },
     ];
@@ -85,8 +93,8 @@ export class HandlerPlugin {
     }
 
     getPlOptions(options) {
-        return options.split(', ').reduce((obj, par) => {
-            const [key, value] = par.split(': ').map(element => element.trim());
+        return options.split(',').reduce((obj, par) => {
+            const [key, value] = par.split(':').map(element => element.trim());
             obj[key] = value;
             return obj;
         }, {});
@@ -104,13 +112,13 @@ export class HandlerPlugin {
                 if (plugin.assets) {
                     await this.resources.loadAssets(plugin.name);
                 }
-                plugin.init(elements);
+                await plugin.init(elements);
             }
         }
         await this.output.defaultMGS('end-loader', 'UI Plugin');
     }
 
-    handlerSpyScroll(elements) {
+    async handlerSpyScroll(elements) {
         elements.forEach(element => {
 
             const target = element.getAttribute('data-spy-target');
@@ -154,7 +162,7 @@ export class HandlerPlugin {
         });
     }
 
-    handlerPasswordView(elements) {
+    async handlerPasswordView(elements) {
         elements.forEach(element => {
 
 
@@ -185,7 +193,7 @@ export class HandlerPlugin {
         });
     }
 
-    handlerSelect2(elements) {
+    async handlerSelect2(elements) {
 
         const destroySelect2 = sel => {
             if (sel.target.data('select2')) {
@@ -213,6 +221,7 @@ export class HandlerPlugin {
             }
 
             sel.target.select2(option);
+
             if (sel.required) {
                 sel.target.next().children().children().each(function () {
                     $(this).css("border-color", "#f8ac59");
@@ -233,19 +242,19 @@ export class HandlerPlugin {
         });
     }
 
-    handlerDatatable(elements) {
+    async handlerDatatable(elements) {
         console.log(elements);
     }
 
-    handlerSummerNote(elements) {
+    async handlerSummerNote(elements) {
         console.log(elements);
     }
 
-    handlerDropZone(elements) {
+    async handlerDropZone(elements) {
         console.log(elements);
     }
 
-    handlerDevMode(elements) {
+    async handlerDevMode(elements) {
         console.log(elements);
         const modalDevView = document.getElementById('modal-dev-view');
         modalDevView.addEventListener('shown.bs.modal', function () {
@@ -253,5 +262,94 @@ export class HandlerPlugin {
         });
     }
 
+    async handlerPasswordStrength(elements) {
 
+        const baseWeights = {
+            length: 30,
+            uppercase: 20,
+            lowercase: 20,
+            number: 15,
+            symbol: 15
+        };
+
+        const calculateDynamicWeights = (options) => {
+            const activeRules = Object.keys(options).filter(key => options[key] !== 'false' && baseWeights[key]);
+            const totalBaseWeight = activeRules.reduce((sum, rule) => sum + baseWeights[rule], 0);
+
+            return activeRules.reduce((weights, rule) => {
+                weights[rule] = baseWeights[rule] / totalBaseWeight;
+                return weights;
+            }, {});
+        }
+
+        const calculatePasswordStrength = (password, options) => {
+            const dynamicWeights = calculateDynamicWeights(options);
+
+            const criteria = {
+                length: password.length >= parseInt(options.length || 0),
+                uppercase: options.uppercase === 'true' ? /[A-Z]/.test(password) : true,
+                lowercase: options.lowercase === 'true' ? /[a-z]/.test(password) : true,
+                number: options.number === 'true' ? /\d/.test(password) : true,
+                symbol: options.symbol ? new RegExp(`[${options.symbol}]`).test(password) : true
+            };
+
+            let strength = 0;
+
+            for (const [criterion, ismet] of Object.entries(criteria)) {
+                if (dynamicWeights[criterion]) {
+                    if (ismet) strength += dynamicWeights[criterion];
+                }
+            }
+
+            return Math.min(strength, 1);
+        }
+
+        const updateMeter = (strength, passwordMeter) => {
+            const meterSections = passwordMeter.querySelectorAll('.meter-section');
+            const strengthClasses = ['weak', 'medium', 'strong', 'very-strong'];
+            const strengthIndex = Math.floor(strength * 4);
+            const activeSections = Math.ceil(strength * meterSections.length);
+
+            meterSections.forEach((section, index) => {
+                section.classList.remove(...strengthClasses);
+                if (index < activeSections) {
+                    section.classList.add(strengthClasses[Math.min(strengthIndex, 3)]);
+                }
+            });
+        }
+
+        const deployPasswordMeter = sel => {
+            const passwordInput = document.getElementById(sel.related);
+            const passwordMeter = sel.target;
+            const options = this.getPlOptions(sel.options);
+
+            const activeCriteria = Object.keys(options).filter(key => options[key] !== 'false').length;
+            const sectionCount = Math.max(activeCriteria * 2, 4); // Ensure at least 4 sections
+
+            for (let i = 0; i < sectionCount; i++) {
+                const section = document.createElement('div');
+                section.className = 'meter-section rounded me-1';
+                passwordMeter.appendChild(section);
+            }
+
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                const strength = calculatePasswordStrength(password, options);
+                updateMeter(strength, passwordMeter);
+            });
+
+            updateMeter(0, passwordMeter);
+        }
+
+        elements.forEach(element => {
+            if (element.dataset.lhPlRelated) {
+                let sel = {
+                    'target': element,
+                    'related': element.dataset.lhPlRelated,
+                    'options': element.dataset.lhPlOptions || 'length:13,uppercase:true,lowercase:true,number:true',
+                }
+                deployPasswordMeter(sel);
+            }
+        });
+    }
 }

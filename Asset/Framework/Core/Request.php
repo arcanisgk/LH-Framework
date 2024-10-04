@@ -117,9 +117,27 @@ class Request
         return trim($input);
     }
 
+    /**
+     * @param string $location
+     * @return void
+     */
     #[NoReturn] public function redirect(string $location): void
     {
         header("Location: ".$location);
+        exit;
+    }
+
+    /**
+     * @param string $location
+     * @return void
+     */
+    #[NoReturn] public function redirectToUri(string $location): void
+    {
+        header("Content-Type: application/json");
+        $response = [
+            'redirect' => $location,
+        ];
+        echo json_encode($response);
         exit;
     }
 

@@ -20,6 +20,7 @@ import {HandlerConsoleOutput} from "./handler-console-output.js";
 export class ControllerUI {
     output = new HandlerConsoleOutput();
     plugin = new HandlerPlugin();
+    event = new HandlerEvents();
 
     /**
      * Class constructor.
@@ -30,9 +31,7 @@ export class ControllerUI {
      */
     constructor() {
         this.setupPlugins();
-        //this.formHandler = new HandlerEvents('#myForm');
     }
-
 
     /**
      * Sets up the plugins.
@@ -59,6 +58,8 @@ export class ControllerUI {
     async initializeUI() {
         await this.output.defaultMGS('loader', 'Graphical Interface');
         await this.plugin.initializePlugins();
+        await this.event.initializeEvents();
         await this.output.defaultMGS('end-loader', 'Graphical Interface');
     }
+
 }

@@ -108,21 +108,21 @@
         </tr>
         <tr class="row-1">
             <td class="col1">Description:</td>
-            <td class="col2">array_merge(): Argument #1 must be of type array, Asset\Framework\View\FormInput given</td>
+            <td class="col2">Typed property Repository\Default\ChangeLanguage\Back\Main::$response must not be accessed before initialization</td>
         </tr>
         <tr class="row-1">
             <td class="col1">File:</td>
-            <td class="col2">/var/www/html/lh-2.dock/Asset/Framework/Controller/EventController.php</td>
+            <td class="col2">/var/www/html/lh-2.dock/Repository/Default/ChangeLanguage/Back/Main.php</td>
         </tr>
         <tr class="row-1">
             <td></td>
             <td>
-                <b>Line: </b>103                <b>Level: </b>Not Set                <b>Time: </b>1727075690            </td>
+                <b>Line: </b>86                <b>Level: </b>Not Set                <b>Time: </b>1728068137            </td>
         </tr>
         <tr class="row-3">
             <td class="col1 top">BackTrace Log:</td>
             <td class="col2">
-                <div class="container-track">/var/www/html/lh-2.dock/Asset/Framework/Controller/EventController.php 103 calling Method: array_merge(Asset\Framework\View\FormInput,Asset\Framework\View\FormSMG)<br>/var/www/html/lh-2.dock/Repository/Default/Setup/Back/Event.php 104 calling Method: getResponseData(Asset\Framework\View\FormInput,Asset\Framework\View\FormSMG)<br>/var/www/html/lh-2.dock/Repository/Default/Setup/Back/Main.php 92 calling Method: listenerEvent()<br>/var/www/html/lh-2.dock/Repository/Default/Setup/Back/Main.php 52 calling Method: __construct()<br>/var/www/html/lh-2.dock/Asset/Framework/Controller/RouteDictionaryController.php 110 calling Method: getInstance()<br>/var/www/html/lh-2.dock/Asset/Framework/Controller/RouteController.php 74 calling Method: resolveController()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 146 calling Method: execute()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 124 calling Method: redirectNotFound()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 64 calling Method: run()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 66 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 35 calling Method: run()</div>
+                <div class="container-track">/var/www/html/lh-2.dock/Repository/Default/ChangeLanguage/Back/Main.php 52 calling Method: __construct()<br>/var/www/html/lh-2.dock/Asset/Framework/Controller/RouteDictionaryController.php 117 calling Method: getInstance()<br>/var/www/html/lh-2.dock/Asset/Framework/Controller/RouteController.php 74 calling Method: resolveController()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 146 calling Method: execute()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 124 calling Method: redirectNotFound()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 64 calling Method: run()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 66 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 35 calling Method: run()</div>
             </td>
         </tr>
         <tr class="row-3">
@@ -145,25 +145,35 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Framework\Controller</span><span style="color: #007700">;
+</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Repository\Default\ChangeLanguage\Back</span><span style="color: #007700">;
+
+use </span><span style="color: #0000BB">Asset\Framework\Controller\EventController</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Controller\FrontResourceController</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Controller\ResponseController</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Core\Files</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Interface\ControllerInterface</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\View\FormInput</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\View\FormSMG</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\View\RenderTemplate</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Exception</span><span style="color: #007700">;
 
 </span><span style="color: #FF8000">/**
  * Class that handles:
  *
- * @package Asset\Framework\Controller;
+ * @package Repository\Default\ChangeLanguage\Back;
  */
-</span><span style="color: #007700">class </span><span style="color: #0000BB">EventController
+</span><span style="color: #007700">class </span><span style="color: #0000BB">Main
 </span><span style="color: #007700">{
 
     </span><span style="color: #FF8000">/**
-     * @var EventController|null Singleton instance of the class: EventController.
+     * @var Main|null Singleton instance of the class: Main.
      */
     </span><span style="color: #007700">private static ?</span><span style="color: #0000BB">self $instance </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * Get the singleton instance of teh class EventController.
+     * Get the singleton instance of teh class Main.
      *
-     * @return EventController The singleton instance.
+     * @return Main The singleton instance.
      */
     </span><span style="color: #007700">public static function </span><span style="color: #0000BB">getInstance</span><span style="color: #007700">(): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
@@ -175,69 +185,35 @@
     }
 
     </span><span style="color: #FF8000">/**
-     * EventController constructor.
+     * @var ResponseController|null
+     */
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">ResponseController $response</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @var EventController|null
+     */
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">EventController $event</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @var FormInput|null
+     */
+    </span><span style="color: #007700">public ?</span><span style="color: #0000BB">FormInput $input</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @var FormSMG|null
+     */
+    </span><span style="color: #007700">public ?</span><span style="color: #0000BB">FormSMG $smg</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * Main constructor.
+     * @throws Exception
      */
     </span><span style="color: #007700">public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()
     {
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setResponseError</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">);
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @var array
-     */
-    </span><span style="color: #007700">public array </span><span style="color: #0000BB">$response </span><span style="color: #007700">= [];
-
-    </span><span style="color: #FF8000">/**
-     * @var bool
-     */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">bool $response_error</span><span style="color: #007700">;
-
-    </span><span style="color: #FF8000">/**
-     * @return bool
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">isResponseError</span><span style="color: #007700">(): </span><span style="color: #0000BB">bool
-    </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response_error</span><span style="color: #007700">;
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param bool $response_error
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setResponseError</span><span style="color: #007700">(</span><span style="color: #0000BB">bool $response_error</span><span style="color: #007700">): </span><span style="color: #0000BB">void
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response_error </span><span style="color: #007700">= </span><span style="color: #0000BB">$response_error</span><span style="color: #007700">;
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param string $target
-     * @param string $data
-     * @param bool $type
-     * @return void
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">string $target</span><span style="color: #007700">, </span><span style="color: #0000BB">string $data</span><span style="color: #007700">, </span><span style="color: #0000BB">bool $type </span><span style="color: #007700">= </span><span style="color: #0000BB">false</span><span style="color: #007700">): </span><span style="color: #0000BB">void
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setResponseError</span><span style="color: #007700">(</span><span style="color: #0000BB">$type</span><span style="color: #007700">);
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response </span><span style="color: #007700">= [</span><span style="color: #DD0000">'target' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$target</span><span style="color: #007700">, </span><span style="color: #DD0000">'content' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$data</span><span style="color: #007700">];
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param $fields
-     * @param $message
-     * @return array
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getResponseData</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">, </span><span style="color: #0000BB">$message</span><span style="color: #007700">): array
-    {
-        </span><span style="color: #0000BB">$response_data </span><span style="color: #007700">= [];
-        </span><span style="color: #0000BB">$error         </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isResponseError</span><span style="color: #007700">() ? </span><span style="color: #DD0000">'danger' </span><span style="color: #007700">: </span><span style="color: #DD0000">'success'</span><span style="color: #007700">;
-        foreach (</span><span style="color: #0000BB">array_merge</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">, </span><span style="color: #0000BB">$message</span><span style="color: #007700">) as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$data</span><span style="color: #007700">) {    </span><span style="color: #FF8000">// error detected in this line!!!
-            </span><span style="color: #007700">if (</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response</span><span style="color: #007700">[</span><span style="color: #DD0000">'target'</span><span style="color: #007700">] == </span><span style="color: #0000BB">$key</span><span style="color: #007700">) {
-                </span><span style="color: #0000BB">$response_data</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">] = </span><span style="color: #DD0000">'&lt;label class="text-'</span><span style="color: #007700">.</span><span style="color: #0000BB">$error</span><span style="color: #007700">.</span><span style="color: #DD0000">' fw-bold"&gt;'</span><span style="color: #007700">.</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response</span><span style="color: #007700">[</span><span style="color: #DD0000">'content'</span><span style="color: #007700">].</span><span style="color: #DD0000">'&lt;/label&gt;'</span><span style="color: #007700">;
-            } else {
-                </span><span style="color: #0000BB">$response_data</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">] = </span><span style="color: #0000BB">$data</span><span style="color: #007700">;
-            }
-        }
-
-        return </span><span style="color: #0000BB">$response_data</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event </span><span style="color: #007700">= </span><span style="color: #0000BB">Event</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">setMain</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">);
+        if (</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_exists</span><span style="color: #007700">) {
+            </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">listenerEvent</span><span style="color: #007700">());    </span><span style="color: #FF8000">// error detected in this line!!!
+        </span><span style="color: #007700">}
     }
 }</span></code></pre></td>
         </tr>

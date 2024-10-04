@@ -27,10 +27,12 @@
     --bs-btn-close-focus-shadow: none;
 }
 
+/* password meter */
+
 .password-meter {
     display: flex;
     height: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .meter-section {
@@ -52,6 +54,18 @@
 
 .very-strong {
     background-color: #009900;
+}
+
+/* tooltips changes */
+
+.tooltip {
+    --bs-tooltip-max-width: 300px !important;
+    max-width: 300px !important;
+}
+
+.tooltip-inner {
+    text-align: justify !important;
+
 }
 
 .vh-80 {
@@ -165,4 +179,187 @@
 
 .dev-mode-btn {
     top: 40% !important;
+}
+
+/*Botones redes sociales*/
+
+/* Google: Outline blue */
+.btn-outline-google {
+    color: #4285F4 !important;
+    border-color: #4285F4 !important;
+}
+
+.btn-outline-google:hover {
+    background-color: #4285F4 !important;
+    color: #fff !important;
+}
+
+/* Facebook: Outline blue */
+.btn-outline-facebook {
+    color: #1877F2 !important;
+    border-color: #1877F2 !important;
+}
+
+.btn-outline-facebook:hover {
+    background-color: #1877F2 !important;
+    color: #fff !important;
+}
+
+/* Instagram: Outline gradient */
+.btn-outline-instagram {
+    color: #C13584 !important;
+    border-color: #C13584 !important;
+    background: linear-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important;
+    background-clip: text !important;
+
+}
+
+.btn-outline-instagram:hover {
+    background: linear-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important;
+    color: #fff !important;
+}
+
+/* GitHub: Outline black */
+.btn-outline-github {
+    color: #333 !important;
+    border-color: #333 !important;
+}
+
+.btn-outline-github:hover {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+
+/* Steam: Outline dark */
+.btn-outline-steam {
+    color: #171a21 !important;
+    border-color: #171a21 !important;
+}
+
+.btn-outline-steam:hover {
+    background-color: #171a21 !important;
+    color: #fff !important;
+}
+
+/* Dropbox: Outline blue */
+.btn-outline-dropbox {
+    color: #007ee5 !important;
+    border-color: #007ee5 !important;
+}
+
+.btn-outline-dropbox:hover {
+    background-color: #007ee5 !important;
+    color: #fff !important;
+}
+
+/* Spotify: Outline green */
+.btn-outline-spotify {
+    color: #1DB954 !important;
+    border-color: #1DB954 !important;
+}
+
+.btn-outline-spotify:hover {
+    background-color: #1DB954 !important;
+    color: #fff !important;
+}
+
+/* Twitch: Outline purple */
+.btn-outline-twitch {
+    color: #6441a5 !important;
+    border-color: #6441a5 !important;
+}
+
+.btn-outline-twitch:hover {
+    background-color: #6441a5 !important;
+    color: #fff !important;
+}
+
+/* Slack: Outline red */
+.btn-outline-slack {
+    color: #E01E5A !important;
+    border-color: #E01E5A !important;
+}
+
+.btn-outline-slack:hover {
+    background-color: #E01E5A !important;
+    color: #fff !important;
+}
+
+/* Auth0: Outline grey */
+.btn-outline-auth0 {
+    color: #eb5424 !important;
+    border-color: #eb5424 !important;
+}
+
+.btn-outline-auth0:hover {
+    background-color: #eb5424 !important;
+    color: #fff !important;
+}
+
+
+/* Twitter: Outline blue */
+.btn-outline-twitter {
+    color: #1DA1F2 !important;
+    border-color: #1DA1F2 !important;
+}
+
+.btn-outline-twitter:hover {
+    background-color: #1DA1F2 !important;
+    color: #fff !important;
+}
+
+/* LinkedIn: Outline blue */
+.btn-outline-linkedin {
+    color: #0A66C2 !important;
+    border-color: #0A66C2 !important;
+}
+
+.btn-outline-linkedin:hover {
+    background-color: #0A66C2 !important;
+    color: #fff !important;
+}
+
+/* Apple: Outline black */
+.btn-outline-apple {
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+.btn-outline-apple:hover {
+    background-color: #000000 !important;
+    color: #fff !important;
+}
+
+/* Microsoft: Outline orange */
+.btn-outline-microsoft {
+    color: #F25022 !important;
+    border-color: #F25022 !important;
+}
+
+.btn-outline-microsoft:hover {
+    background-color: #F25022 !important;
+    color: #fff !important;
+}
+
+/* Disqus: Outline blue */
+.btn-outline-disqus {
+    color: #2E9FFF !important;
+    border-color: #2E9FFF !important;
+}
+
+.btn-outline-disqus:hover {
+    background-color: #2E9FFF !important;
+    color: #fff !important;
+}
+
+/* Foursquare: Outline pink */
+.btn-outline-foursquare {
+    color: #F94877 !important;
+    border-color: #F94877 !important;
+}
+
+.btn-outline-foursquare:hover {
+    background-color: #F94877 !important;
+    color: #fff !important;
 }

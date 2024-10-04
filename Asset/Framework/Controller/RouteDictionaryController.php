@@ -39,7 +39,8 @@ use Repository\Default\{
     TermOfService as TermOfService,
     UserAccess as UserAccess,
     UserActivation as UserActivation,
-    UserLogout as UserLogout
+    UserLogout as UserLogout,
+    ChangeLanguage as ChangeLanguage
 };
 
 
@@ -113,6 +114,7 @@ class RouteDictionaryController
             '/user-access' => UserAccess\Back\Main::getInstance(),
             '/dashboard' => Dashboard\Back\Main::getInstance(),
             '/calendar' => Calendar\Back\Main::getInstance(),
+            '/change-language' => ChangeLanguage\Back\Main::getInstance(),
             /*
 
             '/user-logout' => UserLogout\Back\Main::getInstance(),
