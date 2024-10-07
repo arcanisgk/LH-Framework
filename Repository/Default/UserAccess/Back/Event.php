@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Repository\Default\UserAccess\Back;
 
 use Asset\Framework\Controller\EventController;
+use Asset\Framework\ToolBox\Password;
 
 /**
  * Class that handles:
@@ -95,14 +96,8 @@ class Event extends EventController
      */
     public function listenerEvent(): ?self
     {
-        if ($this->event !== null) {
-
-            call_user_func([$this, $this->event]);
-
-            $this->data = $this->getResponseData(
-                $this->main->input,
-                $this->main->smg
-            );
+        if ($this->event !== null && method_exists($this, $this->event)) {
+            $this->{$this->event}();
         }
 
         return $this;
@@ -115,7 +110,96 @@ class Event extends EventController
 
     private function register()
     {
-        ex_c('Test de register');
+        $error = [];
+        if ($_POST['register-first-name'] === '' || true) {
+            $error[] = [
+                'field'  => 'register-first-name-smg',
+                'status' => 'error',
+                'smg'    => '{{register-first-name-smg}}',
+            ];
+        }
+
+        if ($_POST['register-last-name'] === '' || true) {
+            $error[] = [
+                'field'  => 'register-last-name-smg',
+                'status' => 'error',
+                'smg'    => '{{register-last-name-smg}}',
+            ];
+        }
+
+        if ($_POST['register-email'] === '' || true) {
+            $error[] = [
+                'field'  => 'register-email-smg',
+                'status' => 'error',
+                'smg'    => '{{register-email-smg-0}}',
+            ];
+        }
+
+        if ($_POST['register-re-email'] === '' || true) {
+            $error[] = [
+                'field'  => 'register-re-email-smg',
+                'status' => 'error',
+                'smg'    => '{{register-re-email-smg-0}}',
+            ];
+        }
+
+        if ($_POST['register-re-email'] !== $_POST['register-email'] || true) {
+            $error[] = [
+                'field'  => 'register-email-smg',
+                'status' => 'error',
+                'smg'    => '{{register-email-smg-1}}',
+            ];
+            $error[] = [
+                'field'  => 'register-re-email-smg',
+                'status' => 'error',
+                'smg'    => '{{register-re-email-smg-1}}',
+            ];
+        }
+
+        if ($_POST['register-password'] === '' || true) {
+            $error[] = [
+                'field'  => 'register-password-smg',
+                'status' => 'error',
+                'smg'    => '{{register-password-smg-0}}',
+            ];
+        }
+
+        $pass_eval = Password::quickCheck($_POST['register-password']);
+
+        if (!empty($pass_eval)) {
+            $error[] = [
+                'field'  => 'register-password-smg',
+                'status' => 'error',
+                'smg'    => implode(NL, $pass_eval),
+            ];
+        }
+
+        if ($_POST['register-agree-conditions'] !== true || true) {
+            $error[] = [
+                'field'  => 'register-agree-conditions-smg',
+                'status' => 'error',
+                'smg'    => '{{register-agree-conditions-smg}}',
+            ];
+        }
+
+        ex_c($error);
+
+        /* Validar si Existe un correo electronico repetido */
+
+        /* */
+
+
+        if (!empty($error)) {
+            $error[] = [
+                'field'  => 'register-smg',
+                'status' => 'error',
+                'smg'    => '{{register-smg}}',
+            ];
+            $this->main->smg->setSMG(['error' => $error]);
+        } else {
+            //success
+            ex_c('Test de register right', $error);
+        }
     }
 
     private function loginWithGoogle()

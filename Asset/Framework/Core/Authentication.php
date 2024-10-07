@@ -60,5 +60,5 @@ class Authentication
     {
         return true;
     }
-
+    
 }
