@@ -38,6 +38,8 @@ class RenderTemplate
 
     private array $smg = [];
 
+    private array $inputControl = [];
+
     private array $event_response = [];
 
     private array $data = [];
@@ -86,6 +88,7 @@ class RenderTemplate
             $this->event_response ?? [],
             $this->data ?? [],
             $this->dictionary ?? [],
+            $this->inputControl ?? [],
         );
 
         if ($this->recursive === false) {
@@ -245,6 +248,17 @@ class RenderTemplate
                 }
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @param array $input_control
+     * @return $this
+     */
+    public function setInputControl(array $input_control): self
+    {
+        $this->inputControl = $input_control;
 
         return $this;
     }

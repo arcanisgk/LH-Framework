@@ -1,0 +1,172 @@
+<div id="app" class="app">
+
+    <div class="login login-with-news-feed">
+
+        <div class="news-feed">
+            <div class="news-image"></div>
+            <div class="news-caption">
+                <h4 class="caption-title"><b>{{owner}}</b></h4>
+                <p>{{department}}</p>
+            </div>
+        </div>
+
+        <div class="login-container">
+
+            <div class="login-header mb-30px">
+                <img src="{{owner-logo}}" class="rounded mx-auto d-block user-access-logo"
+                     alt="Default">
+            </div>
+
+            <div class="login-content">
+                <form action="/User-Access" method="post" class="fs-13px">
+                    <div class="mb-3 d-none" id="login-smg">
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2" for="login-name">{{label-email}} <span class="text-danger">*</span></label>
+                        <input type="text" id="login-name" name="login-name" autocomplete="on"
+                               class="form-control fs-13px" placeholder="{{placeholder-email}}" required>
+                        <div class="d-none" id="login-name-smg"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2" for="login-password">{{label-password}} <span
+                                    class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="password" id="login-password" name="login-password" autocomplete="on"
+                                   class="form-control fs-13px" placeholder="{{placeholder-password}}" required>
+                            <button type="button" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <div class="d-none" id="login-password-smg"></div>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="login-remember" name="login-remember">
+                        <label class="form-check-label" for="login-remember">{{label-remember-me}}</label>
+                        <label class="form-check-label">... {{label-recovery-account-1}} <a href="/Recovery-Account"
+                                                                                            target="_blank">{{label-recovery-account-2}}</a></label>
+
+
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" name="event" value="login"
+                                class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">
+                            {{button-label-login}}
+                        </button>
+                        <button type="button"
+                                class="btn btn-outline-blue d-block w-100 btn-lg h-45px fs-13px mt-1 {{enable-user-service}}"
+                                data-bs-toggle="modal" data-bs-target="#modal-login-with-service">
+                            {{button-label-login-with-service}}
+                        </button>
+                    </div>
+                    <hr class="bg-gray-600 opacity-2">
+                    <p class="text-center text-gray-600">
+                        <a href="https://icaros.lh-2.net/" target="_blank" class="text-primary">&copy; Icaros Net -
+                            2024</a>
+                    </p>
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <a href="#" class="btn btn-icon btn-circle btn-theme btn-scroll-to-top" data-toggle="scroll-to-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+</div>
+
+<div class="modal fade" id="modal-login-with-service" tabindex="-1" aria-labelledby="socialModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="socialModalLabel">{{label-login-service}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <form action="/User-Access" method="post" class="fs-13px">
+                    <button class="btn btn-outline-google btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-google">
+                        <i class="fab fa-google"></i> {{button-label-login-service-google}}
+                    </button>
+                    <!--
+                    <button class="btn btn-outline-facebook btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-facebook">
+                        <i class="fab fa-facebook-f"></i> {{button-label-login-service-facebook}}
+                    </button>
+
+                    <button class="btn btn-outline-instagram btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-instagram">
+                        <i class="fab fa-instagram"></i> {{button-label-login-service-instagram}}
+                    </button>
+
+                    <button class="btn btn-outline-github btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-github">
+                        <i class="fab fa-github"></i> {{button-label-login-service-github}}
+                    </button>
+
+                    <button class="btn btn-outline-twitter btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-twitter">
+                        <i class="fab fa-twitter"></i> {{button-label-login-service-twitter}}
+                    </button>
+
+                    <button class="btn btn-outline-disqus btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-disqus">
+                        <i class="fas fa-comments"></i> {{button-label-login-service-disqus}}
+                    </button>
+
+                    <button class="btn btn-outline-foursquare btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-foursquare">
+                        <i class="fab fa-foursquare"></i> {{button-label-login-service-foursquare}}
+                    </button>
+
+                    <button class="btn btn-outline-linkedin btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-linkedin">
+                        <i class="fab fa-linkedin"></i> {{button-label-login-service-linkedin}}
+                    </button>
+
+                    <button class="btn btn-outline-apple btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-apple">
+                        <i class="fab fa-apple"></i> {{button-label-login-service-apple}}
+                    </button>
+
+                    <button class="btn btn-outline-microsoft btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-microsoft">
+                        <i class="fab fa-windows"></i> {{button-label-login-service-microsoft}}
+                    </button>
+
+                    <button class="btn btn-outline-steam btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-steam">
+                        <i class="fab fa-steam"></i> {{button-label-login-service-steam}}
+                    </button>
+
+                    <button class="btn btn-outline-dropbox btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-dropbox">
+                        <i class="fab fa-dropbox"></i> {{button-label-login-service-dropbox}}
+                    </button>
+
+                    <button class="btn btn-outline-spotify btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-spotify">
+                        <i class="fab fa-spotify"></i> {{button-label-login-service-spotify}}
+                    </button>
+
+                    <button class="btn btn-outline-twitch btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-twitch">
+                        <i class="fab fa-twitch"></i> {{button-label-login-service-twitch}}
+                    </button>
+
+                    <button class="btn btn-outline-slack btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-slack">
+                        <i class="fab fa-slack"></i> {{button-label-login-service-slack}}
+                    </button>
+
+                    <button class="btn btn-outline-auth0 btn-lg mb-2 w-100" type="button" name="event"
+                            value="login-service-auth0">
+                        <i class="fas fa-lock"></i> {{button-label-login-service-auth0}}
+                    </button>
+                    -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

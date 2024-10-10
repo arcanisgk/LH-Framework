@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\View;
 
-use Asset\Framework\{Controller\ResponseController, Core\Files};
+use Asset\Framework\{Controller\ResponseController, Core\Files, Core\SecurityPolicies, Core\Variable};
 use Exception;
 
 /**
@@ -104,14 +104,15 @@ class Deployment
             implode(DS, [PD, 'Asset', 'resource', 'template', 'index.html'])
         );
 
+        $dir_tpl_meta         = implode(DS, [PD, 'Asset', 'resource', 'template', 'meta.html']);
         $dir_tpl_icon         = implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html']);
         $dir_tpl_html_content = implode(DS, [PD, 'Asset', 'resource', 'template', 'html_content.html']);
         $dir_tpl_app_setting  = implode(DS, [PD, 'Asset', 'resource', 'template', 'app_setting.html']);
         $dir_tpl_dev_mode     = implode(DS, [PD, 'Asset', 'resource', 'template', 'dev_mode.html']);
 
-        $icon_link   = RenderTemplate::getInstance()->setPath($dir_tpl_icon)->render();
-        $app_setting = RenderTemplate::getInstance()->setPath($dir_tpl_app_setting)->render();
 
+        $meta      = RenderTemplate::getInstance()->setPath($dir_tpl_meta)->render();
+        $icon_link = RenderTemplate::getInstance()->setPath($dir_tpl_icon)->render();
 
         $app_setting = '';
         if (CONFIG['ENVIRONMENT']['APP-SETTING'] === true) {
@@ -123,21 +124,28 @@ class Deployment
             $dev_mode = RenderTemplate::getInstance()->setPath($dir_tpl_dev_mode)->render();
         }
 
-
         $html_content = RenderTemplate::getInstance()->setPath($dir_tpl_html_content)
             ->setData($this->getData())
             ->render();
 
         $data = [
-            'lang'         => CONFIG['APP']['HOST']['LANG'],
-            'html_tittle'  => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
-            'icon_link'    => $icon_link,
-            'html_content' => $html_content,
-            'app_setting'  => $app_setting,
-            'dev_mode'     => $dev_mode,
+            'lang'        => CONFIG['APP']['HOST']['LANG'],
+            'html-tittle' => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
+            'meta'        => $meta,
+            'icon-link'   => $icon_link,
+            'html-body'   => $html_content,
+            'app-setting' => $app_setting,
+            'dev-mode'    => $dev_mode,
         ];
 
+        $security = SecurityPolicies::initSecurity();
+
+        header("Content-Security-Policy: ".$security::getScp());
+
         $html = RenderTemplate::getInstance()->setPath($dir)
+            ->setInputControl(
+                ['nonce-key' => $security::getNonce()]
+            )
             ->setData($data)
             ->render();
 

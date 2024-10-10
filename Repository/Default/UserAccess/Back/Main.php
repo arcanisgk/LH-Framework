@@ -118,19 +118,32 @@ class Main extends FrontResourceController implements ControllerInterface
     public function process(): ResponseController
     {
 
+        $form = (CONFIG['SESSION']['REGISTER']['ALL']) ? 'full.phtml' : 'no-register.phtml';
+
         $form = RenderTemplate::getInstance()
             ->setInput($this->input)
             ->setSMG($this->smg)
             ->setDic(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../dic/view.json'))
+            ->setInputControl(
+                [
+                    'enable-user-service' => (CONFIG['SESSION']['REGISTER']['SERVICE']) ? '' : 'd-none',
+                    //'portrait-login'      => 'assets/img/sinaproc/voluntarios.jpg',
+                    //'owner-logo'          => 'assets/img/sinaproc/sinaproc-logo.png',
+                    //'owner'               => 'Sistema Nacional de Protección Civil',
+                    //'department'          => 'Dirección Nacional de Voluntariado',
+                    'owner'               => 'Avipac Inc',
+                    'department'          => 'Avisistema 4',
+                ]
+            )
             ->setEventResponse($this->event->response)
-            ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/content.phtml'))
+            ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/'.$form))
             ->setData()
             ->setOthers(false, '')
             ->render();
 
-        return $this->response->setData(['html_content' => $form, 'assets' => $this->getHtmlAssets()])
+        return $this->response->setData(['html-content' => $form, 'assets' => $this->getHtmlAssets()])
             ->setShow(true)
-            ->setIn('html_content')
+            ->setIn('html-content')
             ->setRefresh(false)
             ->setNav(false)
             ->setMail(false);

@@ -83,5 +83,11 @@ class Variable
         return null;
     }
 
+    public static function getRandomString(mixed $options = null): string
+    {
+        $length     = $options['length'] ?? 10;
+        $characters = $options['characters'] ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+        return substr(str_shuffle(str_repeat($characters, (int)ceil($length / strlen($characters)))), 0, $length);
+    }
 }
