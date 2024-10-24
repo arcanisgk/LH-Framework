@@ -73,9 +73,9 @@ class SecurityPolicies
 
         self::$scp = "default-src 'self'; ".
             "script-src 'self' 'nonce-".self::$once."'; ".
-            "style-src 'self' 'nonce-".self::$once."'; ".
+            "style-src 'self' 'nonce-".self::$once."' https://fonts.googleapis.com; ".
             "img-src 'self' data: https:; ".
-            "font-src 'self'; ".
+            "font-src 'self' https://fonts.gstatic.com; ".
             "object-src 'none'; ".
             "base-uri 'self'; ".
             "form-action 'self'; ".

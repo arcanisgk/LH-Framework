@@ -186,8 +186,6 @@ class Event extends EventController
 
         /* Validar si Existe un correo electronico repetido */
 
-        /* */
-
 
         if (!empty($error)) {
             $error[] = [

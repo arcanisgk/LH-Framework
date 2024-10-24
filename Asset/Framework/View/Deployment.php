@@ -100,9 +100,7 @@ class Deployment
     {
 
         $file = Files::getInstance();
-        $dir  = $file->getAbsolutePath(
-            implode(DS, [PD, 'Asset', 'resource', 'template', 'index.html'])
-        );
+        $dir  = $file->getAbsolutePath(implode(DS, [PD, 'Asset', 'resource', 'template', 'index.html']));
 
         $dir_tpl_meta         = implode(DS, [PD, 'Asset', 'resource', 'template', 'meta.html']);
         $dir_tpl_icon         = implode(DS, [PD, 'Asset', 'resource', 'template', 'icon_link.html']);

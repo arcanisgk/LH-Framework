@@ -3,5 +3,8 @@
 /vendor/*
 /Asset/resource/config/*.json
 /Asset/resource/config/backup/
+/Asset/resource/recycle_bin/*
 /Repository/Project/*
+/public/assets/js/work/*
+/public/assets/css/work/*
 *.log
