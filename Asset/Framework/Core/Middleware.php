@@ -59,10 +59,10 @@ class Middleware
     public static function processMiddleware(): void
     {
 
-        if (!Config::checkFullConfig() && UR !== '/Setup') {
+        if (!ConfigLoader::checkFullConfig() && UR !== '/Setup') {
             Request::getInstance()->redirect('/Setup');
-        } elseif (Config::checkFullConfig() && UR === '/Setup' && UR !== CONFIG['APP']['HOST']['ENTRY']) {
-            Request::getInstance()->redirect(CONFIG['APP']['HOST']['ENTRY']);
+        } elseif (ConfigLoader::checkFullConfig() && UR === '/Setup' && UR !== CONFIG->app->host->getEntry()) {
+            Request::getInstance()->redirect(CONFIG->app->host->getEntry());
         }
 
         if (!Authentication::check() && UR !== '/User-Access') {

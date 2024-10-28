@@ -18,7 +18,6 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
-use Asset\Framework\Forms;
 use Exception;
 
 /**
@@ -55,9 +54,7 @@ class Kernel
     public function run(): void
     {
         if (!IS_CLI) {
-
-            //ex('|||====>>>> Kernel Run ))))');
-            Config::getInstance()->loadConfiguration();
+            ConfigLoader::getInstance()->loadConfigurations();
             Session::getInstance()->handleSession();
             //Route::getInstance()->initRoute();
             //ex(isset($_POST), isset($_GET));

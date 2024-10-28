@@ -60,8 +60,8 @@ class Lang
         if (isset($_SESSION['USER']['PREFERENCES']['LANG'])) {
             return $_SESSION['USER']['PREFERENCES']['LANG'];
         }
-        if (isset(CONFIG['APP']['HOST']['LANG'])) {
-            return CONFIG['APP']['HOST']['LANG'];
+        if (method_exists(CONFIG->app->host, 'getLang')) {
+            return CONFIG->app->host->getLang();
         }
 
         return 'en';

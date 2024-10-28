@@ -118,7 +118,7 @@ class Main extends FrontResourceController implements ControllerInterface
     public function process(): ResponseController
     {
 
-        $form = (CONFIG['SESSION']['REGISTER']['ALL']) ? 'full.phtml' : 'no-register.phtml';
+        $form = (CONFIG->session->register->getAll()) ? 'full.phtml' : 'no-register.phtml';
 
         $form = RenderTemplate::getInstance()
             ->setInput($this->input)
@@ -126,7 +126,7 @@ class Main extends FrontResourceController implements ControllerInterface
             ->setDic(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../dic/view.json'))
             ->setInputControl(
                 [
-                    'enable-user-service' => (CONFIG['SESSION']['REGISTER']['SERVICE']) ? '' : 'd-none',
+                    'enable-user-service' => (CONFIG->session->register->getService()) ? '' : 'd-none',
                     //'portrait-login'      => 'assets/img/sinaproc/voluntarios.jpg',
                     //'owner-logo'          => 'assets/img/sinaproc/sinaproc-logo.png',
                     //'owner'               => 'Sistema Nacional de Protección Civil',

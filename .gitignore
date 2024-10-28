@@ -1,5 +1,6 @@
 /.idea/
 /.git/
+/.cody/
 /vendor/*
 /Asset/resource/config/*.json
 /Asset/resource/config/backup/

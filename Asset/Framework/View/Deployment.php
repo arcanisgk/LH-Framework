@@ -113,12 +113,12 @@ class Deployment
         $icon_link = RenderTemplate::getInstance()->setPath($dir_tpl_icon)->render();
 
         $app_setting = '';
-        if (CONFIG['ENVIRONMENT']['APP-SETTING'] === true) {
+        if (CONFIG->environment->getAppSetting() === true) {
             $app_setting = RenderTemplate::getInstance()->setPath($dir_tpl_app_setting)->render();
         }
 
         $dev_mode = '';
-        if (CONFIG['ENVIRONMENT']['DEV-TOOL'] === true) {
+        if (CONFIG->environment->getDevTool() === true) {
             $dev_mode = RenderTemplate::getInstance()->setPath($dir_tpl_dev_mode)->render();
         }
 
@@ -127,8 +127,8 @@ class Deployment
             ->render();
 
         $data = [
-            'lang'        => CONFIG['APP']['HOST']['LANG'],
-            'html-tittle' => CONFIG['APP']['PROJECT']['PROJECT_NAME'],
+            'lang'        => CONFIG->app->host->getLang(),
+            'html-tittle' => CONFIG->app->project->getProjectName(),
             'meta'        => $meta,
             'icon-link'   => $icon_link,
             'html-body'   => $html_content,

@@ -70,7 +70,7 @@ class Route
     private function redirectDefault(): void
     {
         if (UR === '/') {
-            Request::getInstance()->redirect(CONFIG['APP']['HOST']['ENTRY']);
+            Request::getInstance()->redirect(CONFIG->app->host->getEntry());
         }
     }
 

@@ -53,14 +53,14 @@ class Session
 
         if (session_status() === PHP_SESSION_NONE) {
 
-            session_name(CONFIG['SESSION']['SESSION']['SESSION_NAME']);
+            session_name(CONFIG->session->session->getSessionName());
             session_set_cookie_params([
-                'lifetime' => CONFIG['SESSION']['SESSION']['SESSION_LIFETIME'],
+                'lifetime' => CONFIG->session->session->getSessionLifeTime(),
                 'path'     => '/',
-                'domain'   => CONFIG['APP']['HOST']['DOMAIN'],
-                'secure'   => CONFIG['SESSION']['SESSION']['SESSION_SECURE'],
-                'httponly' => CONFIG['SESSION']['SESSION']['SESSION_HTTPONLY'],
-                'samesite' => CONFIG['SESSION']['SESSION']['SESSION_SAME_SITE'],
+                'domain'   => CONFIG->app->host->getDomain(),
+                'secure'   => CONFIG->session->session->getSessionSecure(),
+                'httponly' => CONFIG->session->session->getSessionHttpOnly(),
+                'samesite' => CONFIG->session->session->getSessionSameSite(),
             ]);
 
             session_start();
@@ -69,13 +69,13 @@ class Session
 
         $_SESSION['SYSTEM'] ??= [
             'SESSION_START_DATE' => time(),
-            'LANG'               => CONFIG['APP']['HOST']['LANG'],
+            'LANG'               => CONFIG->app->host->getLang(),
         ];
 
         $_SESSION['USER'] ??= [
             'LOGIN'       => false,
             'PREFERENCES' => [
-                'LANG' => CONFIG['APP']['HOST']['LANG'],
+                'LANG' => CONFIG->app->host->getLang(),
             ],
         ];
 
