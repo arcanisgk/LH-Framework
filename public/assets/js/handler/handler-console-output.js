@@ -52,6 +52,17 @@ export class HandlerConsoleOutput {
     }
 
     /**
+     * Static method to create a new instance and call the `out` method.
+     * @param {*} msg - The message to output.
+     * @param {number} type - The type of message to output (1, 2, or 3).
+     * @returns {Promise<void>} - A Promise that resolves when the output is complete.
+     */
+    static async out(msg, type) {
+        const instance = new HandlerConsoleOutput();
+        await instance.out(msg, type);
+    }
+
+    /**
      * Debug output method
      * @param {*} args - The arguments to output
      * @returns {Promise<void>}

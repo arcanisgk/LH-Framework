@@ -67,15 +67,19 @@ export class HandlerAudio {
      */
     async initialize() {
         try {
+
             const response = await fetch('/assets/audio/playlist.json');
+
             if (!response.ok) throw new Error('Failed to fetch audio list');
 
             const data = await response.json();
-            const files = data.files;
+            if (!data || !Array.isArray(data.files)) throw new Error('Invalid playlist format');
 
-            for (const file of files) {
-                await this.loadAudioFile(file);
-            }
+
+            const loadPromises = data.files.map(file => this.loadAudioFile(file));
+            await Promise.all(loadPromises);
+
+            return true;
 
         } catch (error) {
             console.error('Error initializing audio:', error);

@@ -11,12 +11,10 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
-import {HandlerResourceList} from "./handler-rosource-list.js";
+import {HandlerResourceList} from "./handler-resource-list.js";
 import {HandlerRequest} from "./handler-request.js";
 
 export class HandlerResourceLoader {
-
-    accelerator = '';//this.getRandomString(13);
 
     /**
      * Initializes the HandlerResourceLoader instance.
@@ -42,19 +40,38 @@ export class HandlerResourceLoader {
      * @returns {Promise<void>} A Promise that resolves when the CSS file has been loaded.
      */
     loadCss(src) {
+        if (this.loadedCss.has(src)) {
+            return Promise.resolve();
+        }
+
         return new Promise(async (resolve, reject) => {
-            let fileExist = await HandlerRequest.validateFileExist(src);
-            if (fileExist) {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = `${src}`;
-                link.onload = () => resolve();
-                link.onerror = () => reject(new Error(`Failed to load CSS: ${src}`));
-                document.head.appendChild(link);
-            } else {
+            const fileExist = await HandlerRequest.validateFileExist(src);
+            if (!fileExist) {
                 console.warn(`CSS file not found: ${src}`);
                 resolve();
+                return;
             }
+
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.as = 'style';
+            preloadLink.href = src;
+            preloadLink.crossOrigin = 'anonymous';
+            document.head.appendChild(preloadLink);
+
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = src;
+            link.media = 'print';
+            link.crossOrigin = 'anonymous';
+
+            link.onload = () => {
+                link.media = 'all';
+                this.loadedCss.add(src);
+                resolve();
+            };
+            link.onerror = () => reject(new Error(`Failed to load CSS: ${src}`));
+            document.head.appendChild(link);
         });
     }
 
@@ -74,46 +91,70 @@ export class HandlerResourceLoader {
      * @returns {Promise<void>} A Promise that resolves when the JavaScript file has been loaded.
      */
     loadJs({src, defer = true, type = 'text/javascript', async = true} = {}) {
+        if (this.loadedJs.has(src)) {
+            return Promise.resolve();
+        }
+
         return new Promise(async (resolve, reject) => {
-            let fileExist = await HandlerRequest.validateFileExist(src);
-            if (fileExist) {
-                const script = document.createElement('script');
-                script.src = `${src}`;
-                if (defer) {
-                    script.defer = defer;
-                }
-                if (async) {
-                    script.async = async;
-                }
-                script.type = type;
-                script.onload = () => resolve();
-                script.onerror = () => reject(new Error(`Failed to load JS: ${src}`));
-                document.body.appendChild(script);
-            } else {
+            const fileExist = await HandlerRequest.validateFileExist(src);
+            if (!fileExist) {
                 console.warn(`JS file not found: ${src}`);
                 resolve();
+                return;
             }
+
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.as = 'script';
+            preloadLink.href = src;
+            preloadLink.crossOrigin = 'anonymous';
+            document.head.appendChild(preloadLink);
+
+            const script = document.createElement('script');
+            script.src = src;
+            script.defer = defer;
+            script.async = async;
+            script.type = type;
+            script.crossOrigin = 'anonymous';
+
+            script.onload = () => {
+                this.loadedJs.add(src);
+                resolve();
+            };
+            script.onerror = () => reject(new Error(`Failed to load JS: ${src}`));
+            document.body.appendChild(script);
         });
     }
 
     /**
-     * Loads a resource, either a CSS or JavaScript file, and tracks its loading status.
+     * Loads a group of resources, including CSS and JavaScript files, in a specific order.
      *
-     * If the resource is a CSS file and has not been loaded before, it loads the CSS file and adds the source to the `loadedCss` set.
-     * If the resource is a JavaScript file and has not been loaded before, it loads the JavaScript file and adds the source to the `loadedJs` set.
+     * This method first groups the resources by their group number, then loads the groups sequentially while loading the resources within each group in parallel. For CSS resources, it calls the `loadCss()` method, and for JavaScript resources, it calls the `loadJs()` method.
      *
-     * @param {Object} resource - The resource object containing information about the file to be loaded.
-     * @param {string} resource.typeR - The type of the resource, either 'css' or 'js'.
-     * @param {string} resource.src - The source URL of the resource.
-     * @returns {Promise<void>} A Promise that resolves when the resource has been loaded.
+     * @param {Object[]} resources - An array of resource objects, each with properties like `group`, `typeR`, and `src`.
+     * @returns {Promise<void>} A Promise that resolves when all the resources have been loaded.
      */
-    async loadResource(resource) {
-        if (resource.typeR === 'css' && !this.loadedCss.has(resource.src)) {
-            await this.loadCss(resource.src);
-            this.loadedCss.add(resource.src);
-        } else if (resource.typeR === 'js' && !this.loadedJs.has(resource.src)) {
-            await this.loadJs(resource);
-            this.loadedJs.add(resource.src);
+    async loadResourcesByGroup(resources) {
+
+        const groupedResources = resources.reduce((acc, resource) => {
+            const group = resource.group || 1;
+            if (!acc[group]) acc[group] = [];
+            acc[group].push(resource);
+            return acc;
+        }, {});
+
+        const groups = Object.keys(groupedResources).sort((a, b) => a - b);
+        for (const group of groups) {
+            const groupResources = groupedResources[group];
+            await Promise.all(
+                groupResources.map(resource => {
+                    if (resource.typeR === 'css') {
+                        return this.loadCss(resource.src);
+                    } else {
+                        return this.loadJs(resource);
+                    }
+                })
+            );
         }
     }
 
@@ -128,15 +169,11 @@ export class HandlerResourceLoader {
      */
     async loadRequirement() {
         const requirementScript = HandlerResourceList.getRequirement();
-
         try {
-            for (const resource of requirementScript) {
-
-                await this.loadResource(resource);
-                //console.log('resource Loaded', resource);
-            }
+            await this.loadResourcesByGroup(requirementScript);
         } catch (error) {
-            console.error('Error loading assets:', error);
+            console.error('Error loading requirements:', error);
+            throw error;
         }
     }
 
@@ -153,16 +190,16 @@ export class HandlerResourceLoader {
      */
     async loadAssets(name) {
         const assetsScript = HandlerResourceList.getCommonPlugin(name);
-        if (assetsScript) {
-            try {
-                for (const resource of assetsScript) {
-                    await this.loadResource(resource);
-                }
-            } catch (error) {
-                console.error('Error loading assets:', error);
-            }
-        } else {
+        if (!assetsScript) {
             console.log(`Asset not found: ${name}`);
+            return;
+        }
+
+        try {
+            await this.loadResourcesByGroup(assetsScript);
+        } catch (error) {
+            console.error('Error loading assets:', error);
+            throw error;
         }
     }
 
@@ -177,7 +214,10 @@ export class HandlerResourceLoader {
     getScriptPath() {
         const segment = window.location.pathname.split('/')[1].toLowerCase();
         const formattedPath = segment.replace(/-/g, '');
-        return {css: `assets/css/work/${formattedPath}/style.css`, js: `assets/js/work/${formattedPath}/script.js`};
+        return {
+            css: `assets/css/work/${formattedPath}/style.css`,
+            js: `assets/js/work/${formattedPath}/script.js`
+        };
     }
 
     /**
@@ -191,10 +231,13 @@ export class HandlerResourceLoader {
     async loadDynamicScript() {
         const scriptPath = this.getScriptPath();
         try {
-            await this.loadCss(scriptPath.css);
-            await this.loadJs({src: scriptPath.js, type: 'module'});
+            await this.loadResourcesByGroup([
+                {typeR: 'css', group: 1, src: scriptPath.css},
+                {typeR: 'js', group: 2, src: scriptPath.js, type: 'module'}
+            ]);
         } catch (error) {
-            console.warn(`Error loading assets: ${scriptPath}`, error);
+            console.warn(`Error loading dynamic script:`, error);
+            throw error;
         }
     }
 

@@ -92,7 +92,7 @@ class Deployment
 
         $meta      = Render::getInstance()->setPath($dir_tpl_meta)->render();
         $icon_link = Render::getInstance()->setPath($dir_tpl_icon)->render();
-        
+
         $app_setting = '';
         if (CONFIG->tools->getAppSetting() === true) {
             $app_setting = Render::getInstance()->setPath($dir_tpl_app_setting)->render();
@@ -117,6 +117,9 @@ class Deployment
             'dev-mode'    => $dev_mode,
         ];
 
+
+        //ex_c($_SESSION, session_get_cookie_params(), CONFIG);
+
         $security = SecurityPolicies::initSecurity();
 
         header("Content-Security-Policy: ".$security::getCSP());
@@ -129,6 +132,7 @@ class Deployment
             )
             ->setData($data)
             ->render();
+
 
         $this->outHtml(
             $html

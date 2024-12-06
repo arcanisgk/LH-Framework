@@ -35,7 +35,9 @@
                         <div class="input-group">
                             <input type="password" id="login-password" name="login-password" autocomplete="on"
                                    class="form-control fs-13px" placeholder="{{placeholder-password}}" required>
-                            <button type="button" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa-solid fa-eye"></i><span class="visually-hidden">ver contraseña</span>
+                            </button>
                         </div>
                         <div class="d-none" id="login-password-smg"></div>
                     </div>
@@ -176,12 +178,12 @@
 
 </div>
 
-<div class="modal fade" id="modal-register-with-service" tabindex="-1" aria-labelledby="socialModalLabel"
+<div class="modal fade" id="modal-register-with-service" tabindex="-1" aria-labelledby="socialModalLabel-register"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="socialModalLabel">{{label-register-service}}</h5>
+                <h5 class="modal-title" id="socialModalLabel-register">{{label-register-service}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
@@ -272,12 +274,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-login-with-service" tabindex="-1" aria-labelledby="socialModalLabel"
+<div class="modal fade" id="modal-login-with-service" tabindex="-1" aria-labelledby="socialModalLabel-login"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="socialModalLabel">{{label-login-service}}</h5>
+                <h5 class="modal-title" id="socialModalLabel-login">{{label-login-service}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">

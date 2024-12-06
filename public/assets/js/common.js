@@ -27,6 +27,7 @@ await resourceLoader.loadRequirement();
  * @return {Promise<void>}
  */
 async function initApp() {
+    const startTime = performance.now();
     try {
         await HandlerConsoleOutput.defaultMGS('init');
         const controllerUI = new ControllerUI();
@@ -35,6 +36,10 @@ async function initApp() {
         await setLoaderVisibility(false);
     } catch (error) {
         await HandlerConsoleOutput.defaultMGS('error', 'Deploy Interfaces', error);
+    } finally {
+        const endTime = performance.now();
+        const executionTime = endTime - startTime;
+        await HandlerConsoleOutput.out(`InitApp execution time: ${executionTime.toFixed(2)}ms`, 'info');
     }
 }
 

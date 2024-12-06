@@ -35,7 +35,6 @@ class Render
 
     use SingletonTrait;
 
-
     private const array DEFAULT_DIC_PATH = ['Asset', 'resource', 'dic', 'default.json'];
     private const array NOT_FOUND_TEMPLATE = ['Asset', 'resource', 'template', 'not_found.html'];
 
@@ -53,6 +52,8 @@ class Render
      * @var array
      */
     private array $inputControl = [];
+
+    private array $metaHeader = [];
 
     /**
      * @var array
@@ -98,6 +99,7 @@ class Render
             implode(DS, [PD, ...self::DEFAULT_DIC_PATH])
         );
         $this->setDic($defaultDic);
+        $this->setMetaHeader();
     }
 
     /**
@@ -151,7 +153,8 @@ class Render
             $this->event_response ?? [],
             $this->data ?? [],
             $this->dictionary ?? [],
-            $this->inputControl ?? []
+            $this->inputControl ?? [],
+            $this->getMetaHeader() ?? [],
         );
 
         if (!$this->recursive) {
@@ -175,6 +178,26 @@ class Render
         }
 
         return $this->file_reader;
+    }
+
+    public function getMetaHeader(): array
+    {
+        return $this->metaHeader;
+    }
+
+    public function setMetaHeader(): void
+    {
+
+        $metaHeader = [
+            'html-tittle' => CONFIG->app->project->getProjectName().' by '.CONFIG->app->company->getCompanyName(),
+            'meta-autor'  => CONFIG->app->company->getCompanyOwner(),
+            'url-image'   => 'assets/img/logo/adah-logo.png',
+            'alt-image'   => 'ADAH Network',
+            'full-url'    => CONFIG->app->host->getProtocol().'://'.CONFIG->app->host->getDomain().UR,
+            'site-name'   => 'ADAH Network',
+        ];
+
+        $this->metaHeader = $metaHeader;
     }
 
     /**

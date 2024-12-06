@@ -19,7 +19,6 @@ declare(strict_types=1);
 namespace Repository\Default\ClearSession\Back;
 
 use Asset\Framework\Core\Session;
-use Asset\Framework\Http\Request;
 use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;

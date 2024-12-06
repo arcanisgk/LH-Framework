@@ -36,8 +36,8 @@ class SecurityPolicies
     private const array CSP_DIRECTIVES
         = [
             'default-src'     => "'self'",
-            'script-src'      => "'self'", // Will be appended with nonce
-            'style-src'       => "'self' https://fonts.googleapis.com", // Will be appended with nonce
+            'script-src'      => "'self' 'unsafe-inline'",
+            'style-src'       => "'self' 'unsafe-inline' https://fonts.googleapis.com",
             'img-src'         => "'self' data: https:",
             'font-src'        => "'self' https://fonts.gstatic.com",
             'object-src'      => "'none'",
@@ -113,7 +113,6 @@ class SecurityPolicies
     {
         $directives = self::CSP_DIRECTIVES;
 
-        // Append nonce to script-src and style-src
         $directives['script-src'] .= " 'nonce-".self::$nonce."'";
         $directives['style-src']  .= " 'nonce-".self::$nonce."'";
 

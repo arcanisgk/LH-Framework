@@ -10,13 +10,13 @@
     "project_copyright": "Avipac Inc"
   },
   "host": {
-    "domain": "avi4.dock",
-    "lang": "es",
+    "domain": "localhost",
+    "lang": "en",
     "m-lang": true,
-    "protocol": "https",
+    "protocol": "http",
     "entry": "User-Access",
     "license": "FREE-FREE-FREE-FREE",
     "free": true,
-    "humanitarian": true
+    "humanitarian": false
   }
 }

@@ -4,8 +4,8 @@
     "ftp_host": "127.0.0.1",
     "ftp_port": 21,
     "ftp_user": "fulanito_73",
-    "ftp_password": "*@1Qazxsw22",
-    "ftp_password_re": "*@1Qazxsw22",
+    "ftp_password": "",
+    "ftp_password_re": "",
     "ftp_path": "\/path\/dir",
     "ftp_passive_mode": true
   }

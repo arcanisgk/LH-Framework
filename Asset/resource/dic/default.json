@@ -6,6 +6,8 @@
       "lang-fr-selected": "",
       "lang-pt-selected": "",
       "lang": "es",
+      "meta-keyword": "ayuda humanitaria, voluntariado solidario, asistencia social, apoyo comunitario, redes solidarias, organizaciones locales, activismo social, cooperación comunitaria, iniciativas solidarias, grupos de rescate, distribución de alimentos, recolección de donaciones, brigadas médicas, respuesta a emergencias, capacitación en primeros auxilios, educación en desastres, construcción comunitaria, apoyo psicológico, refugios temporales, actividades educativas solidarias, desarrollo sostenible, ayuda a refugiados, inclusión social, protección infantil, igualdad de género, ayuda a personas mayores, apoyo a personas con discapacidad, protección ambiental comunitaria, prevención de desastres, movimientos ciudadanos",
+      "meta-description": "Explora iniciativas de ayuda humanitaria, voluntariado solidario y apoyo comunitario. Descubre redes solidarias, actividades de asistencia social, y proyectos para el desarrollo sostenible y la inclusión social.",
       "label-setting": "Configuración de la aplicación",
       "label-lang": "Idioma",
       "label-color-theme": "Selector de color",
@@ -62,11 +64,13 @@
       "system-message": "Mensaje del Sistema"
     },
     "en": {
-      "lang": "en",
       "lang-en-selected": "selected",
       "lang-es-selected": "",
       "lang-fr-selected": "",
       "lang-pt-selected": "",
+      "lang": "en",
+      "meta-keyword": "humanitarian aid, solidarity volunteering, social assistance, community support, solidarity networks, local organizations, social activism, community cooperation, solidarity initiatives, rescue groups, food distribution, donation collection, medical brigades, emergency response, first aid training, disaster education, community building, psychological support, temporary shelters, solidarity educational activities, sustainable development, refugee aid, social inclusion, child protection, gender equality, help for the elderly, support for people with disabilities, community environmental protection, disaster prevention, citizen movements",
+      "meta-description": "Explore humanitarian aid initiatives, solidarity volunteering and community support. Discover solidarity networks, social assistance activities, and projects for sustainable development and social inclusion.",
       "label-setting": "App Settings",
       "label-lang": "Language",
       "label-color-theme": "Color Theme Selector",
@@ -123,11 +127,13 @@
       "system-message": "System Message"
     },
     "fr": {
-      "lang": "fr",
       "lang-en-selected": "",
       "lang-es-selected": "",
       "lang-fr-selected": "selected",
       "lang-pt-selected": "",
+      "lang": "fr",
+      "meta-keyword": "aide humanitaire, volontariat solidaire, assistance sociale, soutien communautaire, réseaux de solidarité, organisations locales, activisme social, coopération communautaire, initiatives solidaires, groupes de secours, distribution alimentaire, collecte de dons, brigades médicales, intervention d'urgence, formation aux premiers secours, éducation aux catastrophes, renforcement de la communauté, soutien psychologique, abris temporaires, activités éducatives solidaires, développement durable, aide aux réfugiés, inclusion sociale, protection de l'enfance, égalité des sexes, aide aux personnes âgées, soutien aux personnes atteintes handicap, protection communautaire de l'environnement, prévention des catastrophes, mouvements citoyens",
+      "meta-description": "Explorez les initiatives d'aide humanitaire, le volontariat solidaire et le soutien communautaire. Découvrez les réseaux de solidarité, les activités d'assistance sociale et les projets de développement durable et d'inclusion sociale.",
       "label-setting": "Paramètres de l'App",
       "label-lang": "Langue",
       "label-color-theme": "Sélecteur de Thème de Couleur",
@@ -184,11 +190,13 @@
       "system-message": "Message système"
     },
     "pt": {
-      "lang": "pt",
       "lang-en-selected": "",
       "lang-es-selected": "",
       "lang-fr-selected": "",
       "lang-pt-selected": "selected",
+      "lang": "pt",
+      "meta-keyword": "ajuda humanitária, voluntariado solidário, assistência social, apoio comunitário, redes de solidariedade, organizações locais, ativismo social, cooperação comunitária, iniciativas de solidariedade, grupos de resgate, distribuição de alimentos, coleta de doações, brigadas médicas, resposta a emergências, treinamento em primeiros socorros, educação em desastres, construção de comunidade, apoio psicológico, abrigos temporários, atividades educacionais solidárias, desenvolvimento sustentável, ajuda a refugiados, inclusão social, proteção infantil, igualdade de gênero, ajuda a idosos, apoio a pessoas com deficiência, proteção ambiental comunitária, prevenção de desastres, movimentos cidadãos",
+      "meta-description": "Explore iniciativas de ajuda humanitária, voluntariado solidário e apoio comunitário. Descubra redes de solidariedade, atividades de assistência social e projetos de desenvolvimento sustentável e inclusão social.",
       "label-setting": "Configurações do App",
       "label-lang": "Idioma",
       "label-color-theme": "Seletor de Tema de Cor",

@@ -2,10 +2,11 @@
 <html lang="{{lang}}">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" name="viewport"/>
 
     <title>{{html-tittle}}</title>
-    <link rel="manifest" href="/assets/json/manifest.json"/>
+    <link href="/assets/json/manifest.json" rel="manifest"/>
     {{icon-link}}
     {{meta}}
     <style nonce="{{nonce-key}}">
@@ -43,7 +44,7 @@
     </style>
 </head>
 <body class="pace-top">
-<div id="loader" class="app-loader">
+<div class="app-loader" id="loader">
     <span class="spinner"></span>
 </div>
 <div id="screen-loader">
@@ -62,6 +63,6 @@
     })();
 
 </script>
-<script type="module" src="assets/js/common.js"></script>
+<script src="assets/js/common.js" type="module"></script>
 </body>
 </html>
