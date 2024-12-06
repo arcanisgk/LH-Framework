@@ -14,6 +14,11 @@
 
 import {HandlerUtilities} from "./handler-utilities.js";
 
+/**
+ * Provides a console output handler for the Last Hammer framework.
+ * This class is responsible for managing and formatting console output
+ * for the application.
+ */
 export class HandlerConsoleOutput {
 
     /**
@@ -32,6 +37,18 @@ export class HandlerConsoleOutput {
     static async debugOut(args) {
         const instance = new HandlerConsoleOutput();
         await instance.debugOut(args);
+    }
+
+    /**
+     * Static method to create a new instance and call defaultMGS
+     * @param {string} select - The type of message to output
+     * @param {string} text - The text to output
+     * @param {*} error - The error to output
+     * @returns {Promise<void>}
+     */
+    static async defaultMGS(select, text = "Message not set", error = null) {
+        const instance = new HandlerConsoleOutput();
+        await instance.defaultMGS(select, text, error);
     }
 
     /**
@@ -68,18 +85,6 @@ export class HandlerConsoleOutput {
             console.log("Unknown Output");
         }
 
-    }
-
-    /**
-     * Static method to create a new instance and call defaultMGS
-     * @param {string} select - The type of message to output
-     * @param {string} text - The text to output
-     * @param {*} error - The error to output
-     * @returns {Promise<void>}
-     */
-    static async defaultMGS(select, text = "Message not set", error = null) {
-        const instance = new HandlerConsoleOutput();
-        await instance.defaultMGS(select, text, error);
     }
 
     /**

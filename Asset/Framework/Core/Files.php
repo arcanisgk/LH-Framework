@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 
 /**
@@ -26,23 +27,23 @@ use Exception;
  */
 class Files
 {
-    /**
-     * @var Files|null Singleton instance of the Files.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
+
+    private const int DIRECTORY_PERMISSIONS = 0755;
+
+    private const int FILE_PERMISSIONS = 0644;
 
     /**
-     * Get the singleton instance of Files.
-     *
-     * @return Files The singleton instance.
+     * Creates a directory with proper permissions
+     * @param string $directory
+     * @param int $permissions
+     * @return void
      */
-    public static function getInstance(): self
+    public function createDirectory(string $directory, int $permissions = self::DIRECTORY_PERMISSIONS): void
     {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
+        if (!$this->validateDirectory($directory)) {
+            mkdir($directory, $permissions, true);
         }
-
-        return self::$instance;
     }
 
     /**
@@ -56,90 +57,174 @@ class Files
     }
 
     /**
-     * @param string $directory
-     *
-     * @return void
-     */
-    public function createDirectory(string $directory): void
-    {
-        mkdir($directory, 0777, true);
-    }
-
-
-    /**
+     * Enhanced file loader with better error handling and type safety
      * @param string $path
      * @param array $data
      *
      * @return string|null
+     * @throws Exception
      */
     public function fileLoader(string $path, array $data = []): ?string
     {
-        $fullPath = PD.DS.$path;
+        $fullPath = $this->buildFullPath($path);
 
-        if (!file_exists($fullPath)) {
-            $fileContent = null;
+        if (!is_file($fullPath)) {
+            return null;
         }
 
-        extract($data, EXTR_SKIP);
+        try {
+            extract($data, EXTR_SKIP);
+            ob_start();
+            include $fullPath;
 
-        ob_start();
-        include $fullPath;
-
-        return ob_get_clean();
+            return ob_get_clean();
+        } catch (Exception $e) {
+            ob_end_clean();
+            throw new Exception("Failed to load file: $fullPath", 0, $e);
+        }
     }
 
+    /**
+     * Private helper methods
+     * @param string $path
+     * @return string
+     */
+    private function buildFullPath(string $path): string
+    {
+        return PD.DS.$path;
+    }
+
+
+    /**
+     * Builds absolute path with proper directory separators
+     * @param string $path
+     * @return string
+     */
     public function getAbsolutePath(string $path): string
     {
-        $path               = mb_ereg_replace('\\\\|/', DS, $path);
-        $startWithSeparator = $path[0] === DS;
-        preg_match('/^[a-z]:/i', $path, $matches);
+        $normalizedPath = $this->normalizePath($path);
+        $pathInfo       = $this->parsePathComponents($normalizedPath);
+
+        return $this->buildNormalizedPath($pathInfo);
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private function normalizePath(string $path): string
+    {
+        return mb_ereg_replace('\\\\|/', DS, $path);
+    }
+
+    /**
+     * @param string $normalizedPath
+     * @return array
+     */
+    private function parsePathComponents(string $normalizedPath): array
+    {
+        $startWithSeparator = $normalizedPath[0] === DS;
+        preg_match('/^[a-z]:/i', $normalizedPath, $matches);
         $startWithLetterDir = $matches[0] ?? false;
 
-        $subPaths  = array_filter(explode(DS, $path), 'mb_strlen');
-        $absolutes = [];
+        return [
+            'parts'              => array_filter(explode(DS, $normalizedPath), 'mb_strlen'),
+            'startWithSeparator' => $startWithSeparator,
+            'startWithLetterDir' => $startWithLetterDir,
+        ];
+    }
 
-        foreach ($subPaths as $subPath) {
-            $absolutes = match ($subPath) {
-                '.' => $absolutes,
-                '..' => empty($absolutes) || (!$startWithSeparator && !$startWithLetterDir) ?
-                    array_merge($absolutes, [$subPath]) :
-                    array_slice($absolutes, 0, -1),
-                default => array_merge($absolutes, [$subPath]),
-            };
-        }
-
-        $prefix = $startWithSeparator ? DS : ($startWithLetterDir ? $startWithLetterDir.DS : '');
+    /**
+     * @param array $pathInfo
+     * @return string
+     */
+    private function buildNormalizedPath(array $pathInfo): string
+    {
+        $absolutes = $this->resolvePathParts(
+            $pathInfo['parts'],
+            $pathInfo['startWithSeparator'],
+            $pathInfo['startWithLetterDir']
+        );
+        $prefix    = $this->determinePathPrefix($pathInfo['startWithSeparator'], $pathInfo['startWithLetterDir']);
 
         return $prefix.implode(DS, $absolutes);
     }
 
     /**
-     * @param array $resources
-     * @return bool
+     * @param array $parts
+     * @param bool $startWithSeparator
+     * @param $startWithLetterDir
+     * @return array
      */
-    public function fileCopy(array $resources): bool
+    private function resolvePathParts(array $parts, bool $startWithSeparator, $startWithLetterDir): array
     {
-        $path = pathinfo($resources[1]);
-        if (!file_exists($path['dirname'])) {
-            mkdir($path['dirname'], 0777, true);
+        $absolutes = [];
+        foreach ($parts as $part) {
+            if ($part === '.') {
+                continue;
+            }
+            if ($part === '..' && !empty($absolutes) &&
+                ($startWithSeparator || $startWithLetterDir)) {
+                array_pop($absolutes);
+                continue;
+            }
+            $absolutes[] = $part;
         }
-        if (!copy($resources[0], $resources[1])) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return $absolutes;
     }
 
     /**
+     * @param bool $startWithSeparator
+     * @param $startWithLetterDir
+     * @return string
+     */
+    private function determinePathPrefix(bool $startWithSeparator, $startWithLetterDir): string
+    {
+        if ($startWithSeparator) {
+            return DS;
+        }
+
+        return $startWithLetterDir ? $startWithLetterDir.DS : '';
+    }
+
+    /**
+     * Enhanced file copy with better error handling
+     * @param array $resources
+     * @return bool
+     * @throws Exception
+     */
+    public function fileCopy(array $resources): bool
+    {
+        if (!isset($resources[0], $resources[1])) {
+            throw new Exception('Source and destination paths are required');
+        }
+
+        $source      = $resources[0];
+        $destination = $resources[1];
+
+        if (!file_exists($source)) {
+            throw new Exception("Source file does not exist: $source");
+        }
+
+        $destinationDir = dirname($destination);
+        $this->ensureDirectoryExists($destinationDir);
+
+        return copy($source, $destination);
+    }
+
+    /**
+     * Ensures directory exists with proper error handling
      * @param string $directory
      * @return void
      * @throws Exception
      */
     public function ensureDirectoryExists(string $directory): void
     {
-        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
-            throw new Exception("Directory '$directory' was not created");
+        if (!$this->validateDirectory($directory) &&
+            !mkdir($directory, self::DIRECTORY_PERMISSIONS, true) &&
+            !is_dir($directory)) {
+            throw new Exception("Failed to create directory: $directory");
         }
     }
-
 }

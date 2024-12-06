@@ -15,6 +15,15 @@
 import {HandlerDOM} from "./handler-dom.js";
 
 export class HandlerValidation {
+
+    /**
+     * Validates a single field based on the provided rules.
+     *
+     * @param {*} value - The value of the field to be validated.
+     * @param {Object} rules - An object containing the validation rules for the field.
+     * @param {Object} allValues - An object containing the current values for all fields.
+     * @returns {boolean} - `true` if the field is valid, `false` otherwise.
+     */
     static validateField(value, rules, allValues) {
         if (!rules) return true;
 
@@ -43,6 +52,13 @@ export class HandlerValidation {
         return true;
     }
 
+    /**
+     * Validates all fields in the provided `fields` array using the corresponding validation rules.
+     *
+     * @param {Object[]} fields - An array of field objects, each containing an `inputSettingName` and `errorFieldId` property, as well as a `rules` object with validation rules.
+     * @param {Object} values - An object containing the current values for all fields.
+     * @returns {boolean} - `true` if all fields are valid, `false` otherwise.
+     */
     static validateAllFields(fields, values) {
         return fields.every(field => {
             const value = values[field.inputSettingName];
@@ -51,10 +67,10 @@ export class HandlerValidation {
             const isValid = this.validateField(value, field.rules, values);
 
             if (isValid) {
-                if (errorField) HandlerDOM.hideError(errorField);
+                if (errorField) HandlerDOM.hideContent(errorField);
                 return true;
             } else {
-                if (errorField) HandlerDOM.showError(errorField);
+                if (errorField) HandlerDOM.showContent(errorField);
                 return false;
             }
 

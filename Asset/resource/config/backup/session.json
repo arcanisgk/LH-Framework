@@ -1,0 +1,34 @@
+{
+  "session": {
+    "session_name": "lh-2-session",
+    "session_inactivity": true,
+    "session_life_time": 2592000,
+    "session_activity_expire": 172800,
+    "session_secure": true,
+    "session_http_only": true,
+    "session_same_site": "Strict"
+  },
+  "register": {
+    "all": false,
+    "internal": true,
+    "service": false
+  },
+  "service": {
+    "google_sign_service": true,
+    "facebook_sign_service": true,
+    "instagram_sign_service": true,
+    "github_sign_service": true,
+    "twitter_sign_service": true,
+    "disqus_sign_service": true,
+    "foursquare_sign_service": true,
+    "linkedin_sign_service": true,
+    "apple_sign_service": true,
+    "microsoft_sign_service": true,
+    "steam_sign_service": true,
+    "dropbox_sign_service": true,
+    "spotify_sign_service": true,
+    "twitch_sign_service": true,
+    "slack_sign_service": true,
+    "auth0_sign_service": true
+  }
+}

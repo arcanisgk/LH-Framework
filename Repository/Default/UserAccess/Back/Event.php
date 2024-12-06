@@ -18,67 +18,457 @@ declare(strict_types=1);
 
 namespace Repository\Default\UserAccess\Back;
 
-use Asset\Framework\Controller\EventController;
+use Asset\Framework\Http\Request;
+use Asset\Framework\Http\Response;
+use Asset\Framework\Template\Form\FormSMG;
+use Asset\Framework\Template\Render;
 use Asset\Framework\ToolBox\Password;
+use Asset\Framework\Trait\SingletonTrait;
+use Entity\Default\User;
+use Exception;
+use JetBrains\PhpStorm\NoReturn;
+use Random\RandomException;
 
 /**
- * Class that handles:
+ * Class that handles: Events of/over User Access
  *
  * @package Repository\Default\UserAccess\Back;
  */
-class Event extends EventController
+class Event
 {
 
-    /**
-     * @var Event|null Singleton instance of the class: Event.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
+
+    private const array VALIDATION_RULES
+        = [
+            'register-first-name'       => ['required' => true, 'message' => '{{register-first-name-smg}}'],
+            'register-last-name'        => ['required' => true, 'message' => '{{register-last-name-smg}}'],
+            'register-email'            => ['required' => true, 'message' => '{{register-email-smg-0}}'],
+            'register-re-email'         => ['required' => true, 'message' => '{{register-re-email-smg-0}}'],
+            'register-password'         => ['required' => true, 'message' => '{{register-password-smg-0}}'],
+            'register-agree-conditions' => [
+                'required' => true,
+                'value'    => true,
+                'message'  => '{{register-agree-conditions-smg}}',
+            ],
+        ];
 
     /**
-     * Get the singleton instance of teh class Event.
-     *
-     * @return Event The singleton instance.
+     * @var Render
      */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * @var mixed|null
-     */
-    private mixed $event = null;
+    private Render $render;
 
     /**
      * @var bool
      */
-    public bool $event_exists = false;
+    private bool $event_exists = false;
 
     /**
-     * Event constructor.
+     * @var string
      */
-    public function __construct()
-    {
-        parent::__construct();
-        if (isset($_POST) && !empty($_POST)) {
-            $this->event_exists = true;
-            $this->event        = $_POST['event'];
-        }
-    }
+    private string $event = '';
 
     /**
      * @var Main
      */
-    public Main $main;
+    private Main $main;
+
+    /**
+     * @var Response
+     */
+    private Response $response;
+
+    /**
+     * @var Request
+     */
+    private Request $request;
 
     /**
      * @var array
      */
-    public array $data = [];
+    private array $post;
+
+    /**
+     * Event constructor.
+     */
+    public function __construct(Main $main)
+    {
+        if (!empty($_POST)) {
+            $this->initializeEvent($main);
+        }
+    }
+
+    /**
+     * @param Main $main
+     * @return void
+     */
+    private function initializeEvent(Main $main): void
+    {
+
+        $this->setEventExists(true)
+            ->setEvent($_POST['event'])
+            ->setMain($main)
+            ->setRender(Render::getInstance())
+            ->setResponse(Response::getInstance())
+            ->setRequest(Request::getInstance())
+            ->setPost($this->getRequest()->getPost());
+
+        $this->getResponse()->setEvent($this);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPost(): array
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param array $post
+     * @return Event
+     */
+    public function setPost(array $post): self
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param Request $request
+     * @return Event
+     */
+    public function setRequest(Request $request): self
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param Response $response
+     * @return $this
+     */
+    public function setResponse(Response $response): self
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     * @throws Exception
+     */
+    public function eventHandler(): self
+    {
+        if ($this->isEventExists()) {
+            $this->eventListener();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEventExists(): bool
+    {
+        return $this->event_exists;
+    }
+
+    /**
+     * @param bool $event_exists
+     * @return $this
+     */
+    public function setEventExists(bool $event_exists): self
+    {
+        $this->event_exists = $event_exists;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     * @throws Exception
+     */
+    public function eventListener(): self
+    {
+        if (method_exists($this, $this->getEvent())) {
+            $this->{$this->event}();
+        } else {
+            //throw new Exception('Event not found');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEvent(): string
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param string $event
+     * @return $this
+     */
+    public function setEvent(string $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * @return void
+     */
+    private function login(): void
+    {
+        ex_c('Test de login');
+    }
+
+    /**
+     * @return Response
+     * @throws RandomException
+     */
+    private function register(): Response
+    {
+
+        $validationErrors = $this->validateRegistrationData();
+
+        if (!empty($validationErrors)) {
+            return $this->handleValidationErrors($validationErrors);
+        }
+
+        return $this->createUserAccount();
+
+        /*
+        $user = User::getInstance();
+
+        $post = $this->getPost();
+
+        $smg = $this->getMain()->getSmg();
+
+        $error = [];
+
+        if ($post['register-first-name'] === '') {
+
+            $error[] = [
+                'field'  => 'register-first-name-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-first-name-smg', 'invalid'))->getLastMessage(),
+            ];
+
+        }
+
+        if ($post['register-last-name'] === '') {
+
+            $error[] = [
+                'field'  => 'register-last-name-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-last-name-smg', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if ($post['register-email'] === '') {
+            $error[] = [
+                'field'  => 'register-email-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-email-smg-0', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if ($post['register-re-email'] === '') {
+            $error[] = [
+                'field'  => 'register-re-email-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-re-email-smg-0', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if ($post['register-re-email'] !== $post['register-email']) {
+            $error[] = [
+                'field'  => 'register-email-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-email-smg-1', 'invalid'))->getLastMessage(),
+            ];
+            $error[] = [
+                'field'  => 'register-re-email-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-re-email-smg-1', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if ($post['register-password'] === '') {
+            $error[] = [
+                'field'  => 'register-password-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-password-smg-0', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        $pass_eval = Password::quickCheck($post['register-password']);
+
+        if (!empty($pass_eval)) {
+            $error[] = [
+                'field'  => 'register-password-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG(implode(NL, $pass_eval), 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if ($post['register-agree-conditions'] !== true) {
+            $error[] = [
+                'field'  => 'register-agree-conditions-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG(
+                    $this->feedbackSMG('register-agree-conditions-smg', 'invalid')
+                )->getLastMessage(),
+            ];
+        }
+
+        if ($user->emailExists($post['register-email'])) {
+            $error[] = [
+                'field'  => 'register-email-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-email-smg-2', 'invalid'))->getLastMessage(),
+            ];
+        }
+
+        if (!empty($error)) {
+            $error[] = [
+                'field'  => 'register-head-smg',
+                'status' => 'error',
+                'smg'    => $smg->setSMG($this->feedbackSMG('register-smg-0', 'warning'))->getLastMessage(),
+            ];
+
+            return $this->getResponse()
+                ->setContent($error)
+                ->setOutputFormat('json')
+                ->setIsError(true)
+                ->setShow(true);
+
+        } else {
+
+            $credentials = [
+                'first_name' => $post['register-first-name'],
+                'last_name'  => $post['register-last-name'],
+                'email'      => $post['register-email'],
+                'password'   => password_hash($post['register-password'], PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $result = $user->createAccount($credentials);
+
+            if ($result) {
+                $out[] = [
+                    'field'  => 'register-head-smg',
+                    'status' => 'success',
+                    'smg'    => $smg->setSMG($this->feedbackSMG('register-email-success', 'success'))->getLastMessage(),
+                ];
+
+                return $this->getResponse()
+                    ->setContent($out)
+                    ->setOutputFormat('json')
+                    ->setIsError(false)
+                    ->setRefresh(true)
+                    ->setShow(true);
+
+            } else {
+
+                $error[] = [
+                    'field'  => 'register-head-smg',
+                    'status' => 'error',
+                    'smg'    => $smg->setSMG($this->feedbackSMG('register-email-fail', 'danger'))->getLastMessage(),
+                ];
+
+                return $this->getResponse()
+                    ->setContent($error)
+                    ->setOutputFormat('json')
+                    ->setIsError(true)
+                    ->setShow(true);
+            }
+
+        }
+        */
+
+
+    }
+
+    /**
+     * @return array
+     */
+    private function validateRegistrationData(): array
+    {
+        $errors = [];
+        $post   = $this->getPost();
+
+        foreach (self::VALIDATION_RULES as $field => $rules) {
+            if ($rules['required'] && empty($post[$field])) {
+                $errors[] = $this->createErrorMessage($rules['message'], $field.'-smg');
+            }
+        }
+
+        if ($post['register-re-email'] !== $post['register-email']) {
+            $errors[] = $this->createErrorMessage('{{register-email-smg-1}}', 'register-email-smg');
+            $errors[] = $this->createErrorMessage('{{register-re-email-smg-1}}', 'register-re-email-smg');
+        }
+
+        $passwordValidation = Password::quickCheck($post['register-password']);
+        if (!empty($passwordValidation)) {
+            $errors[] = $this->createErrorMessage(implode(NL, $passwordValidation), 'register-password-smg');
+        }
+
+        if (User::getInstance()->emailExists($post['register-email'])) {
+            $errors[] = $this->createErrorMessage('{{register-email-smg-2}}', 'register-email-smg');
+        }
+
+        return $errors;
+    }
+
+    /**
+     * @param string $messageKey
+     * @param string $field
+     * @return array
+     */
+    private function createErrorMessage(string $messageKey, string $field): array
+    {
+        return [
+            'field'  => $field,
+            'status' => 'error',
+            'smg'    => $this->getMain()->getSmg()->setSMG(
+                $this->feedbackSMG($messageKey, 'invalid')
+            )->getLastMessage(),
+        ];
+    }
+
+    /**
+     * @return Main
+     */
+    public function getMain(): Main
+    {
+        return $this->main;
+    }
 
     /**
      * @param Main $main
@@ -92,122 +482,163 @@ class Event extends EventController
     }
 
     /**
-     * @return $this|null
+     * @param string $token
+     * @param string $status
+     * @return array
      */
-    public function listenerEvent(): ?self
+    private function feedbackSMG(string $token, string $status): array
     {
-        if ($this->event !== null && method_exists($this, $this->event)) {
-            $this->{$this->event}();
+
+
+        $content = $this->getRender()
+            ->setDic($this->getMain()->getDic())
+            ->setSmgContent($token)
+            ->getTranslateContent();
+
+        $cite = $this->getRender()
+            ->setDic($this->getMain()->getDic())
+            ->setSmgContent('{{form-validation}}')
+            ->getTranslateContent();
+
+        $footer = $this->getRender()
+            ->setDic($this->getMain()->getDic())
+            ->setSmgContent('{{system-message}}')
+            ->getTranslateContent();
+
+
+        if (!array_key_exists($status, FormSMG::getTypes())) {
+            $status = 'default';
         }
+
+        $messageConfig = [
+            'type'    => $status,
+            'content' => $content,
+            'in'      => 'inline',
+        ];
+
+        if (!in_array($status, ['valid', 'invalid'])) {
+            $messageConfig['footer'] = $footer;
+            $messageConfig['cite']   = $cite;
+        }
+
+        return $messageConfig;
+    }
+
+    /**
+     * @return Render
+     */
+    public function getRender(): Render
+    {
+        return $this->render;
+    }
+
+    /**
+     * @param Render $render
+     * @return $this
+     */
+    public function setRender(Render $render): self
+    {
+        $this->render = $render;
 
         return $this;
     }
 
-    private function login()
+    /**
+     * @param array $errors
+     * @return Response
+     */
+    private function handleValidationErrors(array $errors): Response
     {
-        ex_c('Test de login');
+        $errors[] = [
+            'field'  => 'register-head-smg',
+            'status' => 'error',
+            'smg'    => $this->getMain()->getSmg()->setSMG(
+                $this->feedbackSMG('{{register-smg-0}}', 'warning')
+            )->getLastMessage(),
+        ];
+
+        return $this->getResponse()
+            ->setContent($errors)
+            ->setOutputFormat('json')
+            ->setIsError(true)
+            ->setShow(true);
     }
 
-    private function register()
+    /**
+     * @return Response
+     * @throws RandomException
+     */
+    private function createUserAccount(): Response
     {
-        $error = [];
-        if ($_POST['register-first-name'] === '' || true) {
-            $error[] = [
-                'field'  => 'register-first-name-smg',
-                'status' => 'error',
-                'smg'    => '{{register-first-name-smg}}',
-            ];
-        }
+        $credentials = [
+            'first_name' => $this->post['register-first-name'],
+            'last_name'  => $this->post['register-last-name'],
+            'email'      => $this->post['register-email'],
+            'password'   => password_hash($this->post['register-password'], PASSWORD_DEFAULT),
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
 
-        if ($_POST['register-last-name'] === '' || true) {
-            $error[] = [
-                'field'  => 'register-last-name-smg',
-                'status' => 'error',
-                'smg'    => '{{register-last-name-smg}}',
-            ];
-        }
+        $success = User::getInstance()->createAccount($credentials);
 
-        if ($_POST['register-email'] === '' || true) {
-            $error[] = [
-                'field'  => 'register-email-smg',
-                'status' => 'error',
-                'smg'    => '{{register-email-smg-0}}',
-            ];
-        }
-
-        if ($_POST['register-re-email'] === '' || true) {
-            $error[] = [
-                'field'  => 'register-re-email-smg',
-                'status' => 'error',
-                'smg'    => '{{register-re-email-smg-0}}',
-            ];
-        }
-
-        if ($_POST['register-re-email'] !== $_POST['register-email'] || true) {
-            $error[] = [
-                'field'  => 'register-email-smg',
-                'status' => 'error',
-                'smg'    => '{{register-email-smg-1}}',
-            ];
-            $error[] = [
-                'field'  => 'register-re-email-smg',
-                'status' => 'error',
-                'smg'    => '{{register-re-email-smg-1}}',
-            ];
-        }
-
-        if ($_POST['register-password'] === '' || true) {
-            $error[] = [
-                'field'  => 'register-password-smg',
-                'status' => 'error',
-                'smg'    => '{{register-password-smg-0}}',
-            ];
-        }
-
-        $pass_eval = Password::quickCheck($_POST['register-password']);
-
-        if (!empty($pass_eval)) {
-            $error[] = [
-                'field'  => 'register-password-smg',
-                'status' => 'error',
-                'smg'    => implode(NL, $pass_eval),
-            ];
-        }
-
-        if ($_POST['register-agree-conditions'] !== true || true) {
-            $error[] = [
-                'field'  => 'register-agree-conditions-smg',
-                'status' => 'error',
-                'smg'    => '{{register-agree-conditions-smg}}',
-            ];
-        }
-
-        ex_c($error);
-
-        /* Validar si Existe un correo electronico repetido */
-
-
-        if (!empty($error)) {
-            $error[] = [
-                'field'  => 'register-smg',
-                'status' => 'error',
-                'smg'    => '{{register-smg}}',
-            ];
-            $this->main->smg->setSMG(['error' => $error]);
-        } else {
-            //success
-            ex_c('Test de register right', $error);
-        }
+        return $success
+            ? $this->createSuccessResponse()
+            : $this->createFailureResponse();
     }
 
-    private function loginWithGoogle()
+    /**
+     * @return Response
+     */
+    private function createSuccessResponse(): Response
+    {
+        return $this->getResponse()
+            ->setContent([
+                [
+                    'field'  => 'register-head-smg',
+                    'status' => 'success',
+                    'smg'    => $this->getMain()->getSmg()->setSMG(
+                        $this->feedbackSMG('{{register-email-success}}', 'success')
+                    )->getLastMessage(),
+                ],
+            ])
+            ->setOutputFormat('json')
+            ->setIsError(false)
+            ->setRefresh(true)
+            ->setShow(true);
+    }
+
+    /**
+     * @return Response
+     */
+    private function createFailureResponse(): Response
+    {
+        return $this->getResponse()
+            ->setContent([
+                [
+                    'field'  => 'register-head-smg',
+                    'status' => 'error',
+                    'smg'    => $this->getMain()->getSmg()->setSMG(
+                        $this->feedbackSMG('{{register-email-fail}}', 'danger')
+                    )->getLastMessage(),
+                ],
+            ])
+            ->setOutputFormat('json')
+            ->setIsError(true)
+            ->setShow(true);
+    }
+
+    /**
+     * @return void
+     */
+    #[NoReturn] private function loginWithGoogle(): void
     {
         ex_c('Test de loginWithGoogle');
     }
 
-    private function loginWithFacebook()
+    /**
+     * @return void
+     */
+    #[NoReturn] private function loginWithFacebook(): void
     {
         ex_c('Test de loginWithFacebook');
     }
-
 }

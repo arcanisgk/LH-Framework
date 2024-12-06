@@ -1,136 +1,105 @@
+# Configuración básica
 DirectoryIndex index.php
+Options -Indexes
 IndexIgnore *
 
-<FilesMatch "^assets/audio/.*\.ogg$">
-    Require all granted
-</FilesMatch>
-
-<IfModule mod_autoindex.c>
-    <FilesMatch "^assets/audio/.*\.ogg$">
-        Options +Indexes
-    </FilesMatch>
-</IfModule>
-
-<IfModule mod_negotiation.c>
-    Options -MultiViews
-</IfModule>
-
-<FilesMatch "\.(json|xml|log|txt|html|ogg)$">
-    Order Deny,Allow
-    Deny from all
-    Allow from all
-    Satisfy Any
-</FilesMatch>
-
-<FilesMatch "^(code-1|code-2|code-3|code-4|code-5|code-6|code-7|code-8|code-9|code-10|code-11|code-12|code-13|code-14)\.json$">
-    Require all granted
-</FilesMatch>
-
-<FilesMatch "(sitemap\.xml|robots\.txt)">
-    Require all granted
-</FilesMatch>
-
-<FilesMatch "^(index|setup)\.php$">
-    Require all granted
-</FilesMatch>
-
-<Files "assetlinks.json">
-    Allow from all
-</Files>
-
-<Files "manifest.json">
-    Allow from all
-</Files>
-
-<IfModule mod_expires.c>
-  # Data interchange
-    AddType application/atom+xml                        atom
-    AddType application/json                            json map topojson
-    AddType application/ld+json                         jsonld
-    AddType application/rss+xml                         rss
-    AddType application/geo+json                        geojson
-    AddType application/rdf+xml                         rdf
-    AddType application/xml                             xml
-  # JavaScript
-    AddType text/javascript                             js mjs
-  # Manifest files
-    AddType application/manifest+json                   webmanifest
-    AddType application/x-web-app-manifest+json         webapp
-    AddType text/cache-manifest                         appcache
-  # Media files
-    AddType audio/mp4                                   f4a f4b m4a
-    AddType audio/ogg                                   oga ogg opus
-    AddType image/bmp                                   bmp
-    AddType image/svg+xml                               svg svgz
-    AddType image/webp                                  webp
-    AddType video/mp4                                   f4v f4p m4v mp4
-    AddType video/ogg                                   ogv
-    AddType video/webm                                  webm
-    AddType image/x-icon                                cur ico
-  # HEIF Images
-    AddType image/heic                                  heic
-    AddType image/heif                                  heif
-  # HEIF Image Sequence
-    AddType image/heics                                 heics
-    AddType image/heifs                                 heifs
-  # AVIF Images
-    AddType image/avif                                  avif
-  # AVIF Image Sequence
-    AddType image/avis                                  avis
-  # WebAssembly
-    AddType application/wasm                            wasm
-  # Web fonts
-    AddType font/woff                                   woff
-    AddType font/woff2                                  woff2
-    AddType application/vnd.ms-fontobject               eot
-    AddType font/ttf                                    ttf
-    AddType font/collection                             ttc
-    AddType font/otf                                    otf
-  # Other
-    AddType application/octet-stream                    safariextz
-    AddType application/x-bb-appworld                   bbaw
-    AddType application/x-chrome-extension              crx
-    AddType application/x-opera-extension               oex
-    AddType application/x-xpinstall                     xpi
-    AddType text/calendar                               ics
-    AddType text/markdown                               markdown md
-    AddType text/vcard                                  vcard vcf
-    AddType text/vnd.rim.location.xloc                  xloc
-    AddType text/vtt                                    vtt
-    AddType text/x-component                            htc
-</IfModule>
-
+# Configuración de MIME types y charset
 <IfModule mod_mime.c>
-  AddDefaultCharset utf-8
+    AddDefaultCharset utf-8
+    <IfModule mod_expires.c>
+      # Data interchange
+        AddType application/atom+xml                        atom
+        AddType application/json                            json map topojson
+        AddType application/ld+json                         jsonld
+        AddType application/rss+xml                         rss
+        AddType application/geo+json                        geojson
+        AddType application/rdf+xml                         rdf
+        AddType application/xml                             xml
+      # JavaScript
+        AddType text/javascript                             js mjs
+      # Manifest files
+        AddType application/manifest+json                   webmanifest
+        AddType application/x-web-app-manifest+json         webapp
+        AddType text/cache-manifest                         appcache
+      # Media files
+        AddType audio/mp4                                   f4a f4b m4a
+        AddType audio/ogg                                   oga ogg opus
+        AddType image/bmp                                   bmp
+        AddType image/svg+xml                               svg svgz
+        AddType image/webp                                  webp
+        AddType video/mp4                                   f4v f4p m4v mp4
+        AddType video/ogg                                   ogv
+        AddType video/webm                                  webm
+        AddType image/x-icon                                cur ico
+      # HEIF Images
+        AddType image/heic                                  heic
+        AddType image/heif                                  heif
+      # HEIF Image Sequence
+        AddType image/heics                                 heics
+        AddType image/heifs                                 heifs
+      # AVIF Images
+        AddType image/avif                                  avif
+      # AVIF Image Sequence
+        AddType image/avis                                  avis
+      # WebAssembly
+        AddType application/wasm                            wasm
+      # Web fonts
+        AddType font/woff                                   woff
+        AddType font/woff2                                  woff2
+        AddType application/vnd.ms-fontobject               eot
+        AddType font/ttf                                    ttf
+        AddType font/collection                             ttc
+        AddType font/otf                                    otf
+      # Other
+        AddType application/octet-stream                    safariextz
+        AddType application/x-bb-appworld                   bbaw
+        AddType application/x-chrome-extension              crx
+        AddType application/x-opera-extension               oex
+        AddType application/x-xpinstall                     xpi
+        AddType text/calendar                               ics
+        AddType text/markdown                               markdown md
+        AddType text/vcard                                  vcard vcf
+        AddType text/vnd.rim.location.xloc                  xloc
+        AddType text/vtt                                    vtt
+        AddType text/x-component                            htc
+    </IfModule>
+</IfModule>
+
+# Reglas de acceso y seguridad
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json|html|xml|ogg|mp3|wav|mp4|webm)$">
+    Require all granted
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    <FilesMatch "^mta-sts\.txt$">
+        Header set Content-Type "text/plain"
+        Header set Cache-Control "max-age=86400, must-revalidate"
+    </FilesMatch>
 </IfModule>
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
+    # Redirección a HTTPS (punto 5)
     RewriteCond %{HTTPS} off
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
-    RewriteCond %{REQUEST_URI} ^/assets/audio/ [NC,OR]
-    RewriteCond %{REQUEST_URI} \.ogg$ [NC]
-    RewriteRule ^ - [L]
-
-    RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|pdf|woff2|ttf|ico|json|html|ogg)$ [NC]
-    RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
-
-    #RewriteCond %{DOCUMENT_ROOT}/setup.php -f
-    #RewriteCond %{REQUEST_URI} !^/setup$
-    #RewriteCond %{REQUEST_URI} !^/setup\.php$
-    #RewriteRule ^.*$ /setup [R=301,L,NE,NC]
-
-    #RewriteCond %{DOCUMENT_ROOT}/setup.php -f
-    #RewriteRule ^setup$ /setup.php [NC,L]
-
+    # Permitir acceso directo a archivos existentes (punto 4)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-l
-    RewriteRule ^(.*)$ index.php [QSA,L]
+    RewriteRule ^assets/.*$ /404.php [L]
+
+    # Manejo de assets en subdirectorios
+    RewriteCond %{REQUEST_URI} ^/[^/]+/assets/
+    RewriteRule ^([^/]+)/assets/(.*)$ /assets/$2 [L]
+
+    # Redirigir todas las demás solicitudes a index.php (punto 6)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^/]+)/?(.*)$ index.php?$2 [QSA,L]
+    #RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
 php_value display_errors On

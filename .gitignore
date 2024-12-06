@@ -2,10 +2,15 @@
 /.git/
 /.cody/
 /vendor/*
-/Asset/resource/config/*.json
-/Asset/resource/config/backup/
+/Asset/resource/config/local/*.json
+/Asset/resource/config/dev/*.json
+/Asset/resource/config/qa/*.json
+/Asset/resource/config/pro/*.json
 /Asset/resource/recycle_bin/*
+/Repository/Default/Validar/*
+/Repository/Default/Validar2/*
 /Repository/Project/*
 /public/assets/js/work/*
 /public/assets/css/work/*
 *.log
+LH-Framework.zip

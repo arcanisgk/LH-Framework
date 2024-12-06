@@ -32,4 +32,5 @@ if (!version_compare(phpversion(), '8.3', '>=')) {
 
 require_once realpath(implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'vendor', 'autoload.php']));
 
-Kernel::getInstance()->run();
+
+Kernel::getInstance()->lh();

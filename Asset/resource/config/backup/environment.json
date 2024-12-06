@@ -1,0 +1,5 @@
+{
+  "environment": "dev",
+  "app_setting": true,
+  "dev_tool": false
+}

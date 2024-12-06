@@ -21,4 +21,5 @@ namespace Asset\Framework\Interface;
 interface ControllerInterface
 {
     public static function getInstance(): self;
+    
 }

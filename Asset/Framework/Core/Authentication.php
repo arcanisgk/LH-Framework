@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+
 /**
  * Class that handles:
  *
@@ -26,24 +28,7 @@ namespace Asset\Framework\Core;
 class Authentication
 {
 
-    /**
-     * @var Authentication|null Singleton instance of the class: Authentication.
-     */
-    private static ?self $instance = null;
-
-    /**
-     * Get the singleton instance of teh class Authentication.
-     *
-     * @return Authentication The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    use SingletonTrait;
 
     /**
      * Authentication constructor.
@@ -60,5 +45,5 @@ class Authentication
     {
         return true;
     }
-    
+
 }

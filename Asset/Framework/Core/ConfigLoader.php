@@ -18,30 +18,35 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
-use BadMethodCallException;
+use Asset\Framework\Trait\SingletonTrait;
+use Exception;
+use RuntimeException;
 
 /**
- * Class that handles:
+ * Class that handles: Framework Configuration Usage
  *
  * @package Asset\Framework\Core\ConfigLoader;
  */
 class ConfigLoader
 {
 
-    /**
-     * @var ConfigLoader|null Singleton instance of the class: ConfigLoader.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
+
+    private const string ENVIRONMENT_FILE = 'environment.json';
+
+    private const array CONFIG_ENVIRONMENTS = ['local', 'dev', 'qa', 'pro'];
+
+    private const string CONFIG_PATH = 'Asset'.DS.'resource'.DS.'config';
 
     /**
-     * Get the singleton instance of teh class ConfigLoader.
-     *
-     * @return ConfigLoader The singleton instance.
+     * @var array
      */
-    public static function getInstance(): self
-    {
-        return self::$instance ??= new self();
-    }
+    private array $configCache = [];
+
+    /**
+     * @var string
+     */
+    private string $currentEnvironment;
 
     /**
      * @return bool
@@ -54,49 +59,137 @@ class ConfigLoader
 
     /**
      * @return void
+     * @throws Exception
      */
     public function loadConfigurations(): void
     {
         if (!defined('CONFIG')) {
-            $jsonFiles = glob(implode(DS, [PD, 'Asset', 'resource', 'config', '*.json']));
-            $configs   = [];
-
-            foreach ($jsonFiles as $file) {
-                $jsonContent = file_get_contents($file);
-                if ($jsonContent === false) {
-                    continue;
-                }
-
-                $configData        = json_decode($jsonContent, true);
-                $section           = strtolower(basename($file, '.json'));
-                $configs[$section] = $this->createConfigObject($this->convertKeysToCamelCase($configData));
-            }
-
-            $configurations = $this->createConfigObject($configs);
-            define('CONFIG', $configurations);
+            $configs      = $this->loadAndValidateConfigs();
+            $configObject = $this->createConfigObject($configs);
+            define('CONFIG', $configObject);
         }
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
+    private function loadAndValidateConfigs(): array
+    {
+        $this->loadEnvironment();
+
+        return $this->loadConfigurationFiles();
+    }
+
+    /**
+     * @return void
+     */
+    private function loadEnvironment(): void
+    {
+        $envFile = PD.DS.self::CONFIG_PATH.DS.self::ENVIRONMENT_FILE;
+
+        if (!file_exists($envFile)) {
+            throw new RuntimeException("Environment configuration file not found: $envFile");
+        }
+
+        $envContent = file_get_contents($envFile);
+        if ($envContent === false) {
+            throw new RuntimeException("Unable to read environment configuration file");
+        }
+
+        $envData = json_decode($envContent, true);
+        if (!isset($envData['environment']) || !in_array($envData['environment'], self::CONFIG_ENVIRONMENTS)) {
+            throw new RuntimeException("Invalid environment specified in configuration");
+        }
+
+        $this->currentEnvironment = $envData['environment'];
+    }
+
+    /**
+     * @return array
+     */
+    private function loadConfigurationFiles(): array
+    {
+        $configs    = [];
+        $configPath = PD.DS.self::CONFIG_PATH.DS.$this->currentEnvironment;
+
+        if (!is_dir($configPath)) {
+            throw new RuntimeException(
+                "Configuration directory not found for environment: $this->currentEnvironment"
+            );
+        }
+
+        $jsonFiles = glob($configPath.DS.'*.json');
+        if (empty($jsonFiles)) {
+
+            $backupPath = PD.DS.self::CONFIG_PATH.DS.'backup';
+            $jsonFiles  = glob($backupPath.DS.'*.json');
+
+            if (empty($jsonFiles)) {
+                throw new RuntimeException("No configuration files found in environment or backup directory");
+            }
+        }
+
+        foreach ($jsonFiles as $file) {
+            $jsonContent = file_get_contents($file);
+            if ($jsonContent === false) {
+                continue;
+            }
+
+            $configData = json_decode($jsonContent, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new RuntimeException("Invalid JSON in configuration file: ".basename($file));
+            }
+
+            $section           = strtolower(basename($file, '.json'));
+            $configs[$section] = $this->convertKeysToCamelCase($configData);
+        }
+        $configs['environment'] = $this->currentEnvironment;
+        
+        return $configs;
+    }
+
+    /**
+     * @param array $array
+     * @return array
+     */
     private function convertKeysToCamelCase(array $array): array
     {
         $result = [];
         foreach ($array as $key => $value) {
-            $camelKey          = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
+            $camelKey          = lcfirst(
+                str_replace(
+                    ' ',
+                    '',
+                    ucwords(
+                        str_replace(
+                            '_',
+                            ' ',
+                            str_replace('-', ' ', $key)
+                        )
+                    )
+                )
+            );
             $result[$camelKey] = is_array($value) ? $this->convertKeysToCamelCase($value) : $value;
         }
 
         return $result;
     }
 
-
+    /**
+     * @param array $data
+     * @return object
+     */
     private function createConfigObject(array $data): object
     {
+
         return new class($data) {
-            private array $data;
+
+            private array $properties;
 
             public function __construct(array $data)
             {
-                $this->data = array_map(
+                $this->properties = array_map(
                     fn($value) => is_array($value) ? new self($value) : $value,
                     $data
                 );
@@ -104,19 +197,56 @@ class ConfigLoader
 
             public function __get(string $name)
             {
-                return $this->data[$name] ?? null;
+                if (isset($this->properties[$name]) && $this->properties[$name] instanceof self) {
+                    return $this->properties[$name];
+                }
+
+                throw new Exception(
+                    "Direct property access to '$name' is not allowed. Use getter methods instead (e.g. get".ucfirst(
+                        $name
+                    )."())"
+                );
             }
 
-            public function __call(string $name, array $arguments)
+            public function __call(string $name, array $arguments): mixed
             {
-                if (str_starts_with($name, 'get')) {
-                    $property = lcfirst(substr($name, 3));
-
-                    return $this->data[$property] ?? null;
+                if (!str_starts_with($name, 'get')) {
+                    throw new Exception("Only getter methods are allowed. Method '$name' not found.");
                 }
-                throw new BadMethodCallException("Method $name not found");
+                $property = lcfirst(substr($name, 3));
+                if (isset($this->properties[$property])) {
+                    return $this->properties[$property];
+                }
+                throw new Exception("Getter method '$name' does not exist.");
+            }
+
+            public function __debugInfo()
+            {
+                return ['debug' => '### Only For Implementation Purposes ###', 'Usage' => $this->buildDebugInfo()];
+            }
+
+            private function buildDebugInfo(mixed &$debugInfo = null, string $parentPath = null): mixed
+            {
+
+                foreach ($this->properties as $key => $value) {
+
+                    if ($value instanceof self) {
+                        $currentPath     = $parentPath ? $parentPath.'->'.$key : 'CONFIG->'.$key;
+                        $debugInfo[$key] = [];
+                        $value->buildDebugInfo($debugInfo[$key], $currentPath);
+                    } else {
+                        $path            = $parentPath ?? 'CONFIG';
+                        $debugInfo[$key] = [
+                            'type'     => '[getter]',
+                            'value'    => $value,
+                            'property' => $key,
+                            'path'     => $path.'->get'.ucfirst($key).'()',
+                        ];
+                    }
+                }
+
+                return $debugInfo;
             }
         };
     }
-
 }

@@ -26,37 +26,6 @@ namespace Asset\Framework\ToolBox;
 class Password
 {
 
-    /**
-     * @var Password|null Singleton instance of the class: Password.
-     */
-    private static ?self $instance = null;
-
-    /**
-     * Get the singleton instance of teh class Password.
-     *
-     * @return Password The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * Password constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    private array $criteria = ['length', 'uppercase', 'lowercase', 'number', 'special'];
-    private int $minLength = 13;
-    private string $specialChars = '!@#%*';
-
     private const array ERROR_TOKENS
         = [
             'length'    => '{{register-password-smg-1}}',
@@ -66,25 +35,28 @@ class Password
             'special'   => '{{register-password-smg-5}}',
         ];
 
-    public function setCriteria(array $criteriaList): self
-    {
-        $this->criteria = $criteriaList;
+    /**
+     * @var Password|null Singleton instance of the class: Password.
+     */
+    private static ?self $instance = null;
 
-        return $this;
+    private array $criteria = ['length', 'uppercase', 'lowercase', 'number', 'special'];
+
+    private int $minLength = 13;
+
+    private string $specialChars = '!@#%*';
+
+    /**
+     * Password constructor.
+     */
+    public function __construct()
+    {
+
     }
 
-    public function setMinLength(int $length): self
+    public static function quickCheck(string $password): array
     {
-        $this->minLength = $length;
-
-        return $this;
-    }
-
-    public function setSpecialChars(string $chars): self
-    {
-        $this->specialChars = $chars;
-
-        return $this;
+        return self::getInstance()->check($password);
     }
 
     public function check(string $password): array
@@ -112,8 +84,38 @@ class Password
         return $errors;
     }
 
-    public static function quickCheck(string $password): array
+    /**
+     * Get the singleton instance of teh class Password.
+     *
+     * @return Password The singleton instance.
+     */
+    public static function getInstance(): self
     {
-        return self::getInstance()->check($password);
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public function setCriteria(array $criteriaList): self
+    {
+        $this->criteria = $criteriaList;
+
+        return $this;
+    }
+
+    public function setMinLength(int $length): self
+    {
+        $this->minLength = $length;
+
+        return $this;
+    }
+
+    public function setSpecialChars(string $chars): self
+    {
+        $this->specialChars = $chars;
+
+        return $this;
     }
 }

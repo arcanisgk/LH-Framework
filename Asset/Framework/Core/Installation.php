@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 
 /**
@@ -28,79 +29,50 @@ use Exception;
 class Installation
 {
 
-    /**
-     * @var Installation|null Singleton instance of the class: Setting.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
 
-    /**
-     * Get the singleton instance of teh class Setting.
-     *
-     * @return Installation The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
+    private const string CONFIG_PATH = 'Asset'.DS.'resource'.DS.'config';
 
-        return self::$instance;
-    }
-
-    /**
-     * Setting constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
-     * @var array|string[]
-     */
-    private array $templateConfEmail
+    private const array CONFIG_TEMPLATES
         = [
-            "mail_name",
-            "mail_host",
-            "mail_port",
-            "mail_user",
-            "mail_password",
-            "mail_password_re",
-            "mail_default",
-            "mail_test_smg",
-            "mail_protocol",
-            "mail_authentication",
-            "mail_debug",
-            "mail_test",
+            'email'    => [
+                'mail_name',
+                'mail_host',
+                'mail_port',
+                'mail_user',
+                'mail_password',
+                'mail_password_re',
+                'mail_default',
+                'mail_test_smg',
+                'mail_protocol',
+                'mail_authentication',
+                'mail_debug',
+                'mail_test',
+            ],
+            'ftp'      => [
+                'ftp_name',
+                'ftp_host',
+                'ftp_port',
+                'ftp_user',
+                'ftp_password',
+                'ftp_password_re',
+                'ftp_path',
+                'ftp_passive_mode',
+            ],
+            'database' => [
+                'db_name',
+                'db_host',
+                'db_port',
+                'db_user',
+                'db_password',
+                'db_password_re',
+            ],
         ];
 
     /**
-     * @var array|string[]
+     * @var array
      */
-    private array $templateConfFTP
-        = [
-            "ftp_name",
-            "ftp_host",
-            "ftp_port",
-            "ftp_user",
-            "ftp_password",
-            "ftp_password_re",
-            "ftp_path",
-            "ftp_passive_mode",
-        ];
-
-    /**
-     * @var array|string[]
-     */
-    private array $templateConfDatabase
-        = [
-            "db_name",
-            "db_host",
-            "db_port",
-            "db_user",
-            "db_password",
-            "db_password_re",
-        ];
+    private array $configData = [];
 
     /**
      * @return bool
@@ -108,28 +80,79 @@ class Installation
     public function saveSetting(): bool
     {
         try {
-            $this->processConfigurations();
-            $this->writeConfigFiles();
+            $this->processAllConfigurations();
+            $this->writeAllConfigFiles();
 
             return true;
         } catch (Exception $e) {
-
-            error_log("Error in setJSON: ".$e->getMessage());
+            error_log("Configuration Error: ".$e->getMessage());
 
             return false;
         }
-
     }
 
     /**
      * @return void
      */
-    private function processConfigurations(): void
+    private function processAllConfigurations(): void
     {
+        $this->processAppConfig();
+        $this->processEnvironmentConfig();
+        $this->processErrorConfig();
         $this->processSessionConfig();
-        $this->processMailConfig();
-        $this->processFtpConfig();
-        $this->processDatabaseConfig();
+        $this->processMultiInstanceConfigs();
+    }
+
+    /**
+     * @return void
+     */
+    private function processAppConfig(): void
+    {
+        $this->configData['app'] = [
+            'company' => [
+                'company_name'       => $_POST['company_name'] ?? '',
+                'company_owner'      => $_POST['company_owner'] ?? '',
+                'company_department' => $_POST['company_department'] ?? '',
+            ],
+            'project' => [
+                'project_name'   => $_POST['project_name'] ?? '',
+                'project_config' => true,
+            ],
+            'host'    => [
+                'domain'   => $_POST['domain'] ?? '',
+                'lang'     => $_POST['lang'] ?? 'en',
+                'm-lang'   => filter_var($_POST['m_lang'] ?? false, FILTER_VALIDATE_BOOLEAN),
+                'protocol' => $_POST['protocol'] ?? 'https',
+                'entry'    => $_POST['entry'] ?? '',
+                'license'  => $_POST['license'] ?? '',
+                'free'     => filter_var($_POST['free'] ?? true, FILTER_VALIDATE_BOOLEAN),
+            ],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    private function processEnvironmentConfig(): void
+    {
+        $this->configData['environment'] = [
+            'environment' => $_POST['environment'] ?? 'dev',
+            'app_setting' => filter_var($_POST['app_setting'] ?? true, FILTER_VALIDATE_BOOLEAN),
+            'dev_tool'    => filter_var($_POST['dev_tool'] ?? false, FILTER_VALIDATE_BOOLEAN),
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    private function processErrorConfig(): void
+    {
+        $this->configData['error'] = [
+            'dev'        => filter_var($_POST['error_dev'] ?? true, FILTER_VALIDATE_BOOLEAN),
+            'test'       => filter_var($_POST['error_test'] ?? true, FILTER_VALIDATE_BOOLEAN),
+            'quality'    => filter_var($_POST['error_quality'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            'production' => filter_var($_POST['error_production'] ?? false, FILTER_VALIDATE_BOOLEAN),
+        ];
     }
 
     /**
@@ -137,177 +160,120 @@ class Installation
      */
     private function processSessionConfig(): void
     {
-        $hours                     = (int)($_POST['json-session-lifetime-hours'] ?? 0);
-        $days                      = (int)($_POST['json-session-lifetime-days'] ?? 0);
-        $_POST['session_lifetime'] = ($hours * 3600) + ($days * 86400);
-
-        $hours                            = (int)($_POST['json-session-activity-expire-hours'] ?? 0);
-        $days                             = (int)($_POST['json-session-activity-expire-days'] ?? 0);
-        $_POST['session_activity_expire'] = ($hours * 3600) + ($days * 86400);
-    }
-
-    /**
-     * @param array $configArray
-     * @param array $passwordArray
-     * @param string $type
-     * @param array $nodes
-     * @return array
-     */
-    function replacePlaceholdersWithPasswords(
-        array $configArray,
-        array $passwordArray,
-        string $type,
-        array $nodes
-    ): array {
-        $result        = [];
-        $passwordIndex = 0;
-
-        foreach ($configArray as $index => $config) {
-            $config = preg_replace_callback('/\*\*\*/', function () use (&$passwordIndex, $passwordArray) {
-                return $passwordArray[$passwordIndex++] ?? '';
-            }, $config, 2);
-
-            $arrayString = explode(',', $config);
-            $configArray = [];
-            foreach ($nodes as $key => $nodeName) {
-                $value = $arrayString[$key] ?? '';
-                $value = is_numeric($value) && !str_contains($value, '.')
-                    ? (int)$value
-                    : ($value === 'true' ? true : ($value === 'false' ? false : $value));
-
-                $configArray[$nodeName] = $value;
-            }
-            $result[$type.($index + 1)] = $configArray;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return void
-     */
-    private function processMailConfig(): void
-    {
-
-
-        $_POST['json-mail-conf'] = $this->replacePlaceholdersWithPasswords(
-            $_POST['json-mail-conf'] ?? [],
-            $_POST['json-mail-conf-password'] ?? [],
-            'mail',
-            $this->templateConfEmail
+        $lifetime = $this->calculateTimeInSeconds(
+            (int)($_POST['session_lifetime_hours'] ?? 0),
+            (int)($_POST['session_lifetime_days'] ?? 30)
         );
 
-    }
-
-    /**
-     * @return void
-     */
-    private function processFtpConfig(): void
-    {
-
-        $_POST['json-ftp-conf'] = $this->replacePlaceholdersWithPasswords(
-            $_POST['json-ftp-conf'] ?? [],
-            $_POST['json-ftp-conf-password'] ?? [],
-            'ftp',
-            $this->templateConfFTP
+        $activityExpire = $this->calculateTimeInSeconds(
+            (int)($_POST['session_activity_hours'] ?? 0),
+            (int)($_POST['session_activity_days'] ?? 2)
         );
 
-    }
-
-    /**
-     * @return void
-     */
-    private function processDatabaseConfig(): void
-    {
-
-        $_POST['json-database-conf'] = $this->replacePlaceholdersWithPasswords(
-            $_POST['json-database-conf'] ?? [],
-            $_POST['json-database-conf-password'] ?? [],
-            'db',
-            $this->templateConfDatabase
-        );
-
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     */
-    private function writeConfigFiles(): void
-    {
-        $configFiles = [
-            'app.json'     => $this->getAppConfig(),
-            'session.json' => $this->getSessionConfig(),
-            'mail.json'    => $_POST['json-mail-conf'] ?? [],
-            'ftp.json'     => $_POST['json-ftp-conf'] ?? [],
-            'db.json'      => $_POST['json-database-conf'] ?? [],
-        ];
-
-        foreach ($configFiles as $fileName => $config) {
-            $this->writeConfigFile($fileName, $config);
-        }
-
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getAppConfig(): array
-    {
-        return [
-            'company' => [
-                'company_name'  => $_POST['json-company-name'] ?? '',
-                'company_owner' => $_POST['json-company-owner'] ?? '',
-            ],
-            'project' => [
-                'project_name'   => $_POST['json-project-name'] ?? '',
-                'project_config' => true,
-            ],
-            'host'    => [
-                'domain'   => $_POST['json-domain'] ?? '',
-                'lang'     => $_POST['json-lang'] ?? '',
-                'm-lang'   => $_POST['json-m-lang'] ?? '',
-                'protocol' => $_POST['json-protocol'] ?? '',
-                'entry'    => $_POST['json-entry'] ?? '',
-                'license'  => $_POST['json-license'] ?? '',
-                'free'     => $_POST['json-chk-license'] ?? false,
-            ],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getSessionConfig(): array
-    {
-        return [
+        $this->configData['session'] = [
             'session' => [
-                'session_name'            => $_POST['json-session-name'] ?? '',
-                'session_inactivity'      => $_POST['json-session-inactivity'] ?? '',
-                'session_lifetime'        => $_POST['session_lifetime'] ?? 0,
-                'session_activity_expire' => $_POST['session_activity_expire'] ?? 0,
-                'session_secure'          => $_POST['json-session-secure'] ?? false,
-                'session_httponly'        => $_POST['json-session-http-only'] ?? false,
-                'session_same_site'       => ($_POST['json-session-same-site'] ?? false) ? 'Strict' : 'Lax',
+                'session_name'            => $_POST['session_name'] ?? 'lh-2-session',
+                'session_inactivity'      => filter_var($_POST['session_inactivity'] ?? true, FILTER_VALIDATE_BOOLEAN),
+                'session_lifetime'        => $lifetime,
+                'session_activity_expire' => $activityExpire,
+                'session_secure'          => filter_var($_POST['session_secure'] ?? true, FILTER_VALIDATE_BOOLEAN),
+                'session_http_only'       => filter_var($_POST['session_http_only'] ?? true, FILTER_VALIDATE_BOOLEAN),
+                'session_same_site'       => $_POST['session_same_site'] ?? 'Strict',
             ],
         ];
     }
 
     /**
-     * @param string $fileName
-     * @param mixed $config
+     * @param int $hours
+     * @param int $days
+     * @return int
+     */
+    private function calculateTimeInSeconds(int $hours, int $days): int
+    {
+        return ($hours * 3600) + ($days * 86400);
+    }
+
+    /**
+     * @return void
+     */
+    private function processMultiInstanceConfigs(): void
+    {
+        $this->processMultiConfig('mail', self::CONFIG_TEMPLATES['email']);
+        $this->processMultiConfig('ftp', self::CONFIG_TEMPLATES['ftp']);
+        $this->processMultiConfig('db', self::CONFIG_TEMPLATES['database']);
+    }
+
+    /**
+     * @param string $type
+     * @param array $template
+     * @return void
+     */
+    private function processMultiConfig(string $type, array $template): void
+    {
+        $instances = $_POST["{$type}_instances"] ?? [];
+        $configs   = [];
+
+        foreach ($instances as $index => $instance) {
+            $instanceKey           = "$type".($index + 1);
+            $configs[$instanceKey] = [];
+
+            foreach ($template as $field) {
+                $value                         = $instance[$field] ?? '';
+                $configs[$instanceKey][$field] = $this->normalizeValue($value);
+            }
+        }
+
+        $this->configData[$type] = $configs;
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function normalizeValue(mixed $value): mixed
+    {
+        if (is_numeric($value) && !str_contains((string)$value, '.')) {
+            return (int)$value;
+        }
+
+        return match (strtolower((string)$value)) {
+            'true' => true,
+            'false' => false,
+            default => $value
+        };
+    }
+
+    /**
      * @return void
      * @throws Exception
      */
-    private function writeConfigFile(string $fileName, mixed $config): void
+    private function writeAllConfigFiles(): void
     {
-        $filePath = implode(DS, [PD, 'Asset', 'resource', 'config', $fileName]);
+        foreach ($this->configData as $filename => $data) {
+            $this->writeConfigFile($filename.'.json', $data);
+        }
+    }
+
+    /**
+     * @param string $filename
+     * @param array $data
+     * @return void
+     * @throws Exception
+     */
+    private function writeConfigFile(string $filename, array $data): void
+    {
+
+        $filePath = implode(DS, [PD, self::CONFIG_PATH, $filename]);
+        
         Files::getInstance()->ensureDirectoryExists(dirname($filePath));
 
-        $encodedConfig = json_encode(
-            $config,
-            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
-        );
-        file_put_contents($filePath, $encodedConfig);
+        $jsonData = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if ($jsonData === false) {
+            throw new Exception("Failed to encode JSON data for $filename");
+        }
+
+        if (file_put_contents($filePath, $jsonData) === false) {
+            throw new Exception("Failed to write configuration file $filename");
+        }
     }
 }

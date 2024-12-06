@@ -18,66 +18,35 @@ declare(strict_types=1);
 
 namespace Repository\Default\NotFound\Back;
 
-use Asset\Framework\Controller\{
-    EventController,
-    FrontResourceController,
-    ResponseController
-};
-use Asset\Framework\View\{
-    FormInput,
-    FormSMG,
-    RenderTemplate
-};
 use Asset\Framework\Core\Files;
+use Asset\Framework\Http\Response;
+use Asset\Framework\I18n\Lang;
 use Asset\Framework\Interface\ControllerInterface;
+use Asset\Framework\Template\Render;
+use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 
 /**
- * Class that handles:
+ * Class that handles: NotFound URLs
  *
  * @package Repository\Default\NotFound\Back;
  */
-class Main extends FrontResourceController implements ControllerInterface
+class Main implements ControllerInterface
 {
 
-    /**
-     * @var Main|null Singleton instance of the class: Main.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
+
+    private const string TEMPLATE_PATH = '/../html/';
 
     /**
-     * Get the singleton instance of teh class Main.
-     *
-     * @return Main The singleton instance.
+     * @var Render
      */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    private Render $render;
 
     /**
-     * @var ResponseController|null
+     * @var Response
      */
-    private ?ResponseController $response;
-
-    /**
-     * @var EventController|null
-     */
-    private ?EventController $event;
-
-    /**
-     * @var FormInput|null
-     */
-    private ?FormInput $input;
-
-    /**
-     * @var FormSMG|null
-     */
-    private ?FormSMG $smg;
+    private Response $response;
 
     /**
      * Main constructor.
@@ -85,50 +54,62 @@ class Main extends FrontResourceController implements ControllerInterface
      */
     public function __construct()
     {
-        parent::__construct();
-        $this->response = ResponseController::getInstance();
-        $this->event    = EventController::getInstance();
-        $this->input    = FormInput::getInstance();
-        $this->smg      = FormSMG::getInstance();
-        $this->input->setInput($this->form_input);
-        $this->smg->setSMG($this->form_smg);
+        $this->initializeComponents();
+    }
+
+    private function initializeComponents(): void
+    {
+        $this->render   = Render::getInstance();
+        $this->response = Response::getInstance();
     }
 
     /**
-     * Declare on it inputs for form.
-     *
-     * @var array
-     */
-    private array $form_input = [];
-
-    /**
-     * Declare on it smg for input.
-     *
-     * @var array
-     */
-    private array $form_smg = [];
-
-    /**
-     * @return ResponseController
+     * @return Response
      * @throws Exception
      */
-    public function process(): ResponseController
+    public function process(): Response
     {
-        $form = RenderTemplate::getInstance()
-            ->setInput($this->input)
-            ->setSMG($this->smg)
-            ->setEventResponse($this->event->response)
-            ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/content.phtml'))
-            ->setData()
-            ->setOthers(false, '')
-            ->render();
+        $content = $this->buildContent();
 
-        return $this->response->setData(['html_content' => $form, 'assets' => $this->getHtmlAssets()])
+        return $this->buildResponse($content);
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    private function buildContent(): string
+    {
+        $templateFile = $this->getTemplateFile();
+        $templatePath = Files::getInstance()->getAbsolutePath(
+            dirname(__FILE__).self::TEMPLATE_PATH.$templateFile
+        );
+
+        return $this->render
+            ->setPath($templatePath)
+            ->render();
+    }
+
+    /**
+     * @return string
+     */
+    private function getTemplateFile(): string
+    {
+        return 'content.'.Lang::getLang().'.phtml';
+    }
+
+    /**
+     * @param string $content
+     * @return Response
+     */
+    private function buildResponse(string $content): Response
+    {
+        return $this->response
+            ->setContent(['html-content' => $content])
             ->setShow(true)
-            ->setIn('html_content')
+            ->setIn('html-content')
             ->setRefresh(false)
             ->setNav(false)
             ->setMail(false);
-
     }
 }

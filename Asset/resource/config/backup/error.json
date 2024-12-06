@@ -1,0 +1,6 @@
+{
+  "dev": true,
+  "test": true,
+  "quality": false,
+  "production": false
+}

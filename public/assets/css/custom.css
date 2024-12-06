@@ -363,3 +363,7 @@
     background-color: #F94877 !important;
     color: #fff !important;
 }
+
+.modal .modal-header {
+    flex: unset !important;
+}

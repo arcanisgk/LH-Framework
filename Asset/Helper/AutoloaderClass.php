@@ -26,6 +26,7 @@ use RuntimeException;
  */
 class AutoloaderClass
 {
+    
     /**
      * @var AutoloaderClass|null Singleton instance of the AutoloaderClass.
      */

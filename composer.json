@@ -25,7 +25,8 @@
     "ext-mbstring": "*",
     "ext-xml": "*",
     "ext-json": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-fileinfo": "*"
   },
   "scripts": {
     "post-update-cmd": [

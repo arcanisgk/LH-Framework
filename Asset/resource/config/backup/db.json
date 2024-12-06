@@ -1,0 +1,10 @@
+{
+  "db1": {
+    "db_name": "lh",
+    "db_host": "WSDD-MySql-Server",
+    "db_port": 3306,
+    "db_user": "root",
+    "db_password": "1qazxsw2",
+    "db_password_re": "1qazxsw2"
+  }
+}

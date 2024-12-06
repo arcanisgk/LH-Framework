@@ -18,30 +18,15 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+
 /**
  * Class Session
  * A simple ...
  */
 class Session
 {
-    /**
-     * @var Session|null Singleton instance of the Session.
-     */
-    private static ?self $instance = null;
-
-    /**
-     * Get the singleton instance of Session.
-     *
-     * @return Session The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    use SingletonTrait;
 
     /**
      * Session manager.
@@ -50,9 +35,19 @@ class Session
      */
     public function handleSession(): void
     {
+        $this->initializeSession();
+        $this->initializeSessionData();
+        $this->checkSessionLifetime();
+    }
 
+    /**
+     * @return void
+     */
+    private function initializeSession(): void
+    {
         if (session_status() === PHP_SESSION_NONE) {
 
+            //ex_c(CONFIG);
             session_name(CONFIG->session->session->getSessionName());
             session_set_cookie_params([
                 'lifetime' => CONFIG->session->session->getSessionLifeTime(),
@@ -62,10 +57,15 @@ class Session
                 'httponly' => CONFIG->session->session->getSessionHttpOnly(),
                 'samesite' => CONFIG->session->session->getSessionSameSite(),
             ]);
-
             session_start();
-
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function initializeSessionData(): void
+    {
 
         $_SESSION['SYSTEM'] ??= [
             'SESSION_START_DATE' => time(),
@@ -79,13 +79,39 @@ class Session
             ],
         ];
 
-        if ($_SESSION['USER']['LOGIN']) {
-            if (CT > $_SESSION['SESSION_LIFETIME'] || CT > $_SESSION['SESSION_ACTIVITY_EXPIRE']) {
-                session_destroy();
-                # redirecionar
-            } else {
-                $_SESSION['SESSION_ACTIVITY_EXPIRE'] = (int)$_SERVER['ENVIRONMENT']['SESSION']['SESSION_ACTIVITY_EXPIRE'] + CT;
-            }
+    }
+
+    /**
+     * @return void
+     */
+    private function checkSessionLifetime(): void
+    {
+        if (!$_SESSION['USER']['LOGIN']) {
+            return;
         }
+
+        if (CT > $_SESSION['SESSION_LIFETIME'] || CT > $_SESSION['SESSION_ACTIVITY_EXPIRE']) {
+            session_destroy();
+
+            return;
+        }
+
+        $_SESSION['SESSION_ACTIVITY_EXPIRE'] = (int)$_SERVER['ENVIRONMENT']['SESSION']['SESSION_ACTIVITY_EXPIRE'] + CT;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSession(): array
+    {
+        return $_SESSION;
+    }
+
+    /**
+     * @return void
+     */
+    public function destroy(): void
+    {
+        session_destroy();
     }
 }

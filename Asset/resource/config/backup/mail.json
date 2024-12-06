@@ -1,0 +1,23 @@
+{
+  "mail1": {
+    "mail_name": "LH Mailer",
+    "mail_host": "smtp.zoho.com",
+    "mail_port": 587,
+    "mail_user": "no-replay@lh-2.net",
+    "mail_support": "support@lh-2.net",
+    "mail_postmaster": "postmaster@lh-2.net",
+    "mail_password": "*@Biometric0986",
+    "mail_default": "postmaster@lh-2.net::postmaster",
+    "mail_test_smg": "[TEST]",
+    "mail_protocol": "tls",
+    "mail_authentication": true,
+    "mail_verify": true,
+    "mail_verify_peer_name": true,
+    "mail_self_signed": false,
+    "mail_dkim_sign": "s1",
+    "mail_dkim_passphrase": "",
+    "mail_dkim_copy_header_fields": false,
+    "mail_debug": false,
+    "mail_test": false
+  }
+}

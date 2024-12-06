@@ -18,76 +18,82 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+use JsonException;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+
 class Variable
 {
-    private static ?self $instance = null;
+    use SingletonTrait;
 
     /**
-     * @return Variable
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * @param string $var
+     * Converts all array keys to uppercase recursively
      *
-     * @return bool
+     * @param array<string|int, mixed> $array
+     * @return array<string, mixed>
      */
-    public function isJson(string $var): bool
+    public static function getArrayWithUpperCaseKey(array $array): array
     {
-        return json_decode($var) != null;
+        return array_combine(
+            array_map('strtoupper', array_keys($array)),
+            array_map(
+                fn($value) => is_array($value) ? self::getArrayWithUpperCaseKey($value) : $value,
+                $array
+            )
+        );
     }
 
     /**
-     * Converts all keys in an array to uppercase.
+     * Finds a key in a multidimensional array and returns its value
      *
-     * @param mixed $array
-     * @return array Array with all keys in uppercase.
+     * @param array|object $array
+     * @param string|int $searchKey
+     * @return array{key: string|int, value: mixed}|null
      */
-    public static function getArrayWithUpperCaseKey(mixed $array): array
+    public static function findKeyInArray(array|object $array, string|int $searchKey): ?array
     {
-        $result = [];
-        foreach ($array as $key => $value) {
-            $uppercaseKey          = strtoupper($key);
-            $result[$uppercaseKey] = is_array($value) ? self::getArrayWithUpperCaseKey($value) : $value;
-        }
+        $data      = is_object($array) ? (array)$array : $array;
+        $iterator  = new RecursiveArrayIterator($data);
+        $recursive = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
-        return $result;
-    }
-
-    /**
-     * @param $array
-     * @param $searchKey
-     * @return array|null
-     */
-    public static function findKeyInArray($array, $searchKey): ?array
-    {
-        foreach ($array as $key => $value) {
+        foreach ($recursive as $key => $value) {
             if ($key === $searchKey) {
                 return ['key' => $key, 'value' => $value];
-            }
-            if (is_array($value)) {
-                $result = self::findKeyInArray($value, $searchKey);
-            }
-            if (!empty($result)) {
-                return $result;
             }
         }
 
         return null;
     }
 
-    public static function getRandomString(mixed $options = null): string
+    /**
+     * Generates a random string based on given options
+     *
+     * @param array{length?: positive-int, characters?: string}|null $options
+     * @return string
+     */
+    public static function getRandomString(?array $options = null): string
     {
-        $length     = $options['length'] ?? 10;
-        $characters = $options['characters'] ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $length = $options['length'] ?? 10;
+        $chars  = $options['characters'] ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        return substr(str_shuffle(str_repeat($characters, (int)ceil($length / strlen($characters)))), 0, $length);
+        return substr(str_shuffle(str_repeat($chars, (int)ceil($length / strlen($chars)))), 0, $length);
+    }
+
+    /**
+     * Validates if a string is valid JSON
+     *
+     * @param string $var
+     * @return bool
+     */
+    public function isJson(string $var): bool
+    {
+        try {
+            json_decode($var, false, 512, JSON_THROW_ON_ERROR);
+
+            return true;
+        } catch (JsonException) {
+            return false;
+        }
     }
 }

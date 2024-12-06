@@ -18,18 +18,14 @@ declare(strict_types=1);
 
 namespace Repository\Default\UserAccess\Back;
 
-use Asset\Framework\Controller\{
-    EventController,
-    FrontResourceController,
-    ResponseController
-};
-use Asset\Framework\View\{
-    FormInput,
-    FormSMG,
-    RenderTemplate
-};
+use Asset\Framework\Base\FrontResource;
 use Asset\Framework\Core\Files;
+use Asset\Framework\Http\Response;
 use Asset\Framework\Interface\ControllerInterface;
+use Asset\Framework\Template\Form\FormInput;
+use Asset\Framework\Template\Form\FormSMG;
+use Asset\Framework\Template\Render;
+use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 
 /**
@@ -37,47 +33,44 @@ use Exception;
  *
  * @package Repository\Default\UserAccess\Back;
  */
-class Main extends FrontResourceController implements ControllerInterface
+class Main extends FrontResource implements ControllerInterface
 {
 
-    /**
-     * @var Main|null Singleton instance of the class: Main.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
+
+    private const string TEMPLATE_PATH = '/../html/';
+
+    private const string DIC_PATH = '/../dic/view.json';
 
     /**
-     * Get the singleton instance of teh class Main.
-     *
-     * @return Main The singleton instance.
+     * @var Render
      */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    private Render $render;
 
     /**
-     * @var ResponseController|null
+     * @var Response
      */
-    private ?ResponseController $response;
+    private Response $response;
 
     /**
-     * @var EventController|null
+     * @var FormInput
      */
-    private ?EventController $event;
+    private FormInput $inputs;
 
     /**
-     * @var FormInput|null
+     * @var FormSMG
      */
-    public ?FormInput $input;
+    private FormSMG $smg;
 
     /**
-     * @var FormSMG|null
+     * @var Event
      */
-    public ?FormSMG $smg;
+    private Event $event;
+
+    /**
+     * @var string
+     */
+    private string $dic;
 
     /**
      * Main constructor.
@@ -86,67 +79,258 @@ class Main extends FrontResourceController implements ControllerInterface
     public function __construct()
     {
         parent::__construct();
-        $this->response = ResponseController::getInstance();
-        $this->event    = Event::getInstance()->setMain($this);
-        $this->input    = FormInput::getInstance();
+
+        $this->initializeComponents();
+        $this->initializeEvent();
+    }
+
+    private function initializeComponents(): void
+    {
+        $files   = Files::getInstance();
+        $dicPath = $files->getAbsolutePath(dirname(__FILE__).self::DIC_PATH);
+
+        $this->render   = Render::getInstance();
+        $this->response = Response::getInstance();
+        $this->inputs   = FormInput::getInstance();
         $this->smg      = FormSMG::getInstance();
-        $this->input->setInput($this->form_input);
-        $this->smg->setSMG($this->form_smg);
-        if ($this->event->event_exists) {
-            $this->response->setData($this->event->listenerEvent());
-        }
+        $this->dic      = $dicPath;
+
+
     }
 
     /**
-     * Declare on it inputs for form.
-     *
-     * @var array
-     */
-    private array $form_input = [];
-
-    /**
-     * Declare on it smg for input.
-     *
-     * @var array
-     */
-    private array $form_smg = [];
-
-    /**
-     * @return ResponseController
+     * @return void
      * @throws Exception
      */
-    public function process(): ResponseController
+    private function initializeEvent(): void
+    {
+        $this->event = Event::getInstance($this)->eventHandler();
+    }
+
+    /**
+     * @return Response
+     * @throws Exception
+     */
+    public function process(): Response
     {
 
-        $form = (CONFIG->session->register->getAll()) ? 'full.phtml' : 'no-register.phtml';
+        if ($this->event->isEventExists()) {
+            return $this->getResponse();
+        }
 
-        $form = RenderTemplate::getInstance()
-            ->setInput($this->input)
+        $content = $this->buildContent();
+
+        return $this->buildResponse($content);
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param Response $response
+     * @return Main
+     */
+    public function setResponse(Response $response): self
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    private function buildContent(): string
+    {
+        $templateFile = $this->getTemplateFile();
+        $templatePath = Files::getInstance()->getAbsolutePath(
+            dirname(__FILE__).self::TEMPLATE_PATH.$templateFile
+        );
+
+        return $this->render
+            ->setInput($this->inputs)
             ->setSMG($this->smg)
-            ->setDic(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../dic/view.json'))
-            ->setInputControl(
-                [
-                    'enable-user-service' => (CONFIG->session->register->getService()) ? '' : 'd-none',
-                    //'portrait-login'      => 'assets/img/sinaproc/voluntarios.jpg',
-                    //'owner-logo'          => 'assets/img/sinaproc/sinaproc-logo.png',
-                    //'owner'               => 'Sistema Nacional de Protección Civil',
-                    //'department'          => 'Dirección Nacional de Voluntariado',
-                    'owner'               => 'Avipac Inc',
-                    'department'          => 'Avisistema 4',
-                ]
-            )
-            ->setEventResponse($this->event->response)
-            ->setPath(Files::getInstance()->getAbsolutePath(dirname(__FILE__).'/../html/'.$form))
+            ->setDic($this->dic)
+            ->setInputControl($this->getInputControls())
+            ->setPath($templatePath)
             ->setData()
             ->setOthers(false, '')
             ->render();
+    }
 
-        return $this->response->setData(['html-content' => $form, 'assets' => $this->getHtmlAssets()])
+    /**
+     * @return string
+     */
+    private function getTemplateFile(): string
+    {
+        return CONFIG->session->register->getAll() ? 'full.phtml' : 'no-register.phtml';
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getInputControls(): array
+    {
+
+        //Avisistema
+        return [
+            'enable-user-service' => CONFIG->session->register->getService() ? '' : 'd-none',
+            'owner-logo'          => 'assets/img/logo/default.jpg',
+            'portrait-image'      => 'assets/img/default/default.1.jpg',
+            'owner'               => 'Avipac Inc',
+            'department'          => 'Avisistema 4',
+        ];
+        
+        /*
+        //ADAH
+        return [
+            'enable-user-service' => CONFIG->session->register->getService() ? '' : 'd-none',
+            'owner-logo'          => 'assets/img/logo/adah-logo.png',
+            'portrait-image'      => 'assets/img/default/default.jpg',
+            'owner'               => 'ADAH - Network',
+            'department'          => 'Aplicación para el Desarrollo de Actividades Humanitarias',
+        ];
+
+        /*
+
+        //Icaros Net
+        return [
+            'enable-user-service' => CONFIG->session->register->getService() ? '' : 'd-none',
+            'owner-logo'          => 'assets/img/logo/default.jpg',
+            'portrait-image'      => 'assets/img/default/default.1.jpg',
+            'owner'               => 'Icaros Net - Last Hammer Framework',
+            'department'          => 'Desarrollo y Tecnologia',
+        ];
+
+        //SINAPROC
+        return [
+            'enable-user-service' => CONFIG->session->register->getService() ? '' : 'd-none',
+            'owner-logo'          => 'assets/img/logo/default.jpg',
+            'portrait-image'      => 'assets/img/default/default.1.jpg',
+            'owner'               => 'Sistema Nacional de Protección Civil',
+            'department'          => 'Dirección Nacional de Voluntariado',
+        ];
+        */
+
+    }
+
+    /**
+     * @param string $content
+     * @return Response
+     */
+    private function buildResponse(string $content): Response
+    {
+        return $this->response
+            ->setContent([
+                'html-content' => $content,
+                'assets'       => $this->getHtmlAssets(),
+            ])
             ->setShow(true)
             ->setIn('html-content')
             ->setRefresh(false)
             ->setNav(false)
             ->setMail(false);
+    }
 
+
+    /**
+     * @return Render
+     */
+    public function getRender(): Render
+    {
+        return $this->render;
+    }
+
+    /**
+     * @param Render $render
+     * @return Main
+     */
+    public function setRender(Render $render): self
+    {
+        $this->render = $render;
+
+        return $this;
+    }
+
+    /**
+     * @return FormInput
+     */
+    public function getInputs(): FormInput
+    {
+        return $this->inputs;
+    }
+
+    /**
+     * @param FormInput $inputs
+     * @return Main
+     */
+    public function setInputs(FormInput $inputs): self
+    {
+        $this->inputs = $inputs;
+
+        return $this;
+    }
+
+    /**
+     * @return FormSMG
+     */
+    public function getSmg(): FormSMG
+    {
+        return $this->smg;
+    }
+
+    /**
+     * @param FormSMG $smg
+     * @return Main
+     */
+    public function setSmg(FormSMG $smg): self
+    {
+        $this->smg = $smg;
+
+        return $this;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     * @return $this
+     */
+    public function setEvent(Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDic(): string
+    {
+        return $this->dic;
+    }
+
+    /**
+     * @param string $dic
+     * @return $this
+     */
+    public function setDic(string $dic): self
+    {
+        $this->dic = $dic;
+
+        return $this;
     }
 }

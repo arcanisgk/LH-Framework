@@ -1,0 +1,28 @@
+{
+  "translations": {
+    "es": {
+      "lang": "es",
+      "mail-automated-smg": "Este es un mensaje automático de la plataforma. No responda a este correo.",
+      "mail-unsubscribe-0": "Cancelar suscripción a noticias por correo electrónico: ",
+      "click-here": "Click Aqui"
+    },
+    "en": {
+      "lang": "en",
+      "mail-automated-smg": "This is an automated message from the platform. Please do not reply to this email.",
+      "mail-unsubscribe-0": "Unsubscribe from email news",
+      "click-here": "Click Here"
+    },
+    "fr": {
+      "lang": "fr",
+      "mail-automated-smg": "Ceci est un message automatisé de la plateforme. Ne répondez pas à cet e-mail.",
+      "mail-unsubscribe-0": "Se désabonner des actualités par e-mail",
+      "click-here": "Cliquez ici"
+    },
+    "pt": {
+      "lang": "pt",
+      "mail-automated-smg": "Esta é uma mensagem automática da plataforma. Não responda a este e-mail.",
+      "mail-unsubscribe-0": "Cancelar inscrição de notícias por e-mail",
+      "click-here": "Clique aqui"
+    }
+  }
+}

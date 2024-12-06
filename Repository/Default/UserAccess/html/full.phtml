@@ -3,7 +3,9 @@
     <div class="login login-with-news-feed">
 
         <div class="news-feed">
-            <div class="news-image"></div>
+            <div class="news-image">
+                <img src="{{portrait-image}}" class="responsive-image" alt="Default">
+            </div>
             <div class="news-caption">
                 <h4 class="caption-title"><b>{{owner}}</b></h4>
                 <p>{{department}}</p>
@@ -40,10 +42,6 @@
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" id="login-remember" name="login-remember">
                         <label class="form-check-label" for="login-remember">{{label-remember-me}}</label>
-                        <label class="form-check-label">... {{label-recovery-account-1}} <a href="/Recovery-Account"
-                                                                                            target="_blank">{{label-recovery-account-2}}</a></label>
-
-
                     </div>
                     <div class="mb-4">
                         <button type="button" name="event" value="login"
@@ -55,6 +53,11 @@
                                 data-bs-toggle="modal" data-bs-target="#modal-login-with-service">
                             {{button-label-login-with-service}}
                         </button>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-check-label">{{label-recovery-account-1}}
+                            <a href="/Recovery-Account" target="_blank">{{label-recovery-account-2}}</a>
+                        </label>
                     </div>
                     <div class="mb-4 pb-2">
                         {{paragraph-0-0}} <a href="#" class="text-primary toggle-ua">{{paragraph-0-1}}</a>
@@ -70,9 +73,6 @@
 
             <div class="register-content d-none">
                 <form action="/User-Access" method="post" class="fs-13px">
-
-                    <div class="mb-3 d-none" id="register-smg">
-                    </div>
                     <div class="mb-3">
                         <label class="mb-2" for="register-first-name">{{label-name}} <span class="text-danger">*</span></label>
                         <label class="d-none" for="register-last-name"></label>
@@ -81,15 +81,17 @@
                                 <input type="text" autocomplete="on" class="form-control fs-13px"
                                        placeholder="{{placeholder-first-name}}" id="register-first-name"
                                        name="register-first-name" required>
+                                <div class="d-none" id="register-first-name-smg"></div>
                             </div>
                             <div class="col-md-6">
                                 <input type="text" autocomplete="on" class="form-control fs-13px"
                                        placeholder="{{placeholder-last-name}}" id="register-last-name"
                                        name="register-last-name" required>
+                                <div class="d-none" id="register-last-name-smg"></div>
                             </div>
                         </div>
-                        <div class="d-none" id="register-first-name-smg"></div>
-                        <div class="d-none" id="register-last-name-smg"></div>
+
+
                     </div>
                     <div class="mb-3">
                         <label class="mb-2" for="register-email">{{label-email}} <span
@@ -116,22 +118,32 @@
                                    title="<div>{{label-rule-password-title}}<br><br>- {{label-rule-password-1}}<br>- {{label-rule-password-2}}<br>- {{label-rule-password-3}}<br>- {{label-rule-password-4}}<br>- {{label-rule-password-5}}"
                                    required>
                             <button type="button" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                            <div class="d-none" id="register-password-smg"></div>
                         </div>
                         <div class="password-meter" data-lh-pl="password-strength"
                              data-lh-pl-related="register-password"
                              data-lh-pl-options="length:13,uppercase:true,lowercase:true,number:true,symbol:!@#%*">
                         </div>
-                        <div class="d-none" id="register-password-smg"></div>
+
                     </div>
-                    <div class="form-check mb-4">
+                    <div class="form-check mb-1">
                         <input class="form-check-input" type="checkbox" id="register-agree-conditions"
                                name="register-agree-conditions" required>
-                        <label for="register-agree-conditions" class="form-check-label">{{paragraph-1-0}} <a
-                                    href="/User-Terms" target="_blank">{{paragraph-1-1}}</a> {{paragraph-1-2}} <a
-                                    href="/Data-Policy" target="_blank">{{paragraph-1-3}}</a>, {{paragraph-1-4}} <a
-                                    href="/Use-Cookies" target="_blank">{{paragraph-1-5}}.</a>
-                        </label>
+                        <label class="form-check-label" for="register-agree-conditions">{{paragraph-1-0}}:</label>
                     </div>
+                    <div class="form-check mb-4">
+                        <label class="form-check-label"><a
+                                    href="/User-Terms/Section=Terms-of-Service">{{paragraph-1-1}}</a>
+                            {{paragraph-1-2}} <a
+                                    href="/User-Terms/Section=Privacy-Policy">{{paragraph-1-3}}</a>, {{paragraph-1-4}}
+                            <a
+                                    href="/User-Terms/Section=Cookie-Policy">{{paragraph-1-5}}.</a>
+                        </label>
+                        <div class="d-none" id="register-agree-conditions-smg"></div>
+                    </div>
+
+
+                    <div class="mb-3 d-none" id="register-head-smg"></div>
                     <div class="mb-4">
                         <button type="button" name="event" value="register"
                                 class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">

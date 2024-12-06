@@ -18,6 +18,10 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Http\Request;
+use Asset\Framework\Http\Response;
+use Asset\Framework\Http\Route;
+use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 
 /**
@@ -27,38 +31,26 @@ use Exception;
  */
 class Kernel
 {
-    /**
-     * @var Kernel|null Singleton instance of the Kernel.
-     */
-    private static ?self $instance = null;
-
-
-    /**
-     * Get the singleton instance of Kernel.
-     *
-     * @return Kernel The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    use SingletonTrait;
 
     /**
      * @return void
      * @throws Exception
      */
-    public function run(): void
+    public function lh(): void
     {
         if (!IS_CLI) {
             ConfigLoader::getInstance()->loadConfigurations();
+
+
             Session::getInstance()->handleSession();
+
+
             //Route::getInstance()->initRoute();
             //ex(isset($_POST), isset($_GET));
 
+            //
+            //ex_c(Mailer::getInstance());
 
             Route::getInstance()->initialize();
 
@@ -69,9 +61,6 @@ class Kernel
 
 
         /*
-
-
-
 
         $forms = Forms::getInstance();
 

@@ -20856,7 +20856,7 @@ a:focus {
     bottom: 0;
     padding: 1.875rem;
     background: #2d353c;
-    background-image: url(images/error-page-pattern.png);
+    background-image: url(../../../img/theme/error-page-pattern.png);
 }
 .error .error-message {
     color: #fff;

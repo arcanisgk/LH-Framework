@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+use Random\RandomException;
+
 /**
  * Class that handles:
  *
@@ -26,64 +29,153 @@ namespace Asset\Framework\Core;
 class SecurityPolicies
 {
 
+    use SingletonTrait;
+
+    private const int NONCE_LENGTH = 32;
+
+    private const array CSP_DIRECTIVES
+        = [
+            'default-src'     => "'self'",
+            'script-src'      => "'self'", // Will be appended with nonce
+            'style-src'       => "'self' https://fonts.googleapis.com", // Will be appended with nonce
+            'img-src'         => "'self' data: https:",
+            'font-src'        => "'self' https://fonts.gstatic.com",
+            'object-src'      => "'none'",
+            'base-uri'        => "'self'",
+            'form-action'     => "'self'",
+            'frame-ancestors' => "'none'",
+            'connect-src'     => "'self'",
+            'media-src'       => "'self'",
+            'worker-src'      => "'self'",
+            'manifest-src'    => "'self'",
+        ];
+
+    private const array SECURITY_HEADERS
+        = [
+            'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains; preload',
+            'X-Content-Type-Options'    => 'nosniff',
+            'X-Frame-Options'           => 'DENY',
+            'X-XSS-Protection'          => '1; mode=block',
+            'Referrer-Policy'           => 'strict-origin-when-cross-origin',
+            'Permissions-Policy'        => 'geolocation=(), microphone=(), camera=()',
+        ];
+
     /**
-     * @var SecurityPolicies|null Singleton instance of the class: SecurityPolicies.
+     * @var string
      */
-    private static ?self $instance = null;
-
+    private static string $nonce = '';
 
     /**
-     * Get the singleton instance of teh class SecurityPolicies.
-     *
-     * @return SecurityPolicies The singleton instance.
+     * @var string
      */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    private static string $contentSecurityPolicy = '';
 
     /**
-     * SecurityPolicies constructor.
+     * @return string
      */
-    public function __construct()
-    {
-
-    }
-
-    private static string $once = '';
-    private static string $scp = '';
-
     public static function getNonce(): string
     {
-        return self::$once;
+        return self::$nonce;
     }
 
-    public static function getScp(): string
+    /**
+     * @return string
+     */
+    public static function getCSP(): string
     {
-        return self::$scp;
+        return self::$contentSecurityPolicy;
     }
 
+    /**
+     * @throws RandomException
+     */
     public static function initSecurity(): self
     {
-        self::$once = bin2hex(random_bytes(16));
-
-        self::$scp = "default-src 'self'; ".
-            "script-src 'self' 'nonce-".self::$once."'; ".
-            "style-src 'self' 'nonce-".self::$once."' https://fonts.googleapis.com; ".
-            "img-src 'self' data: https:; ".
-            "font-src 'self' https://fonts.gstatic.com; ".
-            "object-src 'none'; ".
-            "base-uri 'self'; ".
-            "form-action 'self'; ".
-            "frame-ancestors 'none'; ".
-            "block-all-mixed-content; ".
-            "upgrade-insecure-requests;";
+        self::generateNonce();
+        self::buildCSP();
+        self::setSecurityHeaders();
 
         return self::getInstance();
     }
 
+    /**
+     * @throws RandomException
+     */
+    private static function generateNonce(): void
+    {
+        self::$nonce = bin2hex(random_bytes(self::NONCE_LENGTH));
+    }
+
+    /**
+     * @return void
+     */
+    private static function buildCSP(): void
+    {
+        $directives = self::CSP_DIRECTIVES;
+
+        // Append nonce to script-src and style-src
+        $directives['script-src'] .= " 'nonce-".self::$nonce."'";
+        $directives['style-src']  .= " 'nonce-".self::$nonce."'";
+
+        $cspParts = [];
+        foreach ($directives as $directive => $value) {
+            $cspParts[] = "$directive $value";
+        }
+
+        self::$contentSecurityPolicy = implode('; ', $cspParts).'; '.
+            'block-all-mixed-content; '.
+            'upgrade-insecure-requests;';
+    }
+
+    /**
+     * @return void
+     */
+    private static function setSecurityHeaders(): void
+    {
+        foreach (self::SECURITY_HEADERS as $header => $value) {
+            header("$header: $value");
+        }
+        header("Content-Security-Policy: ".self::$contentSecurityPolicy);
+    }
+
+    /**
+     * @return void
+     */
+    public static function exposeHumanitariaPorpuse(): void
+    {
+        foreach (self::getHumanitarianHeaders('web') as $header) {
+            header($header);
+        }
+    }
+
+    /**
+     * @param string $purpose
+     * @return array
+     */
+    public static function getHumanitarianHeaders(string $purpose): array
+    {
+        if (!CONFIG->app->host->getHumanitarian()) {
+            return [];
+        }
+
+        $domain  = CONFIG->app->host->getProtocol().'://'.CONFIG->app->host->getDomain();
+        $contact = CONFIG->mail->mail1->getMailPostmaster();
+
+        $headers = [
+            'X-Humanitarian-Protection' => 'This site is protected by international humanitarian law.',
+            'X-Humanitarian-Purpose'    => 'Non-commercial',
+            'X-Humanitarian-Licenced'   => $domain.'/',
+            'X-Humanitarian-Contact'    => $contact,
+        ];
+
+        return match ($purpose) {
+            'web' => array_map(
+                fn($key, $value) => "$key: $value",
+                array_keys($headers),
+                $headers
+            ),
+            'mail' => $headers,
+            default => []
+        };
+    }
 }

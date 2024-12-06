@@ -14,95 +14,86 @@
 
 export class HandlerRequest {
 
-
-    static async request(param) {
-        const requestHandler = new HandlerRequest();
-        await requestHandler.request(param);
+    /**
+     * Checks if a file exists at the given URI.
+     *
+     * @param {string} uri - The URI of the file to check.
+     * @returns {Promise<boolean>} - `true` if the file exists, `false` otherwise.
+     */
+    static async validateFileExist(uri) {
+        try {
+            const response = await fetch(uri, {method: 'HEAD'});
+            return response.ok;
+        } catch (error) {
+            console.warn(`File not found: ${uri}`);
+            return false;
+        }
     }
 
-    async request({uri, data, type, method, output, error} = {}) {
+    /**
+     * Sends an HTTP request with the provided configuration.
+     *
+     * @param {Object} [param={}] - The request parameters.
+     * @param {string} [param.uri] - The URI for the request.
+     * @param {any} [param.data] - The request data.
+     * @param {string} [param.type] - The content type of the request data.
+     * @param {string} [param.method] - The HTTP method for the request.
+     * @returns {Promise<any>} - The response data.
+     */
+    static async request(param) {
+        const requestHandler = new HandlerRequest();
+        return await requestHandler.request(param);
+    }
+
+    /**
+     * Sends an HTTP request with the provided configuration.
+     *
+     * @param {Object} [param={}] - The request parameters.
+     * @param {string} [param.uri] - The URI for the request.
+     * @param {any} [param.data] - The request data.
+     * @param {string} [param.type] - The content type of the request data.
+     * @param {string} [param.method] - The HTTP method for the request.
+     * @returns {Promise<any>} - The response data.
+     */
+    async request({uri, data, type, method} = {}) {
         try {
 
             const config = {
                 method: method || 'post',
                 url: uri,
+                baseURL: window.location.origin,
                 data: data,
                 headers: {
-                    'Content-Type': type || 'application/json'
+                    'Content-Type': type || 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-UI': true,
                 }
             };
 
-            axios.interceptors.request.use(config => {
-                Pace.restart();
-                return config;
-            }, error => {
-                return Promise.reject(error);
-            });
-
-            axios.interceptors.response.use(response => {
-                return response;
-            }, error => {
-                return Promise.reject(error);
-            });
+            this.setupInterceptors();
 
             const response = await axios(config);
-
-            console.log(response);
-
-            if (response.data.redirect) {
-                window.location.href = response.data.redirect;
-            }
-
-            /*
-             *
-             * aqui se debe implementar la logica de la respuesta
-             * mostrar en modal.
-             * mostrar el sweet alert.
-             * mostrar en el html/DOM
-             * Retornar los dato para alimentar un plugin
-             *
-             */
-
-            /*
-            if (response === 'Swal') {
-                if (result.data) {
-
-                    Swal.fire({
-                        icon: 'success',
-                        html: 'Request completed successfully!',
-                        showCancelButton: true,
-                        showConfirmButton: false,
-                        cancelButtonText: 'Return'
-                    }).then(() => {
-
-                        window.location.href = window.location.origin;
-
-                    });
-                } else {
-                    // Si hubo un problema con la respuesta
-                    Swal.fire({
-                        icon: 'warning',
-                        html: 'An error occurred!',
-                        showCancelButton: true,
-                        showConfirmButton: false,
-                        cancelButtonText: 'Return'
-                    });
-                }
-            }
-            */
-
+            return response.data;
 
         } catch (err) {
             console.error(err);
-
-            // Si hay un error y se especifica manejarlo con SweetAlert
-            if (error === 'Swal') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!'
-                });
-            }
         }
+    }
+
+    /**
+     * Sets up interceptors for the Axios HTTP client.
+     * The request interceptor restarts the Pace loading indicator.
+     * The response interceptor simply passes the response through.
+     */
+    setupInterceptors() {
+        axios.interceptors.request.use(config => {
+            Pace.restart();
+            return config;
+        }, error => Promise.reject(error));
+
+        axios.interceptors.response.use(
+            response => response,
+            error => Promise.reject(error)
+        );
     }
 }

@@ -12,6 +12,9 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+/**
+ * Utility class for handling various functionality related to the application.
+ */
 export class HandlerUtilities {
     /**
      * @param {string} text - The text to wrap.
@@ -27,6 +30,12 @@ export class HandlerUtilities {
         return text + padding;
     }
 
+    /**
+     * Converts a data URI to a binary array.
+     *
+     * @param {string} dataURI - The data URI to convert.
+     * @returns {Uint8Array} - The binary array representation of the data URI.
+     */
     static convertDataURIToBinary(dataURI) {
         const BASE64_MARKER = ';base64,';
         const base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
@@ -42,6 +51,12 @@ export class HandlerUtilities {
         return array;
     }
 
+    /**
+     * Finds the closest parent element that is a modal body.
+     *
+     * @param {HTMLElement} target - The target element to start the search from.
+     * @returns {Object} - An object with the target element and the length of the search.
+     */
     static findModalParent(target) {
 
         const panelBody = target.closest('.panel-body');
@@ -57,5 +72,62 @@ export class HandlerUtilities {
         return {length: 0};
     }
 
+    /**
+     * Checks if the current device orientation is in portrait mode.
+     *
+     * @returns {boolean} - `true` if the device orientation is in portrait mode, `false` otherwise.
+     */
+    static isPortrait() {
+        return window.matchMedia("(orientation: portrait)").matches;
+    }
+
+    /**
+     * Checks if the current device orientation is in landscape mode.
+     *
+     * @returns {boolean} - `true` if the device orientation is in landscape mode, `false` otherwise.
+     */
+    static isLandscape() {
+        return window.matchMedia("(orientation: landscape)").matches;
+    }
+
+
+    /**
+     * Applies a function to be called when the device orientation changes.
+     *
+     * @param {Object} options - An object with optional callback functions for portrait and landscape orientations.
+     * @param {function} [options.onPortrait] - A callback function to be called when the device is in portrait orientation.
+     * @param {function} [options.onLandscape] - A callback function to be called when the device is in landscape orientation.
+     * @returns {function} - A function that can be called to remove the event listener for device orientation changes.
+     */
+    static aplicarOnChangeDeviceOrientation(options = {}) {
+        const {
+            onPortrait = null,
+            onLandscape = null
+        } = options;
+
+        const mediaQueryPortrait = window.matchMedia("(orientation: portrait)");
+
+        const checkOrientation = (e) => {
+            if (e.matches) {
+                if (onPortrait && typeof onPortrait === 'function') {
+                    onPortrait();
+                }
+            } else {
+                if (onLandscape && typeof onLandscape === 'function') {
+                    onLandscape();
+                }
+            }
+        };
+
+        setTimeout(() => {
+            checkOrientation(mediaQueryPortrait);
+        }, 100);
+
+        mediaQueryPortrait.addEventListener('change', checkOrientation);
+
+        return () => {
+            mediaQueryPortrait.removeEventListener('change', checkOrientation);
+        };
+    }
 }
 

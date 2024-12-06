@@ -18,30 +18,15 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+
 /**
  * Class EventLog
  * A simple ...
  */
 class Log
 {
-    /**
-     * @var Log|null Singleton instance of the EventLog.
-     */
-    private static ?self $instance = null;
-
-    /**
-     * Get the singleton instance of EventLog.
-     *
-     * @return Log The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
+    use SingletonTrait;
 
     public function __construct()
     {
@@ -55,7 +40,7 @@ class Log
      * cronjob: occurs when a cron is executed correctly
      * webservice: occurs when a webservice is consumed correctly
      */
-    protected const LOG_LIST = ['user', 'cron', 'webservice', 'error'];
+    protected const array LOG_LIST = ['user', 'cron', 'webservice', 'error'];
 
     private function initLogs(): void
     {

@@ -108,21 +108,21 @@
         </tr>
         <tr class="row-1">
             <td class="col1">Description:</td>
-            <td class="col2">Asset\Helper\AutoloaderClass::buildSafeFilePath(): Return value must be of type string, false returned</td>
+            <td class="col2">Getter method 'getMailDkimSign' does not exist.</td>
         </tr>
         <tr class="row-1">
             <td class="col1">File:</td>
-            <td class="col2">/var/www/html/lh-2.dock/Asset/Helper/AutoloaderClass.php</td>
+            <td class="col2">/var/www/html/lh-2.dock/Asset/Framework/Core/ConfigLoader.php</td>
         </tr>
         <tr class="row-1">
             <td></td>
             <td>
-                <b>Line: </b>106                <b>Level: </b>Not Set                <b>Time: </b>1729867883            </td>
+                <b>Line: </b>154                <b>Level: </b>Not Set                <b>Time: </b>1733431581            </td>
         </tr>
         <tr class="row-3">
             <td class="col1 top">BackTrace Log:</td>
             <td class="col2">
-                <div class="container-track">/var/www/html/lh-2.dock/Asset/Helper/AutoloaderClass.php 68 calling Method: buildSafeFilePath('Asset\Framework\Core\Config\ConfigLoader')<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Middleware.php 64 calling Method: autoload('Asset\Framework\Core\Config\ConfigLoader')<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 110 calling Method: processMiddleware()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Route.php 64 calling Method: run()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 63 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 35 calling Method: run()</div>
+                <div class="container-track">/var/www/html/lh-2.dock/Asset/Framework/Core/Mailer.php 99 calling Method: __call('getMailDkimSign',Array)<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Mailer.php 67 calling Method: configure()<br>/var/www/html/lh-2.dock/Asset/Framework/Trait/SingletonTrait.php 46 calling Method: __construct()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 49 calling Method: getInstance()<br>/var/www/html/lh-2.dock/public/index.php 35 calling Method: lh()</div>
             </td>
         </tr>
         <tr class="row-3">
@@ -137,7 +137,7 @@
  *
  * @see https://github.com/arcanisgk/LH-Framework
  *
- * @author    Walter Nuñez (arcanisgk/original founder) &lt;icarosnet@gmail.com&gt;
+ * @author    Walter Nuñez (arcanisgk/founder) &lt;icarosnet@gmail.com&gt;
  * @copyright 2017 - 2024
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note      This program is distributed in the hope that it will be useful
@@ -145,117 +145,173 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Helper</span><span style="color: #007700">;
+</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Framework\Core</span><span style="color: #007700">;
 
-use </span><span style="color: #0000BB">RuntimeException</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Asset\Framework\Trait\SingletonTrait</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">Exception</span><span style="color: #007700">;
+use </span><span style="color: #0000BB">SplStack</span><span style="color: #007700">;
 
 </span><span style="color: #FF8000">/**
- * Class AutoloaderClass
- * A simple autoloader class for automatically loading classes in a secure manner.
+ * Class that handles: Framework Configuration Usage
+ *
+ * @package Asset\Framework\Core\ConfigLoader;
  */
-</span><span style="color: #007700">class </span><span style="color: #0000BB">AutoloaderClass
+</span><span style="color: #007700">class </span><span style="color: #0000BB">ConfigLoader
 </span><span style="color: #007700">{
-    </span><span style="color: #FF8000">/**
-     * @var AutoloaderClass|null Singleton instance of the AutoloaderClass.
-     */
-    </span><span style="color: #007700">private static ?</span><span style="color: #0000BB">self $instance </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;
+
+    use </span><span style="color: #0000BB">SingletonTrait</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * Get the singleton instance of AutoloaderClass.
-     *
-     * @return AutoloaderClass The singleton instance.
+     * @var array
      */
-    </span><span style="color: #007700">public static function </span><span style="color: #0000BB">getInstance</span><span style="color: #007700">(): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">private array </span><span style="color: #0000BB">$configCache </span><span style="color: #007700">= [];
+
+    </span><span style="color: #FF8000">/**
+     * @return bool
+     */
+    </span><span style="color: #007700">public static function </span><span style="color: #0000BB">checkFullConfig</span><span style="color: #007700">(): </span><span style="color: #0000BB">bool
     </span><span style="color: #007700">{
-        if (!</span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">$instance </span><span style="color: #007700">instanceof </span><span style="color: #0000BB">self</span><span style="color: #007700">) {
-            </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">$instance </span><span style="color: #007700">= new </span><span style="color: #0000BB">self</span><span style="color: #007700">();
-        }
 
-        return </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">$instance</span><span style="color: #007700">;
+        return </span><span style="color: #0000BB">CONFIG</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">app</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">project</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getProjectConfig</span><span style="color: #007700">();
     }
 
     </span><span style="color: #FF8000">/**
-     * AutoloaderClass constructor.
-     * Registers the autoloader function.
+     * @return void
+     * @throws Exception
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">loadConfigurations</span><span style="color: #007700">(): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">{
+        if (!</span><span style="color: #0000BB">defined</span><span style="color: #007700">(</span><span style="color: #DD0000">'CONFIG'</span><span style="color: #007700">)) {
+            </span><span style="color: #0000BB">$configs      </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">loadAndValidateConfigs</span><span style="color: #007700">();
+            </span><span style="color: #0000BB">$configObject </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">createConfigObject</span><span style="color: #007700">(</span><span style="color: #0000BB">$configs</span><span style="color: #007700">);
+            </span><span style="color: #0000BB">define</span><span style="color: #007700">(</span><span style="color: #DD0000">'CONFIG'</span><span style="color: #007700">, </span><span style="color: #0000BB">$configObject</span><span style="color: #007700">);
+        }
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return array
+     * @throws Exception
+     */
+    </span><span style="color: #007700">private function </span><span style="color: #0000BB">loadAndValidateConfigs</span><span style="color: #007700">(): array
     {
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">register</span><span style="color: #007700">();
-    }
+        </span><span style="color: #0000BB">$configs   </span><span style="color: #007700">= [];
+        </span><span style="color: #0000BB">$jsonFiles </span><span style="color: #007700">= </span><span style="color: #0000BB">glob</span><span style="color: #007700">(</span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'config'</span><span style="color: #007700">, </span><span style="color: #DD0000">'*.json'</span><span style="color: #007700">]));
 
+        foreach (</span><span style="color: #0000BB">$jsonFiles </span><span style="color: #007700">as </span><span style="color: #0000BB">$file</span><span style="color: #007700">) {
+            </span><span style="color: #0000BB">$jsonContent </span><span style="color: #007700">= </span><span style="color: #0000BB">file_get_contents</span><span style="color: #007700">(</span><span style="color: #0000BB">$file</span><span style="color: #007700">);
+            if (</span><span style="color: #0000BB">$jsonContent </span><span style="color: #007700">=== </span><span style="color: #0000BB">false</span><span style="color: #007700">) {
+                continue;
+            }
 
-    </span><span style="color: #FF8000">/**
-     * Autoload the class.
-     *
-     * @param string $class The class name.
-     *
-     * @return void
-     * @throws RuntimeException When the class file is not found.
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">autoload</span><span style="color: #007700">(</span><span style="color: #0000BB">string $class</span><span style="color: #007700">): </span><span style="color: #0000BB">void
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$filePath </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">buildSafeFilePath</span><span style="color: #007700">(</span><span style="color: #0000BB">$class</span><span style="color: #007700">);
-        if (!</span><span style="color: #0000BB">is_bool</span><span style="color: #007700">(</span><span style="color: #0000BB">$filePath</span><span style="color: #007700">) &amp;&amp; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isValidClassName</span><span style="color: #007700">(</span><span style="color: #0000BB">$class</span><span style="color: #007700">) &amp;&amp; </span><span style="color: #0000BB">file_exists</span><span style="color: #007700">(</span><span style="color: #0000BB">$filePath</span><span style="color: #007700">)) {
-            require_once </span><span style="color: #0000BB">$filePath</span><span style="color: #007700">;
-
-            return;
+            </span><span style="color: #0000BB">$configData        </span><span style="color: #007700">= </span><span style="color: #0000BB">json_decode</span><span style="color: #007700">(</span><span style="color: #0000BB">$jsonContent</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">);
+            </span><span style="color: #0000BB">$section           </span><span style="color: #007700">= </span><span style="color: #0000BB">strtolower</span><span style="color: #007700">(</span><span style="color: #0000BB">basename</span><span style="color: #007700">(</span><span style="color: #0000BB">$file</span><span style="color: #007700">, </span><span style="color: #DD0000">'.json'</span><span style="color: #007700">));
+            </span><span style="color: #0000BB">$configs</span><span style="color: #007700">[</span><span style="color: #0000BB">$section</span><span style="color: #007700">] = </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">convertKeysToCamelCase</span><span style="color: #007700">(</span><span style="color: #0000BB">$configData</span><span style="color: #007700">);
         }
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">handleClassNotFound</span><span style="color: #007700">(</span><span style="color: #0000BB">$class</span><span style="color: #007700">);
+
+        return </span><span style="color: #0000BB">$configs</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * Validate the class name.
-     *
-     * @param string $class The class name.
-     *
-     * @return bool True if the class name is valid, false otherwise.
+     * @param array $array
+     * @return array
      */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">isValidClassName</span><span style="color: #007700">(</span><span style="color: #0000BB">string $class</span><span style="color: #007700">): </span><span style="color: #0000BB">bool
-    </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">preg_match</span><span style="color: #007700">(</span><span style="color: #DD0000">'/^[a-zA-Z0-9\\\\]+$/'</span><span style="color: #007700">, </span><span style="color: #0000BB">$class</span><span style="color: #007700">) === </span><span style="color: #0000BB">1</span><span style="color: #007700">;
+    </span><span style="color: #007700">private function </span><span style="color: #0000BB">convertKeysToCamelCase</span><span style="color: #007700">(array </span><span style="color: #0000BB">$array</span><span style="color: #007700">): array
+    {
+        </span><span style="color: #0000BB">$result </span><span style="color: #007700">= [];
+        foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {
+            </span><span style="color: #0000BB">$camelKey          </span><span style="color: #007700">= </span><span style="color: #0000BB">lcfirst</span><span style="color: #007700">(
+                </span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(
+                    </span><span style="color: #DD0000">' '</span><span style="color: #007700">,
+                    </span><span style="color: #DD0000">''</span><span style="color: #007700">,
+                    </span><span style="color: #0000BB">ucwords</span><span style="color: #007700">(
+                        </span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(
+                            </span><span style="color: #DD0000">'_'</span><span style="color: #007700">,
+                            </span><span style="color: #DD0000">' '</span><span style="color: #007700">,
+                            </span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(</span><span style="color: #DD0000">'-'</span><span style="color: #007700">, </span><span style="color: #DD0000">' '</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">)
+                        )
+                    )
+                )
+            );
+            </span><span style="color: #0000BB">$result</span><span style="color: #007700">[</span><span style="color: #0000BB">$camelKey</span><span style="color: #007700">] = </span><span style="color: #0000BB">is_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) ? </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">convertKeysToCamelCase</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) : </span><span style="color: #0000BB">$value</span><span style="color: #007700">;
+        }
+
+        return </span><span style="color: #0000BB">$result</span><span style="color: #007700">;
     }
 
-    </span><span style="color: #FF8000">/**
-     * Build a safe file path based on the class name.
-     *
-     * @param string $class The relative class name.
-     *
-     * @return string The safe file path.
-     */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">buildSafeFilePath</span><span style="color: #007700">(</span><span style="color: #0000BB">string $class</span><span style="color: #007700">): </span><span style="color: #0000BB">string
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$newClass  </span><span style="color: #007700">= </span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(</span><span style="color: #DD0000">'\\'</span><span style="color: #007700">, </span><span style="color: #0000BB">DS</span><span style="color: #007700">, </span><span style="color: #0000BB">$class</span><span style="color: #007700">);
-        </span><span style="color: #0000BB">$parts     </span><span style="color: #007700">= </span><span style="color: #0000BB">explode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, </span><span style="color: #0000BB">$newClass</span><span style="color: #007700">);
-        </span><span style="color: #0000BB">$safeParts </span><span style="color: #007700">= </span><span style="color: #0000BB">array_map</span><span style="color: #007700">(function (</span><span style="color: #0000BB">$part</span><span style="color: #007700">) {
-            return </span><span style="color: #0000BB">preg_replace</span><span style="color: #007700">(</span><span style="color: #DD0000">'/[^a-zA-Z0-9]/'</span><span style="color: #007700">, </span><span style="color: #DD0000">''</span><span style="color: #007700">, </span><span style="color: #0000BB">$part</span><span style="color: #007700">);
-        }, </span><span style="color: #0000BB">$parts</span><span style="color: #007700">);
-        </span><span style="color: #0000BB">$safePath  </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, </span><span style="color: #0000BB">$safeParts</span><span style="color: #007700">);
-        </span><span style="color: #0000BB">$filename  </span><span style="color: #007700">= </span><span style="color: #0000BB">PD</span><span style="color: #007700">.</span><span style="color: #0000BB">DS</span><span style="color: #007700">.</span><span style="color: #0000BB">$safePath</span><span style="color: #007700">.</span><span style="color: #DD0000">'.php'</span><span style="color: #007700">;
-
-        return </span><span style="color: #0000BB">realpath</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);    </span><span style="color: #FF8000">// error detected in this line!!!
-    </span><span style="color: #007700">}
 
     </span><span style="color: #FF8000">/**
-     * Handle the case when the class is not found.
-     *
-     * @param string $class The class name.
-     *
-     * @return void
-     * @throws RuntimeException
+     * @param array $data
+     * @return object
      */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">handleClassNotFound</span><span style="color: #007700">(</span><span style="color: #0000BB">string $class</span><span style="color: #007700">): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">private function </span><span style="color: #0000BB">createConfigObject</span><span style="color: #007700">(array </span><span style="color: #0000BB">$data</span><span style="color: #007700">): </span><span style="color: #0000BB">object
     </span><span style="color: #007700">{
-        throw new </span><span style="color: #0000BB">RuntimeException</span><span style="color: #007700">(</span><span style="color: #DD0000">"Class </span><span style="color: #0000BB">$class</span><span style="color: #DD0000"> not found"</span><span style="color: #007700">);
-    }
 
-    </span><span style="color: #FF8000">/**
-     * Registers the autoloader function in Composer.
-     *
-     * @return void
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">register</span><span style="color: #007700">(): </span><span style="color: #0000BB">void
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">spl_autoload_register</span><span style="color: #007700">([</span><span style="color: #0000BB">$this</span><span style="color: #007700">, </span><span style="color: #DD0000">'autoload'</span><span style="color: #007700">]);
+        return new class(</span><span style="color: #0000BB">$data</span><span style="color: #007700">) {
+
+            private array </span><span style="color: #0000BB">$properties</span><span style="color: #007700">;
+
+            public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">(array </span><span style="color: #0000BB">$data</span><span style="color: #007700">)
+            {
+                </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties </span><span style="color: #007700">= </span><span style="color: #0000BB">array_map</span><span style="color: #007700">(
+                    fn(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) =&gt; </span><span style="color: #0000BB">is_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) ? new </span><span style="color: #0000BB">self</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) : </span><span style="color: #0000BB">$value</span><span style="color: #007700">,
+                    </span><span style="color: #0000BB">$data
+                </span><span style="color: #007700">);
+            }
+
+            public function </span><span style="color: #0000BB">__get</span><span style="color: #007700">(</span><span style="color: #0000BB">string $name</span><span style="color: #007700">)
+            {
+                if (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties</span><span style="color: #007700">[</span><span style="color: #0000BB">$name</span><span style="color: #007700">]) &amp;&amp; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties</span><span style="color: #007700">[</span><span style="color: #0000BB">$name</span><span style="color: #007700">] instanceof </span><span style="color: #0000BB">self</span><span style="color: #007700">) {
+                    return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties</span><span style="color: #007700">[</span><span style="color: #0000BB">$name</span><span style="color: #007700">];
+                }
+
+                throw new </span><span style="color: #0000BB">Exception</span><span style="color: #007700">(
+                    </span><span style="color: #DD0000">"Direct property access to '</span><span style="color: #0000BB">$name</span><span style="color: #DD0000">' is not allowed. Use getter methods instead (e.g. get"</span><span style="color: #007700">.</span><span style="color: #0000BB">ucfirst</span><span style="color: #007700">(
+                        </span><span style="color: #0000BB">$name
+                    </span><span style="color: #007700">).</span><span style="color: #DD0000">"())"
+                </span><span style="color: #007700">);
+            }
+
+            public function </span><span style="color: #0000BB">__call</span><span style="color: #007700">(</span><span style="color: #0000BB">string $name</span><span style="color: #007700">, array </span><span style="color: #0000BB">$arguments</span><span style="color: #007700">): </span><span style="color: #0000BB">mixed
+            </span><span style="color: #007700">{
+                if (!</span><span style="color: #0000BB">str_starts_with</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #DD0000">'get'</span><span style="color: #007700">)) {
+                    throw new </span><span style="color: #0000BB">Exception</span><span style="color: #007700">(</span><span style="color: #DD0000">"Only getter methods are allowed. Method '</span><span style="color: #0000BB">$name</span><span style="color: #DD0000">' not found."</span><span style="color: #007700">);
+                }
+                </span><span style="color: #0000BB">$property </span><span style="color: #007700">= </span><span style="color: #0000BB">lcfirst</span><span style="color: #007700">(</span><span style="color: #0000BB">substr</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">));
+                if (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties</span><span style="color: #007700">[</span><span style="color: #0000BB">$property</span><span style="color: #007700">])) {
+                    return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties</span><span style="color: #007700">[</span><span style="color: #0000BB">$property</span><span style="color: #007700">];
+                }
+                throw new </span><span style="color: #0000BB">Exception</span><span style="color: #007700">(</span><span style="color: #DD0000">"Getter method '</span><span style="color: #0000BB">$name</span><span style="color: #DD0000">' does not exist."</span><span style="color: #007700">);    </span><span style="color: #FF8000">// error detected in this line!!!
+            </span><span style="color: #007700">}
+
+            public function </span><span style="color: #0000BB">__debugInfo</span><span style="color: #007700">()
+            {
+                return [</span><span style="color: #DD0000">'debug' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'### Only For Implementation Purposes ###'</span><span style="color: #007700">, </span><span style="color: #DD0000">'Usage' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">buildDebugInfo</span><span style="color: #007700">()];
+            }
+
+            private function </span><span style="color: #0000BB">buildDebugInfo</span><span style="color: #007700">(</span><span style="color: #0000BB">mixed </span><span style="color: #007700">&amp;</span><span style="color: #0000BB">$debugInfo </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">, </span><span style="color: #0000BB">string $parentPath </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">): </span><span style="color: #0000BB">mixed
+            </span><span style="color: #007700">{
+
+                foreach (</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">properties </span><span style="color: #007700">as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {
+
+                    if (</span><span style="color: #0000BB">$value </span><span style="color: #007700">instanceof </span><span style="color: #0000BB">self</span><span style="color: #007700">) {
+                        </span><span style="color: #0000BB">$currentPath     </span><span style="color: #007700">= </span><span style="color: #0000BB">$parentPath </span><span style="color: #007700">? </span><span style="color: #0000BB">$parentPath</span><span style="color: #007700">.</span><span style="color: #DD0000">'-&gt;'</span><span style="color: #007700">.</span><span style="color: #0000BB">$key </span><span style="color: #007700">: </span><span style="color: #DD0000">'CONFIG-&gt;'</span><span style="color: #007700">.</span><span style="color: #0000BB">$key</span><span style="color: #007700">;
+                        </span><span style="color: #0000BB">$debugInfo</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">] = [];
+                        </span><span style="color: #0000BB">$value</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">buildDebugInfo</span><span style="color: #007700">(</span><span style="color: #0000BB">$debugInfo</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">], </span><span style="color: #0000BB">$currentPath</span><span style="color: #007700">);
+                    } else {
+                        </span><span style="color: #0000BB">$path            </span><span style="color: #007700">= </span><span style="color: #0000BB">$parentPath </span><span style="color: #007700">?? </span><span style="color: #DD0000">'CONFIG'</span><span style="color: #007700">;
+                        </span><span style="color: #0000BB">$debugInfo</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">] = [
+                            </span><span style="color: #DD0000">'type'     </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'[getter]'</span><span style="color: #007700">,
+                            </span><span style="color: #DD0000">'value'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">,
+                            </span><span style="color: #DD0000">'property' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$key</span><span style="color: #007700">,
+                            </span><span style="color: #DD0000">'path'     </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$path</span><span style="color: #007700">.</span><span style="color: #DD0000">'-&gt;get'</span><span style="color: #007700">.</span><span style="color: #0000BB">ucfirst</span><span style="color: #007700">(</span><span style="color: #0000BB">$key</span><span style="color: #007700">).</span><span style="color: #DD0000">'()'</span><span style="color: #007700">,
+                        ];
+                    }
+                }
+
+                return </span><span style="color: #0000BB">$debugInfo</span><span style="color: #007700">;
+            }
+
+        };
     }
 }</span></code></pre></td>
         </tr>

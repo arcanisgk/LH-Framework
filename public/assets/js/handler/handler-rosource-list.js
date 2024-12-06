@@ -14,6 +14,11 @@
 
 export class HandlerResourceList {
 
+    /**
+     * Retrieves the list of CSS and JavaScript files required for the system.
+     *
+     * @returns {Object[]} - An array of objects, each representing a required file. Each object has two properties: `typeR` (either 'css' or 'js') and `src` (the file path).
+     */
     static getRequirement() {
         return [
             /*CSS Files Require for System*/
@@ -44,6 +49,12 @@ export class HandlerResourceList {
         ];
     }
 
+    /**
+     * Retrieves the common plugin resources for the specified plugin name.
+     *
+     * @param {string} name - The name of the plugin.
+     * @returns {Object|null} - An object containing the CSS and JS resources for the plugin, or null if the plugin is not found.
+     */
     static getCommonPlugin(name) {
         const assets = {
             select2: {

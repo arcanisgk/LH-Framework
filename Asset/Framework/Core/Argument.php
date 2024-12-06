@@ -18,17 +18,17 @@ declare(strict_types=1);
 
 namespace Asset\Framework\Core;
 
+use Asset\Framework\Trait\SingletonTrait;
+
 class Argument
 {
+
+    use SingletonTrait;
+
     /**
      * @var array
      */
     private static array $arguments = [];
-
-    /**
-     * @var Argument|null
-     */
-    private static ?self $instance = null;
 
     /**
      * @param $args
@@ -36,20 +36,6 @@ class Argument
     public function __construct($args)
     {
         $this->setArguments($args);
-    }
-
-    /**
-     * @param $args
-     *
-     * @return self
-     */
-    public static function getInstance($args): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self($args);
-        }
-
-        return self::$instance;
     }
 
     /**

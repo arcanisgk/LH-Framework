@@ -18,62 +18,34 @@ declare(strict_types=1);
 
 namespace Repository\Default\ChangeLanguage\Back;
 
-use Asset\Framework\Controller\EventController;
-use Asset\Framework\View\FormInput;
-use Asset\Framework\View\FormSMG;
-use Exception;
+use Asset\Framework\Interface\ControllerInterface;
+use Asset\Framework\Trait\SingletonTrait;
 
 /**
  * Class that handles:
  *
- * @package Repository\Default\ChangeLanguage\Back;
+ * @package ChangeLanguage;
  */
-class Main
+class Main implements ControllerInterface
 {
 
-    /**
-     * @var Main|null Singleton instance of the class: Main.
-     */
-    private static ?self $instance = null;
+    use SingletonTrait;
 
     /**
-     * Get the singleton instance of teh class Main.
-     *
-     * @return Main The singleton instance.
+     * @var Event
      */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * @var EventController|null
-     */
-    private ?EventController $event;
-
-    /**
-     * @var FormInput|null
-     */
-    public ?FormInput $input;
-
-    /**
-     * @var FormSMG|null
-     */
-    public ?FormSMG $smg;
+    private Event $event;
 
     /**
      * Main constructor.
-     * @throws Exception
      */
     public function __construct()
     {
-        $this->event = Event::getInstance()->setMain($this);
-        if ($this->event->event_exists) {
-            $this->event->listenerEvent();
-        }
+        $this->initializeEvent();
+    }
+
+    private function initializeEvent(): void
+    {
+        $this->event = Event::getInstance($this)->eventHandler();
     }
 }

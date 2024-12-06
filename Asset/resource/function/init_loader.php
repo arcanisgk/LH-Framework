@@ -16,7 +16,8 @@ declare(strict_types=1);
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Asset\Framework\Core\{Argument, Log, Request};
+use Asset\Framework\Core\{Argument, Log};
+use Asset\Framework\Http\Request;
 use Asset\Helper\AutoloaderClass;
 use IcarosNet\WebCLIToolKit\WebCLIDetector;
 

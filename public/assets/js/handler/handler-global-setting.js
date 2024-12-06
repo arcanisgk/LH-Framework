@@ -14,10 +14,29 @@
 
 import {HandlerAudio} from "./handler-audio.js";
 
+/**
+ * The `HandlerGlobalSetting` class provides methods for managing the global settings of the application.
+ * It initializes the global settings, including settings related to form handling, error handling, voice AI,
+ * server checks, scan keys, reloading, file uploads, search functionality, modified fields, sound settings,
+ * and the list of available audio files.
+ * The class also provides methods for getting, setting, and removing individual settings, as well as
+ * retrieving the entire global settings object and resetting the settings to their initial state.
+ */
 export class HandlerGlobalSetting {
 
     static settings = {};
 
+    /**
+     * Initializes the global settings for the application.
+     * This method is marked as `async` to allow for any asynchronous initialization
+     * that may be required as part of the reset process.
+     * It creates a new `HandlerAudio` instance, initializes it, and then
+     * retrieves all the available audio files. The global settings object is then
+     * populated with various configuration options, including settings related to
+     * form handling, error handling, voice AI, server checks, scan keys, reloading,
+     * file uploads, search functionality, modified fields, sound settings, and the
+     * list of available audio files.
+     */
     static async init() {
 
         const handlerAudio = new HandlerAudio();
@@ -52,26 +71,46 @@ export class HandlerGlobalSetting {
 
     }
 
+    /**
+     * Gets the value of a setting from the global settings object.
+     * @param {string} key - The key of the setting to retrieve.
+     * @returns {*} The value of the setting, or null if the setting does not exist.
+     */
     static getSetting(key) {
         return this.settings[key] ?? null;
     }
 
-
+    /**
+     * Sets a value in the global settings object.
+     * @param {string} key - The key of the setting to set.
+     * @param {*} value - The value to set for the given key.
+     */
     static setSetting(key, value) {
         this.settings[key] = value;
     }
 
-
+    /**
+     * Returns the global settings object.
+     * @returns {Object} The global settings object.
+     */
     static getAllSettings() {
         return this.settings;
     }
 
+    /**
+     * Removes a setting from the global settings object.
+     * @param {string} key - The key of the setting to remove.
+     */
     static removeSetting(key) {
         delete this.settings[key];
     }
 
+    /**
+     * Resets the global settings to their initial state.
+     * This method is marked as `async` to allow for any asynchronous initialization
+     * that may be required as part of the reset process.
+     */
     static async resetSettings() {
         await this.init();
     }
-
 }

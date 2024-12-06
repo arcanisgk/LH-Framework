@@ -1,17 +1,30 @@
 <div class="theme-panel">
-    <a href="#" data-toggle="theme-panel-expand" class="theme-collapse-btn"><i
+    <a class="theme-collapse-btn" data-toggle="theme-panel-expand" href="#"><i
             class="fa fa-cog"></i></a>
-    <div class="theme-panel-content" data-scrollbar="true" data-height="100%">
+    <div class="theme-panel-content" data-height="100%" data-scrollbar="true">
         <h5>{{label-setting}}</h5>
 
 
         <div class="theme-panel-divider"></div>
+
+        <label aria-controls="collapse-nav" aria-expanded="false" class="col-12 form-label col-form-label fw-bold" data-bs-toggle="collapse" for="lang" href="#collapse-nav">{{label-nav}} (Click!!!)</label>
+
+        <div class="collapse" id="collapse-nav">
+            <a class="btn btn-outline-warning d-block w-100 rounded-pill mb-2" data-lh-pl="navigation" data-nav-action="User-Terms" href="#"><b>{{button-label-terms}}</b></a>
+
+            <a class="btn btn-outline-primary d-block w-100 rounded-pill mb-2" data-lh-pl="navigation" data-nav-action="{{sys-home}}"><b>{{button-label-go-home}}</b></a>
+
+            <a class="btn btn-outline-primary d-block w-100 rounded-pill" data-lh-pl="navigation" data-nav-action="back" href="#"><b>{{button-label-back-page}}</b></a>
+        </div>
+
+        <div class="theme-panel-divider"></div>
+
         <div class="row mt-10px">
             <label class="col-4 form-label col-form-label fw-bold" for="lang">{{label-lang}}</label>
             <div class="col-8">
                 <form action="/Change-Language" method="post">
-                    <select name="event" class="form-control form-select" id="lang" data-lh-pl="select"
-                            data-lh-pl-options="minimumResultsForSearch: Infinity" data-width="100%">
+                    <select class="form-control form-select" data-lh-pl="select" data-lh-pl-options="minimumResultsForSearch: Infinity" data-width="100%"
+                            id="lang" name="event">
                         <option value="en" {{lang-en-selected}}>English</option>
                         <option value="es" {{lang-es-selected}}>Español</option>
                         <option value="fr" {{lang-fr-selected}}>Français</option>
@@ -24,70 +37,70 @@
         <div class="theme-panel-divider"></div>
         <h6>{{label-color-theme}}</h6>
         <div class="theme-list">
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-red"
+            <div class="theme-list-item"><a class="theme-list-link bg-red" data-bs-container="body"
+                                            data-bs-title="Red" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
                                             data-theme-class="theme-red" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body"
-                                            data-bs-title="Red">&nbsp;</a>
+                                            href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-pink"
+            <div class="theme-list-item"><a class="theme-list-link bg-pink" data-bs-container="body"
+                                            data-bs-title="Pink" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
                                             data-theme-class="theme-pink" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body"
-                                            data-bs-title="Pink">&nbsp;</a>
+                                            href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-orange"
-                                            data-theme-class="theme-orange" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-orange" data-bs-container="body"
+                                            data-bs-title="Orange" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-orange" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-yellow"
-                                            data-theme-class="theme-yellow" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-yellow" data-bs-container="body"
+                                            data-bs-title="Yellow" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-yellow" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-lime"
+            <div class="theme-list-item"><a class="theme-list-link bg-lime" data-bs-container="body"
+                                            data-bs-title="Lime" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
                                             data-theme-class="theme-lime" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body"
-                                            data-bs-title="Lime">&nbsp;</a>
+                                            href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-green"
-                                            data-theme-class="theme-green" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-green" data-bs-container="body"
+                                            data-bs-title="Green" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-green" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item active"><a href="#" class="theme-list-link bg-teal"
+            <div class="theme-list-item active"><a class="theme-list-link bg-teal" data-bs-container="body"
+                                                   data-bs-title="Default" data-bs-toggle="tooltip"
+                                                   data-bs-trigger="hover"
                                                    data-theme-class data-toggle="theme-selector"
-                                                   data-bs-toggle="tooltip"
-                                                   data-bs-trigger="hover" data-bs-container="body"
-                                                   data-bs-title="Default">&nbsp;</a></div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-cyan"
+                                                   href="#">&nbsp;</a></div>
+            <div class="theme-list-item"><a class="theme-list-link bg-cyan" data-bs-container="body"
+                                            data-bs-title="Cyan" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
                                             data-theme-class="theme-cyan" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body"
-                                            data-bs-title="Cyan">&nbsp;</a>
+                                            href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-blue"
+            <div class="theme-list-item"><a class="theme-list-link bg-blue" data-bs-container="body"
+                                            data-bs-title="Blue" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
                                             data-theme-class="theme-blue" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body"
-                                            data-bs-title="Blue">&nbsp;</a>
+                                            href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-purple"
-                                            data-theme-class="theme-purple" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-purple" data-bs-container="body"
+                                            data-bs-title="Purple" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-purple" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-indigo"
-                                            data-theme-class="theme-indigo" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-indigo" data-bs-container="body"
+                                            data-bs-title="Indigo" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-indigo" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
-            <div class="theme-list-item"><a href="#" class="theme-list-link bg-black"
-                                            data-theme-class="theme-gray-600" data-toggle="theme-selector"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover" data-bs-container="body" data-bs-title="Black">&nbsp;</a>
+            <div class="theme-list-item"><a class="theme-list-link bg-black" data-bs-container="body"
+                                            data-bs-title="Black" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            data-theme-class="theme-gray-600" data-toggle="theme-selector" href="#">&nbsp;</a>
             </div>
         </div>
 
@@ -103,8 +116,8 @@
             </div>
             <div class="col-4 d-flex">
                 <div class="form-check form-switch ms-auto mb-0">
-                    <input type="checkbox" class="form-check-input" name="app-theme-dark-mode"
-                           id="appThemeDarkMode" value="1"/>
+                    <input class="form-check-input" id="appThemeDarkMode" name="app-theme-dark-mode"
+                           type="checkbox" value="1"/>
                     <label class="form-check-label" for="appThemeDarkMode">&nbsp;</label>
                 </div>
             </div>
@@ -115,8 +128,8 @@
             <div class="col-8 control-label text-body fw-bold">{{label-fix-header}}</div>
             <div class="col-4 d-flex">
                 <div class="form-check form-switch ms-auto mb-0">
-                    <input type="checkbox" class="form-check-input" name="app-header-fixed" id="appHeaderFixed"
-                           value="1" checked/>
+                    <input checked class="form-check-input" id="appHeaderFixed" name="app-header-fixed"
+                           type="checkbox" value="1"/>
                     <label class="form-check-label" for="appHeaderFixed">&nbsp;</label>
                 </div>
             </div>
@@ -137,8 +150,8 @@
             <div class="col-8 control-label text-body fw-bold">{{label-fix-sidebar}}</div>
             <div class="col-4 d-flex">
                 <div class="form-check form-switch ms-auto mb-0">
-                    <input type="checkbox" class="form-check-input" name="app-sidebar-fixed"
-                           id="appSidebarFixed" value="1" checked/>
+                    <input checked class="form-check-input" id="appSidebarFixed"
+                           name="app-sidebar-fixed" type="checkbox" value="1"/>
                     <label class="form-check-label" for="appSidebarFixed">&nbsp;</label>
                 </div>
             </div>
@@ -147,7 +160,7 @@
             <div class="col-8 control-label text-body fw-bold">{{label-grid-sidebar}}</div>
             <div class="col-4 d-flex">
                 <div class="form-check form-switch ms-auto mb-0">
-                    <input type="checkbox" class="form-check-input" name="app-sidebar-grid" id="appSidebarGrid"
+                    <input class="form-check-input" id="appSidebarGrid" name="app-sidebar-grid" type="checkbox"
                            value="1"/>
                     <label class="form-check-label" for="appSidebarGrid">&nbsp;</label>
                 </div>
@@ -168,7 +181,13 @@
         -->
         <div class="theme-panel-divider"></div>
 
-        <a href="#" class="btn btn-default d-block w-100 rounded-pill"
-           data-toggle="reset-local-storage"><b>{{button-label-reset-setting}}</b></a>
+        <!--
+        <a class="btn btn-default d-block w-100 rounded-pill mb-2" data-toggle="reset-local-storage"
+           href="#"><b>{{button-label-reset-setting}}</b></a>
+           -->
+
+        <a class="btn btn-danger d-block w-100 rounded-pill" data-lh-pl="cache-clear" href="#">
+            <i class="fa fa-refresh me-1"></i> <b>{{button-label-reset-setting}}</b>
+        </a>
     </div>
 </div>

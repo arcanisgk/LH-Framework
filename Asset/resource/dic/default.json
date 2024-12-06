@@ -16,7 +16,11 @@
       "label-grid-sidebar": "Cuadricula Barra de Menu",
       "label-login-service": "Inicia Sesión con Servicio",
       "label-register-service": "Iniciar sesión con un Servicio",
+      "label-nav": "Navegación",
       "button-label-reset-setting": "Restablecer la Configuración Local",
+      "button-label-terms": "Ir a los Terminos de Usuario",
+      "button-label-go-home": "Ir a la Página Principal",
+      "button-label-back-page": "Ir a la Página Anterior",
       "button-label-login-with-service": "Iniciar sesión con una Red Social",
       "button-label-login-service-google": "Iniciar sesión con Google",
       "button-label-login-service-facebook": "Iniciar sesión con Facebook",
@@ -50,7 +54,12 @@
       "button-label-register-service-spotify": "Registrate con Spotify",
       "button-label-register-service-twitch": "Registrate con Twitch",
       "button-label-register-service-slack": "Registrate con Slack",
-      "button-label-register-service-auth0": "Registrate con Auth0"
+      "button-label-register-service-auth0": "Registrate con Auth0",
+      "mail-user-0": "Registro de cuenta de usuario",
+      "mail-user-1": "Se ha creado una cuenta de usuario con este correo electrónico, la cuenta de usuario aún no está activa. <br><br>Para activar la cuenta debe darle clic aquí: ",
+      "click-here": "Click Aqui",
+      "form-validation": "Validación de Formularios",
+      "system-message": "Mensaje del Sistema"
     },
     "en": {
       "lang": "en",
@@ -68,7 +77,11 @@
       "label-grid-sidebar": "Sidebar Grid",
       "label-login-service": "Login with Service",
       "label-register-service": "Sign Up with Login Service",
+      "label-nav": "Navegation",
       "button-label-reset-setting": "Reset Local Configuration",
+      "button-label-terms": "Go to User Terms",
+      "button-label-go-home": "Go to Home Page",
+      "button-label-back-page": "Go to Previous Page",
       "button-label-login-with-service": "Login with a Social Network",
       "button-label-login-service-google": "Sign in with Google",
       "button-label-login-service-facebook": "Sign in with Facebook",
@@ -102,7 +115,12 @@
       "button-label-register-service-spotify": "Sign up with Spotify",
       "button-label-register-service-twitch": "Sign up with Twitch",
       "button-label-register-service-slack": "Sign up with Slack",
-      "button-label-register-service-auth0": "Sign up with Auth0"
+      "button-label-register-service-auth0": "Sign up with Auth0",
+      "mail-user-0": "User account registration",
+      "mail-user-1": "A user account has been created with this email address, the user account is not yet active. <br><br>To activate the account, click here: ",
+      "click-here": "Click Here",
+      "form-validation": "Form Validation",
+      "system-message": "System Message"
     },
     "fr": {
       "lang": "fr",
@@ -120,7 +138,11 @@
       "label-grid-sidebar": "Barre Latérale en Grille",
       "label-login-service": "Connectez-vous avec le service",
       "label-register-service": "Connectez-vous avec les réseaux sociaux",
+      "label-nav": "Navigation",
       "button-label-reset-setting": "Réinitialiser les Paramètres Local",
+      "button-label-terms": "Aller aux conditions d'utilisation",
+      "button-label-go-home": "Aller à la page d'accueil",
+      "button-label-back-page": "Aller à la page précédente",
       "button-label-login-with-service": "Connectez-vous avec un Réseau Social",
       "button-label-login-service-google": "Connectez-vous avec Google",
       "button-label-login-service-facebook": "Connectez-vous avec Facebook",
@@ -154,7 +176,12 @@
       "button-label-register-service-spotify": "Inscrivez-vous sur Spotify",
       "button-label-register-service-twitch": "Inscrivez-vous sur Twitch",
       "button-label-register-service-slack": "Inscrivez-vous sur Slack",
-      "button-label-register-service-auth0": "Inscrivez-vous sur Auth0"
+      "button-label-register-service-auth0": "Inscrivez-vous sur Auth0",
+      "mail-user-0": "Enregistrement du compte utilisateur",
+      "mail-user-1": "Un compte utilisateur a été créé avec cet email, le compte utilisateur n'est pas encore actif. <br><br>Pour activer le compte vous devez cliquer ici: ",
+      "click-here": "Cliquez ici",
+      "form-validation": "Validation du formulaire",
+      "system-message": "Message système"
     },
     "pt": {
       "lang": "pt",
@@ -172,7 +199,11 @@
       "label-grid-sidebar": "Barra Lateral em Grade",
       "label-login-service": "Faça login com serviço",
       "label-register-service": "Entrar com Redes Sociais",
+      "label-nav": "Navegação",
       "button-label-reset-setting": "Redefinir o Armazenamento Local",
+      "button-label-terms": "Ir para os Termos do Usuário",
+      "button-label-go-home": "Ir para a página inicial",
+      "button-label-back-page": "Ir para a página anterior",
       "button-label-login-with-service": "Faça login com uma rede social",
       "button-label-login-service-google": "Login com o Google",
       "button-label-login-service-facebook": "Login com Facebook",
@@ -206,7 +237,12 @@
       "button-label-register-service-spotify": "Registre-se com Spotify",
       "button-label-register-service-twitch": "Registre-se com Twitch",
       "button-label-register-service-slack": "Registre-se com Slack",
-      "button-label-register-service-auth0": "Registre-se com Auth0"
+      "button-label-register-service-auth0": "Registre-se com Auth0",
+      "mail-user-0": "Registro de conta de usuário",
+      "mail-user-1": "Uma conta de usuário foi criada com este e-mail, a conta de usuário ainda não está ativa. <br><br>Para ativar a conta você deve clicar aqui: ",
+      "click-here": "Clique aqui",
+      "form-validation": "Validação de formulário",
+      "system-message": "Mensagem do sistema"
     }
   }
 }

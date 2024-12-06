@@ -15,6 +15,15 @@
 import {HandlerDOM} from "./handler-dom.js";
 
 export class HandlerInstallerAction {
+    
+    /**
+     * Processes the save action for the installer configuration.
+     * This method updates the values of the JSON input fields based on the provided values, and calls the onSave callback function if it exists in the configuration.
+     *
+     * @param {Object} values - An object containing the values for the configuration fields.
+     * @param {Array} fields - An array of configuration field objects.
+     * @param {Object} config - An object containing the configuration for the save action, including the onSave callback function.
+     */
     static processSaveAction(values, fields, config) {
 
         fields.forEach(field => {
@@ -30,6 +39,14 @@ export class HandlerInstallerAction {
         }
     }
 
+    /**
+     * Processes the add action for the installer configuration.
+     * This method creates a new configuration item in the container based on the provided values, fields, and configuration.
+     *
+     * @param {Object} values - An object containing the values for the configuration fields.
+     * @param {Array} fields - An array of configuration field objects.
+     * @param {Object} config - An object containing the configuration for the add action, including the target element, container, and edit modal ID.
+     */
     static processAddAction(values, fields, config) {
         if (!config || !config.targetElement) return;
 
@@ -82,9 +99,5 @@ export class HandlerInstallerAction {
         if (config && config.onAdd) {
             config.onAdd(values);
         }
-
-
     }
-
-
 }

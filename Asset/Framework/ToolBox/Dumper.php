@@ -20,6 +20,7 @@ namespace Asset\Framework\ToolBox;
 
 use ReflectionNamedType;
 use ReflectionObject;
+use stdClass;
 
 /**
  * Class that handles:
@@ -33,20 +34,6 @@ class Dumper
      * @var Dumper|null Singleton instance of the class: Dumper.
      */
     private static ?self $instance = null;
-
-    /**
-     * Get the singleton instance of teh class Dumper.
-     *
-     * @return Dumper The singleton instance.
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Dumper constructor.
@@ -96,7 +83,6 @@ class Dumper
         return null;
     }
 
-
     /**
      * Format the variable for output.
      *
@@ -145,6 +131,24 @@ class Dumper
                 if ($indentLevel > 5) {
                     return get_class($var).' {...}';
                 }
+
+                if (method_exists($var, '__debugInfo')) {
+                    $debugInfo = $var->__debugInfo();
+                    if (!is_array($debugInfo) && !is_object($debugInfo)) {
+                        return get_class($var)." { /* Invalid __debugInfo output */ }";
+                    }
+
+                    $output = get_class($var)." {\n";
+                    foreach ((array)$debugInfo as $name => $value) {
+                        $output .= $indent.'  '.
+                            self::highlight($name, 'property').': '.
+                            self::export($value, $indentLevel + 1)."\n";
+                    }
+                    $output .= $indent.'}';
+
+                    return $output;
+                }
+
                 $reflection = new ReflectionObject($var);
                 $properties = $reflection->getProperties();
                 if (empty($properties)) {
@@ -157,12 +161,18 @@ class Dumper
                         $type     = $property->getType();
                         $typeName = $type ? $type->getName() : 'mixed';
                         if (in_array($typeName, ['int', 'float', 'string', 'bool', 'array'])) {
-                            $value = $property->getValue($var);
+                            if ($property->isInitialized($var)) {
+                                $value = $property->getValue($var);
+                            } else {
+                                $value = '<uninitialized>';
+                            }
                         } else {
                             $other = $property->class;
                             $value = 'object(class::'.$typeName.($other !== '' ? '||'.$other : '').')';
                         }
-                        $output .= $indent.'  '.self::highlight($name, 'property').': '.self::export(
+                        $output .= $indent.'  '.
+                            self::highlight($name, 'property').': '.
+                            self::export(
                                 $value,
                                 $indentLevel + 1
                             )."\n";
@@ -171,8 +181,7 @@ class Dumper
                 }
 
                 return $output;
-            case
-            'resource':
+            case 'resource':
                 return self::highlight('resource', 'resource');
             default:
                 return self::highlight('unknown type', 'unknown');
@@ -210,5 +219,19 @@ class Dumper
 
             return '<span style="'.$styles[$type].'">'.htmlspecialchars($text).'</span>';
         }
+    }
+
+    /**
+     * Get the singleton instance of teh class Dumper.
+     *
+     * @return Dumper The singleton instance.
+     */
+    public static function getInstance(): self
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 }
