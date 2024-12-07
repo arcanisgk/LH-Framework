@@ -53,6 +53,9 @@ class Render
      */
     private array $inputControl = [];
 
+    /**
+     * @var array
+     */
     private array $metaHeader = [];
 
     /**
@@ -103,25 +106,43 @@ class Render
     }
 
     /**
-     * @param string $dic
-     * @return $this
+     * Set dictionary from a single file
+     *
+     * @param string $dic Path to dictionary file
+     * @return self
      */
     public function setDic(string $dic): self
     {
-        if (!file_exists($dic)) {
+        return $this->processDictionaryFile($dic);
+    }
+
+    /**
+     * @param string $dictionaryFile
+     * @return self
+     */
+    private function processDictionaryFile(string $dictionaryFile): self
+    {
+        if (!file_exists($dictionaryFile)) {
             return $this;
         }
 
-        $jsonContent = file_get_contents($dic);
+        $jsonContent = file_get_contents($dictionaryFile);
         $rawDic      = json_decode($jsonContent, true);
-        $lang        = Lang::getLang();
 
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this;
+        }
+
+        $lang = Lang::getLang();
+
+        // Process fixed files
         if (isset($rawDic['fixed']['files'])) {
             foreach ($rawDic['fixed']['files'] as $key => $path) {
                 $this->dictionary[$key] = $path;
             }
         }
 
+        // Process fixed constants
         if (isset($rawDic['fixed']['const'])) {
             foreach ($rawDic['fixed']['const'] as $key => $value) {
                 $result = Variable::findKeyInArray(CONFIG, $value);
@@ -131,6 +152,7 @@ class Render
             }
         }
 
+        // Process translations for current language
         if (isset($rawDic['translations'][$lang])) {
             foreach ($rawDic['translations'][$lang] as $key => $value) {
                 $this->dictionary[$key] = $value;
@@ -138,6 +160,31 @@ class Render
         }
 
         $this->dictionary['sys-home'] = CONFIG->app->host->getEntry();
+
+        return $this;
+    }
+
+    /**
+     * Load all JSON dictionary files from a directory
+     *
+     * @param string $directory Path to directory containing dictionary files
+     * @return self
+     */
+    public function loadDictionariesFromDirectory(string $directory): self
+    {
+        if (!is_dir($directory)) {
+            return $this;
+        }
+
+        $jsonFiles = glob($directory.'/*.json');
+
+        if (empty($jsonFiles)) {
+            return $this;
+        }
+
+        foreach ($jsonFiles as $jsonFile) {
+            $this->processDictionaryFile($jsonFile);
+        }
 
         return $this;
     }
@@ -180,21 +227,27 @@ class Render
         return $this->file_reader;
     }
 
+    /**
+     * @return array
+     */
     public function getMetaHeader(): array
     {
         return $this->metaHeader;
     }
 
+    /**
+     * @return void
+     */
     public function setMetaHeader(): void
     {
 
         $metaHeader = [
-            'html-tittle' => CONFIG->app->project->getProjectName().' by '.CONFIG->app->company->getCompanyName(),
-            'meta-autor'  => CONFIG->app->company->getCompanyOwner(),
-            'url-image'   => 'assets/img/logo/adah-logo.png',
-            'alt-image'   => 'ADAH Network',
-            'full-url'    => CONFIG->app->host->getProtocol().'://'.CONFIG->app->host->getDomain().UR,
-            'site-name'   => 'ADAH Network',
+            'html-title' => CONFIG->app->project->getProjectName().' by '.CONFIG->app->company->getCompanyName(),
+            'meta-autor' => CONFIG->app->company->getCompanyOwner(),
+            'url-image'  => 'assets/img/logo/adah-logo.png',
+            'alt-image'  => 'ADAH Network',
+            'full-url'   => CONFIG->app->host->getProtocol().'://'.CONFIG->app->host->getDomain().UR,
+            'site-name'  => 'ADAH Network',
         ];
 
         $this->metaHeader = $metaHeader;

@@ -108,34 +108,118 @@ class Main extends FrontResource implements ControllerInterface
      */
     private function buildContent(): string
     {
+        try {
 
-        $templateFile = $this->getTemplateFile();
+            $templatePaths = $this->getTemplatePaths();
 
-        $templatePath = Files::getInstance()->getAbsolutePath(
-            dirname(__FILE__).self::TEMPLATE_PATH.$templateFile
-        );
+            $contentSections = $this->renderContentSections($templatePaths);
 
-        $renderData = array_merge(
-            $this->getActiveSection(),
-            [
-                'last-update' => date('F d, Y'),
-            ]
-        );
+            $renderData = $this->buildRenderData($contentSections);
 
-        return $this->render
-            ->setPath($templatePath)
-            ->setData($renderData)
-            ->render();
+            $mainTemplatePath = Files::getInstance()->getAbsolutePath(
+                dirname(__FILE__).self::TEMPLATE_PATH.$this->getTemplateFile()
+            );
+
+            if (!file_exists($mainTemplatePath)) {
+                throw new Exception("Main template file not found: {$mainTemplatePath}");
+            }
+
+            return $this->render
+                ->setPath($mainTemplatePath)
+                ->setData($renderData)
+                ->loadDictionariesFromDirectory(
+                    implode(DS, [PD, 'Repository', 'Default', 'UserTerms', 'dic'])
+                )
+                ->render();
+
+        } catch (Exception $e) {
+            error_log("Error in buildContent: ".$e->getMessage());
+            throw $e;
+        }
     }
 
     /**
-     * @return string
+     * @return array
      */
-    private function getTemplateFile(): string
+    private function getTemplatePaths(): array
     {
-        return 'content.'.Lang::getLang().'.phtml';
+        return [
+            'terms'        => implode(DS, [
+                PD,
+                'Repository',
+                'Default',
+                'UserTerms',
+                'html',
+                'content.terms-service.phtml',
+            ]),
+            'privacy'      => implode(DS, [
+                PD,
+                'Repository',
+                'Default',
+                'UserTerms',
+                'html',
+                'content.privacy-policy.phtml',
+            ]),
+            'cookie'       => implode(DS, [
+                PD,
+                'Repository',
+                'Default',
+                'UserTerms',
+                'html',
+                'content.cookie-policy.phtml',
+            ]),
+            'humanitarian' => implode(DS, [
+                PD,
+                'Repository',
+                'Default',
+                'UserTerms',
+                'html',
+                'content.humanitarian-framework.phtml',
+            ]),
+        ];
     }
 
+    /**
+     * @param array $paths
+     * @return array
+     * @throws Exception
+     */
+    private function renderContentSections(array $paths): array
+    {
+        $renderer = Render::getInstance();
+        $sections = [];
+
+        foreach ($paths as $key => $path) {
+            if (!file_exists($path)) {
+                throw new Exception("Template file not found: {$path}");
+            }
+            $sections[$key] = $renderer->setPath($path)->render();
+        }
+
+        return [
+            'content-terms-service'          => $sections['terms'],
+            'content-privacy-policy'         => $sections['privacy'],
+            'content-cookie-policy'          => $sections['cookie'],
+            'content-humanitarian-framework' => $sections['humanitarian'],
+        ];
+    }
+
+    /**
+     * @param array $contentSections
+     * @return array
+     */
+    private function buildRenderData(array $contentSections): array
+    {
+        return array_merge(
+            $this->getActiveSection(),
+            $contentSections,
+            ['last-update' => date('F d, Y')]
+        );
+    }
+
+    /**
+     * @return string[]
+     */
     private function getActiveSection(): array
     {
 
@@ -171,6 +255,15 @@ class Main extends FrontResource implements ControllerInterface
         }
 
         return $classes;
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    private function getTemplateFile(): string
+    {
+        return 'content.phtml';
     }
 
     /**

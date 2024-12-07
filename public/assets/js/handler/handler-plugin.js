@@ -28,6 +28,14 @@ export class HandlerPlugin {
 
     elementSelectors = [
         {
+            name: 'zoom-control',
+            assets: false,
+            selector: '[data-lh-pl="zoom-control"]',
+            init: async (elements) => {
+                await this.handleZoomControl(elements);
+            }
+        },
+        {
             name: 'cache-clear',
             assets: false,
             selector: '[data-lh-pl="cache-clear"]',
@@ -563,6 +571,102 @@ export class HandlerPlugin {
 
                 window.location.reload(true);
             });
+        });
+    }
+    
+    /**
+     * Handles the zoom control functionality for the application.
+     * @param {HTMLElement[]} elements - The elements to apply the zoom control to.
+     * @returns {Promise<void>} - A Promise that resolves when the zoom control has been applied.
+     */
+    async handleZoomControl(elements) {
+        const applyZoom = (isEnabled) => {
+            const html = document.documentElement;
+            const mainContent = document.querySelector('.app-body');
+
+            if (isEnabled) {
+                // Apply zoom using CSS transform scale
+                html.style.transform = 'scale(1.25)';
+                html.style.transformOrigin = 'top left';
+                html.style.height = '80%';
+                html.style.width = '80%';
+                html.style.position = 'absolute';
+
+                if (mainContent) {
+                    mainContent.style.maxWidth = '80vw';
+                    mainContent.style.overflow = 'auto';
+                    mainContent.style.height = 'calc(100vh / 1.25)';
+                }
+
+                // Store zoom state
+                localStorage.setItem('app-zoom-control', 'true');
+                document.body.classList.add('zoom-enabled');
+
+                // Fix scrolling
+                document.body.style.overflow = 'auto';
+                document.body.style.position = 'relative';
+
+                // Store scroll position
+                sessionStorage.setItem('scrollPos', window.pageYOffset.toString());
+            } else {
+                // Reset all zoom styles
+                html.style.transform = '';
+                html.style.transformOrigin = '';
+                html.style.height = '';
+                html.style.width = '';
+                html.style.position = '';
+
+                if (mainContent) {
+                    mainContent.style.maxWidth = '';
+                    mainContent.style.overflow = '';
+                    mainContent.style.height = '';
+                }
+
+                // Remove zoom state
+                localStorage.setItem('app-zoom-control', 'false');
+                document.body.classList.remove('zoom-enabled');
+
+                // Reset body styles
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+
+                // Restore scroll position
+                const scrollPos = sessionStorage.getItem('scrollPos');
+                if (scrollPos) {
+                    window.scrollTo(0, parseInt(scrollPos));
+                    sessionStorage.removeItem('scrollPos');
+                }
+            }
+        };
+
+        // Handle window resize
+        const handleResize = () => {
+            const isEnabled = localStorage.getItem('app-zoom-control') === 'true';
+            if (isEnabled) {
+                applyZoom(true);
+            }
+        };
+
+        // Initialize zoom control for each element
+        elements.forEach(element => {
+            // Set initial state
+            const zoomEnabled = localStorage.getItem('app-zoom-control') === 'true';
+            element.checked = zoomEnabled;
+            applyZoom(zoomEnabled);
+
+            // Handle checkbox changes
+            element.addEventListener('change', (e) => {
+                const isEnabled = e.target.checked;
+                applyZoom(isEnabled);
+            });
+        });
+
+        // Add resize event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            window.removeEventListener('resize', handleResize);
         });
     }
 

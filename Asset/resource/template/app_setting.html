@@ -125,10 +125,32 @@
                 <div class="form-check form-switch ms-auto mb-0">
                     <input class="form-check-input" id="appThemeDarkMode" name="app-theme-dark-mode"
                            type="checkbox" value="1"/>
-                    <label class="form-check-label" for="appThemeDarkMode">&nbsp;</label>
+                    <label class="form-check-label" for="appThemeDarkMode"><span class="visually-hidden">Dark Mode</span></label>
                 </div>
             </div>
         </div>
+
+        <div class="row mt-10px">
+            <div class="col-8 control-label text-body fw-bold">
+                <label for="zoom-control">Page Zoom (125%)</label>
+                <div class="lh-14">
+                    <small class="text-body opacity-50">
+                        Enable/disable page zoom for better readability
+                    </small>
+                </div>
+            </div>
+            <div class="col-4 d-flex">
+                <div class="form-check form-switch ms-auto mb-0">
+                    <input class="form-check-input" data-lh-pl="zoom-control" id="zoom-control" name="zoom-control"
+                           type="checkbox" value="1"/>
+                    <label class="form-check-label" for="zoom-control"><span class="visually-hidden">Zoom Mode</span></label>
+                </div>
+            </div>
+        </div>
+
+
+        <!--
+
         <div class="theme-panel-divider"></div>
 
         <div class="row mt-10px align-items-center">
@@ -141,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <!--
+
         <div class="row mt-10px align-items-center">
             <div class="col-8 control-label text-body fw-bold">Header Inverse</div>
             <div class="col-4 d-flex">
@@ -152,7 +174,7 @@
                 </div>
             </div>
         </div>
-        -->
+
         <div class="row mt-10px align-items-center">
             <label class="col-8 control-label text-body fw-bold" for="appSidebarFixed">{{label-fix-sidebar}}</label>
             <div class="col-4 d-flex">
@@ -174,7 +196,7 @@
             </div>
         </div>
 
-        <!--
+
         <div class="row mt-10px align-items-center">
             <div class="col-8 control-label text-body fw-bold">Gradient Enabled</div>
             <div class="col-4 d-flex">

@@ -100,7 +100,6 @@ class User
                     'content' => $content.$activationLink,
                     'footer'  => 'Best regards, '.CONFIG->app->company->getCompanyOwner(),
                 ],
-
             );
 
             return true;

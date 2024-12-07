@@ -75,6 +75,7 @@ class Mailer
     private function configure(): void
     {
         $this->mailer->isSMTP();
+        $this->mailer->SMTPDebug             = CONFIG->mail->mail1->getMailDebug();
         $this->mailer->Host                  = CONFIG->mail->mail1->getMailHost();
         $this->mailer->MessageID             = sprintf(
             '<%s@%s>',
@@ -110,7 +111,6 @@ class Mailer
         $this->mailer->addCustomHeader('List-Unsubscribe', 'List-Unsubscribe=One-Click');
         $this->mailer->addCustomHeader('Precedence', 'bulk');
         $this->mailer->addCustomHeader('X-Auto-Response-Suppress', 'OOF, AutoReply');
-
         foreach (SecurityPolicies::getHumanitarianHeaders('mail') as $key => $value) {
             $this->mailer->addCustomHeader($key, $value);
         }

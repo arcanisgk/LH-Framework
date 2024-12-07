@@ -109,7 +109,7 @@ class Deployment
 
         $data = [
             'lang'        => CONFIG->app->host->getLang(),
-            'html-tittle' => CONFIG->app->project->getProjectName(),
+            'html-title'  => CONFIG->app->project->getProjectName(),
             'meta'        => $meta,
             'icon-link'   => $icon_link,
             'html-body'   => $html_content,

@@ -1,0 +1,16 @@
+{
+  "translations": {
+    "es": {
+      "head-terms-of-service": "Terminos de Servicios"
+    },
+    "en": {
+      "head-terms-of-service": "Terms of Service"
+    },
+    "fr": {
+      "head-terms-of-service": "Conditions d'utilisation"
+    },
+    "pt": {
+      "head-terms-of-service": "Termos de Serviços"
+    }
+  }
+}
