@@ -22,7 +22,6 @@ use Asset\Framework\Base\FrontResource;
 use Asset\Framework\Core\Files;
 use Asset\Framework\Http\Request;
 use Asset\Framework\Http\Response;
-use Asset\Framework\I18n\Lang;
 use Asset\Framework\Interface\ControllerInterface;
 use Asset\Framework\Template\Render;
 use Asset\Framework\Trait\SingletonTrait;
@@ -121,7 +120,7 @@ class Main extends FrontResource implements ControllerInterface
             );
 
             if (!file_exists($mainTemplatePath)) {
-                throw new Exception("Main template file not found: {$mainTemplatePath}");
+                throw new Exception("Main template file not found: $mainTemplatePath");
             }
 
             return $this->render
@@ -191,7 +190,7 @@ class Main extends FrontResource implements ControllerInterface
 
         foreach ($paths as $key => $path) {
             if (!file_exists($path)) {
-                throw new Exception("Template file not found: {$path}");
+                throw new Exception("Template file not found: $path");
             }
             $sections[$key] = $renderer->setPath($path)->render();
         }
@@ -213,7 +212,11 @@ class Main extends FrontResource implements ControllerInterface
         return array_merge(
             $this->getActiveSection(),
             $contentSections,
-            ['last-update' => date('F d, Y')]
+            [
+                'eula'        => CONFIG->app->project->getEula(),
+                'last-update' => date('F d, Y'),
+                //Aquí se deben agregar los links de las secciones externas etc.
+            ]
         );
     }
 

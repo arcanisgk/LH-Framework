@@ -13,9 +13,11 @@
  */
 
 import {HandlerConsoleOutput} from "./handler-console-output.js";
-import {HandlerUtilities} from "./handler-utilities.js";
 import {HandlerResourceLoader} from "./handler-resource-loader.js";
 import {HandlerEvents} from "./handler-event.js";
+import {HandlerShortcut} from "./handler-shortcut.js";
+import {DatatablePlugin} from "./plugins/pl-datatable.js";
+import {Select2Plugin} from "./plugins/pl-select2.js";
 
 /**
  * Represents a plugin manager that handles various UI functionality, such as cache clearing, navigation, password view, spy scroll, Select2, Datatable, SummerNote, Dropzone, password strength, and developer mode.
@@ -27,6 +29,14 @@ export class HandlerPlugin {
     resources = new HandlerResourceLoader();
 
     elementSelectors = [
+        {
+            name: 'keyboard-shortcuts',
+            assets: false,
+            selector: 'body',
+            init: async (elements) => {
+                await this.handleKeyboardShortcuts(elements);
+            }
+        },
         {
             name: 'zoom-control',
             assets: false,
@@ -68,19 +78,19 @@ export class HandlerPlugin {
             }
         },
         {
-            name: 'select2',
-            assets: true,
-            selector: '[data-lh-pl="select"]',
-            init: async (elements) => {
-                await this.handlerSelect2(elements);
-            }
-        },
-        {
             name: 'datatable',
             assets: true,
             selector: '[data-lh-pl="datatable"]',
             init: async (elements) => {
                 await this.handlerDatatable(elements);
+            }
+        },
+        {
+            name: 'select2',
+            assets: true,
+            selector: '[data-lh-pl="select"]',
+            init: async (elements) => {
+                await this.handlerSelect2(elements);
             }
         },
         {
@@ -266,66 +276,10 @@ export class HandlerPlugin {
      * @returns {Promise<void>}
      */
     async handlerSelect2(elements) {
-
-        const getSelectConfig = (target) => ({
-            target: $(target),
-            width: target.getAttribute("data-width") || '100px',
-            required: target.hasAttribute('required'),
-            options: target.getAttribute("data-lh-pl-options") || false
-        });
-
-        const buildSelect2Options = (config) => {
-
-            const baseOptions = {
-                width: config.width,
-                dropdownAutoWidth: true
-            };
-
-            const extraOptions = config.options ? this.getPlOptions(config.options) : {};
-            const parent = HandlerUtilities.findModalParent(config.target);
-
-            if (parent.length > 0 && parent.target) {
-                baseOptions.dropdownParent = parent.target;
-            }
-
-            return {...baseOptions, ...extraOptions};
-        };
-
-        const setupEventHandlers = (select, config) => {
-
-            const nativeSelect = select[0];
-
-            select.on('select2:select', function (e) {
-                nativeSelect.value = e.params.data.id;
-                nativeSelect.dispatchEvent(new Event('change', {
-                    bubbles: true,
-                    cancelable: true,
-                    composed: true
-                }));
-            });
-        };
-
-        const handleRequiredStyling = (select) => {
-            select.next().children().children().each(function () {
-                $(this).css("border-color", "#f8ac59");
-            });
-        };
-
-        const initializeSelect2 = (element) => {
-
-            const config = getSelectConfig(element);
-            const options = buildSelect2Options(config);
-
-            config.target.select2(options);
-            setupEventHandlers(config.target, config);
-
-            if (config.required) {
-                handleRequiredStyling(config.target);
-            }
-        };
-
-        elements.forEach(initializeSelect2);
-
+        await Promise.all(Array.from(elements).map(async (element) => {
+            const select2Plugin = new Select2Plugin();
+            await select2Plugin.initialize(element);
+        }));
     }
 
     /**
@@ -337,7 +291,11 @@ export class HandlerPlugin {
      * @returns {Promise<void>}
      */
     async handlerDatatable(elements) {
-        console.log(elements);
+        await this.resources.loadAssets('select2');
+        await Promise.all(Array.from(elements).map(async (element) => {
+            const datatablePlugin = new DatatablePlugin();
+            await datatablePlugin.initialize(element);
+        }));
     }
 
     /**
@@ -573,7 +531,7 @@ export class HandlerPlugin {
             });
         });
     }
-    
+
     /**
      * Handles the zoom control functionality for the application.
      * @param {HTMLElement[]} elements - The elements to apply the zoom control to.
@@ -585,7 +543,7 @@ export class HandlerPlugin {
             const mainContent = document.querySelector('.app-body');
 
             if (isEnabled) {
-                // Apply zoom using CSS transform scale
+
                 html.style.transform = 'scale(1.25)';
                 html.style.transformOrigin = 'top left';
                 html.style.height = '80%';
@@ -598,18 +556,15 @@ export class HandlerPlugin {
                     mainContent.style.height = 'calc(100vh / 1.25)';
                 }
 
-                // Store zoom state
                 localStorage.setItem('app-zoom-control', 'true');
                 document.body.classList.add('zoom-enabled');
 
-                // Fix scrolling
                 document.body.style.overflow = 'auto';
                 document.body.style.position = 'relative';
 
-                // Store scroll position
                 sessionStorage.setItem('scrollPos', window.pageYOffset.toString());
             } else {
-                // Reset all zoom styles
+
                 html.style.transform = '';
                 html.style.transformOrigin = '';
                 html.style.height = '';
@@ -622,15 +577,12 @@ export class HandlerPlugin {
                     mainContent.style.height = '';
                 }
 
-                // Remove zoom state
                 localStorage.setItem('app-zoom-control', 'false');
                 document.body.classList.remove('zoom-enabled');
 
-                // Reset body styles
                 document.body.style.overflow = '';
                 document.body.style.position = '';
 
-                // Restore scroll position
                 const scrollPos = sessionStorage.getItem('scrollPos');
                 if (scrollPos) {
                     window.scrollTo(0, parseInt(scrollPos));
@@ -639,7 +591,6 @@ export class HandlerPlugin {
             }
         };
 
-        // Handle window resize
         const handleResize = () => {
             const isEnabled = localStorage.getItem('app-zoom-control') === 'true';
             if (isEnabled) {
@@ -647,27 +598,29 @@ export class HandlerPlugin {
             }
         };
 
-        // Initialize zoom control for each element
         elements.forEach(element => {
-            // Set initial state
             const zoomEnabled = localStorage.getItem('app-zoom-control') === 'true';
             element.checked = zoomEnabled;
             applyZoom(zoomEnabled);
 
-            // Handle checkbox changes
             element.addEventListener('change', (e) => {
                 const isEnabled = e.target.checked;
                 applyZoom(isEnabled);
             });
         });
 
-        // Add resize event listener
         window.addEventListener('resize', handleResize);
 
-        // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
             window.removeEventListener('resize', handleResize);
         });
     }
 
+    /**
+     * Initializes keyboard shortcuts for the provided elements.
+     * @param {HTMLElement[]} elements - The elements to apply keyboard shortcuts to.
+     */
+    async handleKeyboardShortcuts(elements) {
+        await HandlerShortcut.initialize(elements);
+    }
 }

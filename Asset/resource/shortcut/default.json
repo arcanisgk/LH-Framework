@@ -1,0 +1,25 @@
+{
+  "shortcuts": [
+    {
+      "keys": [
+        "Control",
+        "Shift",
+        "Q",
+        "D"
+      ],
+      "action": "goTranslate",
+      "title": "{{shortcut-title-go-translate}}",
+      "message": "{{shortcut-message-go-translate}}"
+    },
+    {
+      "keys": [
+        "Control",
+        "Alt",
+        "Space"
+      ],
+      "action": "openSearch",
+      "title": "{{shortcut-title-open-search}}",
+      "message": "{{shortcut-message-open-search}}"
+    }
+  ]
+}

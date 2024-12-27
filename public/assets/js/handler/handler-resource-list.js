@@ -53,14 +53,15 @@ export class HandlerResourceList {
         const assets = {
             select2: {
                 resources: [
+
                     {typeR: 'css', group: 1, src: 'assets/lib/select2/select2.min.css'},
                     {typeR: 'js', group: 2, src: 'assets/lib/select2/select2.full.min.js'},
                 ],
             },
             datatable: {
                 resources: [
-                    {typeR: 'css', group: 1, src: 'assets/lib/datatable/datatable.min.css'},
-                    {typeR: 'js', group: 2, src: 'assets/lib/datatable/datatable.min.js'},
+                    {typeR: 'css', group: 1, src: 'assets/lib/datatable/datatables.min.css'},
+                    {typeR: 'js', group: 2, src: 'assets/lib/datatable/datatables.min.js'},
                 ],
             },
             summernote: {

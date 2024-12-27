@@ -1,0 +1,28 @@
+{
+  "translations": {
+    "es": {
+      "shortcut-title-go-translate": "Atajo de teclado para la traducción de la plataforma.",
+      "shortcut-message-go-translate": "Desde este atajo usted podrá entrar a la traducción de la plataforma, tenga en cuenta que su traducción deberá ser aprobada por un Administrador del Sistema.",
+      "shortcut-title-open-search": "Atajo de teclado para la Búsqueda Interactiva.",
+      "shortcut-message-open-search": "Desde este atajo usted podrá invocar el campo de búsqueda interactiva del contenido del sitio, se exceptúan archivos como PDF/Imágenes."
+    },
+    "en": {
+      "shortcut-title-go-translate": "Keyboard shortcut for platform translation.",
+      "shortcut-message-go-translate": "From this shortcut you can access the platform translation, keep in mind that your translation must be approved by a System Administrator.",
+      "shortcut-title-open-search": "Keyboard shortcut for Interactive Search.",
+      "shortcut-message-open-search": "From this shortcut you can invoke the interactive search field of the site content, except for files such as PDF/Images."
+    },
+    "fr": {
+      "shortcut-title-go-translate": "Raccourci clavier pour la traduction de la plateforme.",
+      "shortcut-message-go-translate": "Depuis ce raccourci vous pouvez accéder à la traduction de la plateforme, gardez à l'esprit que votre traduction doit être approuvée par un administrateur système.",
+      "shortcut-title-open-search": "Raccourci clavier pour la recherche interactive.",
+      "shortcut-message-open-search": "À partir de ce raccourci, vous pouvez appeler le champ de recherche interactif pour le contenu du site, à l'exception des fichiers tels que PDF/Images."
+    },
+    "pt": {
+      "shortcut-title-go-translate": "Atalho de teclado para tradução da plataforma.",
+      "shortcut-message-go-translate": "A partir deste atalho você pode acessar a tradução da plataforma, lembre-se que sua tradução deve ser aprovada por um Administrador do Sistema.",
+      "shortcut-title-open-search": "Atalho de teclado para pesquisa interativa.",
+      "shortcut-message-open-search": "A partir deste atalho você pode invocar o campo de pesquisa interativo para o conteúdo do site, exceto arquivos como PDF/Imagens."
+    }
+  }
+}

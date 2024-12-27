@@ -1,3 +1,8 @@
+body {
+    text-rendering: optimizeLegibility; /* Optimiza para texto pequeño y kerning */
+    height: 97% !important;
+}
+
 .user-access-logo {
     height: 200px;
     width: 200px;
@@ -7,13 +12,6 @@
     padding-top: 30px !important;
     padding-bottom: 0 !important;
 }
-
-/*
-.app-content {
-    margin-right: 220px;
-    padding: 20px 30px;
-}
- */
 
 .prevent-app-header-padding {
     padding-top: 50px !important;
@@ -366,4 +364,73 @@
 
 .modal .modal-header {
     flex: unset !important;
+}
+
+.translate-container {
+    width: unset !important;
+}
+
+.table {
+    width: 100% !important;
+}
+
+.table > :not(caption) > * > * {
+    padding-bottom: 0.25rem !important;
+    padding-top: 0.25rem !important;
+}
+
+.dt-column-order {
+    right: 6px !important;
+}
+
+.dtfc-top-blocker {
+    line-height: var(--bs-body-line-height) !important;
+    margin: 0.8rem 0 !important;
+}
+
+.fs-t {
+    width: 1% !important;
+}
+
+.dt-button-collection {
+    width: fit-content !important;
+    min-width: fit-content !important;
+}
+
+.dt-buttons {
+    margin-bottom: 0 !important;
+}
+
+.dt-search input {
+    max-width: 120px !important;
+    width: 120px !important;
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: rgb(222, 226, 230) !important;
+
+}
+
+input, select, textarea {
+    box-shadow: unset !important;
+}
+
+body table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, body table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+    display: inline-flex !important;
+}
+
+
+/*CSS for select2 in table*/
+
+.select2-container--tb {
+    padding: 0 0 !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    font-size: 0.6875rem !important;
+}
+
+.select2-container--tb * {
+    padding: 2px 6px !important;
 }

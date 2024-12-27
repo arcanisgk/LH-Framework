@@ -23,6 +23,9 @@ use Asset\Framework\Interface\ControllerInterface;
 
 use Asset\Framework\Trait\SingletonTrait;
 use Repository\Default\{
+    Shortcut as Shortcut,
+    PlatformTranslator as PlatformTranslator,
+    Template as Template,
     ClearSession as ClearSession,
     Test as Test,
     ChangeLanguage as ChangeLanguage,
@@ -44,12 +47,15 @@ class RouteDictionary
 
     private const array ROUTES
         = [
-            '/clear-session'   => ClearSession\Back\Main::class,
-            '/test'            => Test\Back\Main::class,
-            '/change-language' => ChangeLanguage\Back\Main::class,
-            '/user-terms'      => UserTerms\Back\Main::class,
-            '/user-access'     => UserAccess\Back\Main::class,
-            'default'          => NotFound\Back\Main::class,
+            '/shortcut'            => Shortcut\Back\Main::class,
+            '/platform-translator' => PlatformTranslator\Back\Main::class,
+            '/template'            => Template\Back\Main::class,
+            '/clear-session'       => ClearSession\Back\Main::class,
+            '/test'                => Test\Back\Main::class,
+            '/change-language'     => ChangeLanguage\Back\Main::class,
+            '/user-terms'          => UserTerms\Back\Main::class,
+            '/user-access'         => UserAccess\Back\Main::class,
+            'default'              => NotFound\Back\Main::class,
         ];
 
     /**

@@ -1,0 +1,64 @@
+{
+  "translations": {
+    "es": {
+      "platform-translator-title": "Last Hammer Translation Tool",
+      "label-key-selector": "Espacio de nombres:",
+      "key-column": "Llave",
+      "status": "Estado",
+      "priority": "Prioridad",
+      "translate": "Traducir",
+      "report": "Reportar",
+      "spanish-column": "Traducir solo en Español",
+      "english-column": "Traducir solo en Inglés",
+      "french-column": "Traducir solo en Francés",
+      "portuguese-column": "traducir solo en Portugués",
+      "save-translations": "Guardar Traducción",
+      "select-dictionary": "Seleccione el Diccionario"
+    },
+    "en": {
+      "platform-translator-title": "Last Hammer Translation Tool",
+      "label-key-selector": "Namespace:",
+      "key-column": "Key",
+      "status": "Status",
+      "priority": "Priority",
+      "translate": "Translate",
+      "report": "Report",
+      "spanish-column": "Translate only in Spanish",
+      "english-column": "Translate only in English",
+      "french-column": "Translate only in French",
+      "portuguese-column": "Translate only in Portuguese",
+      "save-translations": "Save Translation",
+      "select-dictionary": "Select Dictionary"
+    },
+    "fr": {
+      "platform-translator-title": "Outil de traduction Last Hammer",
+      "label-key-selector": "Espace de noms:",
+      "key-column": "Clé",
+      "status": "Statut",
+      "priority": "Priorité",
+      "translate": "Traduire",
+      "report": "Rapport",
+      "spanish-column": "Traduire uniquement en espagnol",
+      "english-column": "Traduire uniquement en anglais",
+      "french-column": "Traduire uniquement en français",
+      "portuguese-column": "Traduire uniquement en portugais",
+      "save-translations": "Enregistrer la traduction",
+      "select-dictionary": "Sélectionner un dictionnaire"
+    },
+    "pt": {
+      "platform-translator-title": "Ferramenta de Tradução Último Martelo",
+      "label-key-selector": "Espaços de nomes:",
+      "key-column": "Chave",
+      "status": "Estado",
+      "priority": "Prioridade",
+      "translate": "Traduzir",
+      "report": "Relatório",
+      "spanish-column": "Traduzir apenas em espanhol",
+      "english-column": "Traduzir apenas em inglês",
+      "french-column": "Traduzir apenas em francês",
+      "portuguese-column": "Traduzir apenas em português",
+      "save-translations": "Salvar tradução",
+      "select-dictionary": "Selecionar Dicionário"
+    }
+  }
+}

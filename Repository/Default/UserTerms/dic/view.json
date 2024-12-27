@@ -1,16 +1,44 @@
 {
   "translations": {
     "es": {
-      "title-terms-of-service": "Terminos de Servicios"
+      "title-terms-of-service": "Términos de Servicios",
+      "title-privacy-policy": "Políticas de Privacidad",
+      "title-cookie-policy": "Políticas de cookies",
+      "title-humanitarian-Framework": "Marco de Trabajo Humanitario",
+      "revision": "Revisión",
+      "last-revision": "Ultima Revision",
+      "not-subtitle-multi-language-support": "Disponibilidad multilingüe de la plataforma",
+      "not-content-multi-language-support": "La plataforma está disponible en cuatro idiomas principales: inglés, español, francés y portugués. Sin embargo, debido a las diferencias semánticas inherentes entre los idiomas, podrían presentarse ligeras variaciones en la interpretación de ciertos términos o expresiones. En caso de dudas, se recomienda utilizar el inglés como idioma de referencia, ya que este suele presentar menores dificultades legales en cuanto a interpretación."
     },
     "en": {
-      "title-terms-of-service": "Terms of Service"
+      "title-terms-of-service": "Terms of Service",
+      "title-privacy-policy": "Privacy Policy",
+      "title-cookie-policy": "Cookie Policy",
+      "title-humanitarian-Framework": "Humanitarian Framework",
+      "revision": "Review",
+      "last-revision": "Last Revision",
+      "not-subtitle-multi-language-support": "Multilingual Availability of the Platform",
+      "not-content-multi-language-support": "The platform is available in four main languages: English, Spanish, French, and Portuguese. However, due to inherent semantic differences between languages, slight variations in the interpretation of certain terms or expressions may occur. In case of doubt, it is recommended to use English as the reference language, as it generally presents fewer legal difficulties in terms of interpretation."
     },
     "fr": {
-      "title-terms-of-service": "Conditions d'utilisation"
+      "title-terms-of-service": "Conditions d'utilisation",
+      "title-privacy-policy": "Politiques de confidentialité",
+      "title-cookie-policy": "Politiques en matière de cookies",
+      "title-humanitarian-Framework": "Cadre humanitaire",
+      "revision": "Révision",
+      "last-revision": "Dernière révision",
+      "not-subtitle-multi-language-support": "Disponibilité multilingue de la plateforme",
+      "not-content-multi-language-support": "La plateforme est disponible en quatre langues principales : anglais, espagnol, français et portugais. Cependant, en raison des différences sémantiques inhérentes entre les langues, de légères variations dans l'interprétation de certains termes ou expressions peuvent survenir. En cas de doute, il est recommandé d'utiliser l'anglais comme langue de référence, car il présente généralement moins de difficultés légales en matière d'interprétation."
     },
     "pt": {
-      "title-terms-of-service": "Termos de Serviços"
+      "title-terms-of-service": "Termos de Serviços",
+      "title-privacy-policy": "Políticas de Privacidade",
+      "title-cookie-policy": "Políticas de cookies",
+      "title-humanitarian-Framework": "Quadro Humanitário",
+      "revision": "Revisão",
+      "last-revision": "Última revisão",
+      "not-subtitle-multi-language-support": "Disponibilidade multilíngue da plataforma",
+      "not-content-multi-language-support": "A plataforma está disponível em quatro idiomas principais: inglês, espanhol, francês e português. No entanto, devido às diferenças semânticas inerentes entre os idiomas, podem ocorrer pequenas variações na interpretação de certos termos ou expressões. Em caso de dúvida, recomenda-se utilizar o inglês como idioma de referência, pois geralmente apresenta menos dificuldades legais em termos de interpretação."
     }
   }
 }
