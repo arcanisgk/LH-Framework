@@ -430,8 +430,7 @@ export class HandlerModal {
                 });
             }
 
-            const modalInstance = await HandlerModal.showModal(modalConfig);
-            return modalInstance;
+            return await HandlerModal.showModal(modalConfig);
         };
 
         return await showStep(sequenceKeys[0]);

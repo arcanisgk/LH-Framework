@@ -13,6 +13,12 @@
   "host": {
     "domain": "localhost",
     "lang": "en",
+    "s-lang": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French",
+      "pt": "Portuguese"
+    },
     "m-lang": true,
     "protocol": "http",
     "entry": "User-Access",

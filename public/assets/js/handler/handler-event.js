@@ -129,10 +129,18 @@ export class HandlerEvents {
 
         formData.append('uri_current', window.location.pathname);
         formData.append('uri_params', JSON.stringify(Object.fromEntries(new URLSearchParams(window.location.search))));
-        formData.append('event', buttonClicked.value);
+
+        if (buttonClicked.tagName.toLowerCase() === 'select' && buttonClicked.hasAttribute('data-lh-event')) {
+            formData.append('event', buttonClicked.getAttribute('data-lh-event'));
+        } else {
+            formData.append('event', buttonClicked.value);
+        }
 
         form.querySelectorAll('input, select, textarea').forEach(input => {
-            formData.append(input.name, input.type === 'checkbox' ? input.checked : input.value);
+
+            let name = input.name === 'event' ? input.getAttribute('data-lh-var') : input.name;
+            formData.append(name, input.type === 'checkbox' ? input.checked : input.value);
+
         });
 
         return formData;

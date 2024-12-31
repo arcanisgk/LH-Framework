@@ -20,11 +20,11 @@ namespace Repository\Default\PlatformTranslator\Back;
 
 use Asset\Framework\Http\Request;
 use Asset\Framework\Http\Response;
+use Asset\Framework\I18n\Lang;
 use Asset\Framework\Template\Form\FormSMG;
 use Asset\Framework\Template\Render;
 use Asset\Framework\Trait\SingletonTrait;
 use Exception;
-use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class that handles: Events of/over User Access
@@ -209,6 +209,7 @@ class Event
      */
     public function eventListener(): self
     {
+
         if (method_exists($this, $this->getEvent())) {
             $this->{$this->event}();
         } else {
@@ -256,95 +257,31 @@ class Event
         return $this;
     }
 
-    private function getDictionaryList(): void
+    public function getDictionary()
     {
-        $dictionaries = $this->main->findDictionaryFiles();
+        $lang = Lang::getInstance();
 
-        $this->response
-            ->setContent(['dictionaries' => $dictionaries])
+        $post            = $this->getPost();
+        $dictionaryFiles = $lang->findDictionaryFiles($post['workspace-selected']);
+        $rawDictionaries = $lang->parseDictionaryToTable($dictionaryFiles);
+
+
+        $translatedDictionaries
+            = $this->render
+            ->setContent($rawDictionaries)
+            ->loadDictionariesFromDirectory(
+                implode(DS, [PD, 'Repository', 'Default', 'PlatformTranslator', 'dic'])
+            )->getTranslateContent();
+
+        return $this->getResponse()
+            ->setContent(
+                [$translatedDictionaries],
+            )
             ->setOutputFormat('json')
+            ->setIsError(false)
+            ->setRefresh(false)
+            ->setIn('#translations-table')
+            ->setTypeTarget('table')
             ->setShow(true);
-    }
-
-    private function getDictionaryContent(): void
-    {
-        $path = $this->post['path'] ?? '';
-        if (empty($path)) {
-            $this->handleError('Invalid dictionary path');
-
-            return;
-        }
-
-        $content = $this->main->loadDictionaryContent($path);
-        if ($content === null) {
-            $this->handleError('Failed to load dictionary content');
-
-            return;
-        }
-
-        $this->response
-            ->setContent(['content' => $content])
-            ->setOutputFormat('json')
-            ->setShow(true);
-    }
-
-    private function handleError(string $message): void
-    {
-        $this->response
-            ->setContent([
-                'error'   => true,
-                'message' => $this->smg->setSMG([
-                    'type'    => 'error',
-                    'content' => $message,
-                ])->getLastMessage(),
-            ])
-            ->setOutputFormat('json')
-            ->setIsError(true)
-            ->setShow(true);
-    }
-
-    private function saveDictionaryContent(): void
-    {
-        $path    = $this->post['path'] ?? '';
-        $content = $this->post['content'] ?? null;
-
-        if (empty($path) || empty($content)) {
-            $this->handleError('Invalid save request');
-
-            return;
-        }
-
-        if (!$this->main->validateDictionaryStructure($content)) {
-            $this->handleError('Invalid dictionary structure');
-
-            return;
-        }
-
-        $success = $this->main->saveDictionaryContent($path, $content);
-
-        if (!$success) {
-            $this->handleError('Failed to save dictionary');
-
-            return;
-        }
-
-        $this->response
-            ->setContent([
-                'success' => true,
-                'message' => $this->smg->setSMG([
-                    'type'    => 'success',
-                    'content' => 'Dictionary saved successfully',
-                ])->getLastMessage(),
-            ])
-            ->setOutputFormat('json')
-            ->setShow(true);
-    }
-
-    /**
-     * @return void
-     */
-    #[NoReturn] private function tempateShowInteraction(): void
-    {
-        ex_c('Test de ShowInteraction');
     }
 }

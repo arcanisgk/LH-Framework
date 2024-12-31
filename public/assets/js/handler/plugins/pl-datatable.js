@@ -18,6 +18,18 @@ import {HandlerPlugin} from "../handler-plugin.js";
 
 export class DatatablePlugin {
 
+    data = [];
+
+    static async updateTable(info) {
+        const jsonContent = typeof info.content.data === 'string' ? JSON.parse(info.content.data) : info.content.data;
+        const target = $(`${info.target}`);
+        const table = target.DataTable();
+        table.clear();
+        table.rows.add(jsonContent).draw();
+        table.columns.adjust();
+        return table;
+    }
+
     /**
      * Parses a string of options in the format "key1:value1,key2:value2" and returns an object with the key-value pairs.
      * @param {string} options - The string of options to parse.
@@ -57,7 +69,11 @@ export class DatatablePlugin {
 
                 const config = {
                     target: $(element),
-                    options: element.getAttribute("data-lh-pl-options") || false
+                    options: element.getAttribute("data-lh-pl-options") || false,
+                    columns: Array.from(element.querySelectorAll('th')).map(th => ({
+                        data: th.getAttribute('data-column-name'),
+                        name: th.getAttribute('data-column-name')
+                    }))
                 };
 
                 if (config.options) {
@@ -67,7 +83,7 @@ export class DatatablePlugin {
                 return config;
             },
 
-            getDefaultTableConfig: () => ({
+            getDefaultTableConfig: (config) => ({
                 landscape: false,
                 paging: false,
                 ordering: false,
@@ -115,6 +131,13 @@ export class DatatablePlugin {
                     [5, 10, 25, 50, 100, 250, 500, 1000, -1],
                     [5, 10, 25, 50, 100, 250, 500, 1000, "∞"]
                 ],
+                columns: config.columns.map(column => ({
+                    data: column.data,
+                    name: column.name,
+                    render: function (data, type, row) {
+                        return data || null;
+                    }
+                })),
                 initComplete: function (settings) {
                     const api = new $.fn.dataTable.Api(settings);
                     api.page('last').draw('page');
@@ -208,7 +231,7 @@ export class DatatablePlugin {
                             const orientation = document.getElementById('orientation')?.value || recommendedOrientation;
                             const pageSize = document.getElementById('pageSize')?.value || recommendedSize;
 
-                            console.log({'orientation': orientation, 'pageSize': pageSize});
+                            //console.log({'orientation': orientation, 'pageSize': pageSize});
 
                             const exportOptions = {
                                 ...config,
@@ -311,9 +334,7 @@ export class DatatablePlugin {
                     if (key === 'dom') {
                         baseOptions[key] = tableConfig.getDomLayout();
                     } else if (key === 'leftColumns' || key === 'rightColumns') {
-
                         baseOptions['fixedColumns'][key] = value;
-
                     } else if (key === 'buttons' && value === 'true') {
                         baseOptions[key] = tableConfig.getButtons();
                     } else {
@@ -346,7 +367,7 @@ export class DatatablePlugin {
         const init = () => {
 
             const config = tableConfig.getDatatableConfig();
-            const baseOptions = tableConfig.getDefaultTableConfig();
+            const baseOptions = tableConfig.getDefaultTableConfig(config);
             const options = tableConfig.parseOptions(config.options, baseOptions);
             const datatable = config.target.DataTable(options).columns.adjust();
             tableConfig.setupEventHandlers(datatable);

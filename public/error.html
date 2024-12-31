@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ErrorHandler | Error Control Software</title>
+    <title>ExceptionHandler | Error Control Software</title>
     <style>
 
         @import url(/assets/css/firacode/fira_code.css);
@@ -104,25 +104,25 @@
 <div style="display: flex; align-items: center; height: 100%">
     <table id="errorTable">
         <tr>
-            <th colspan="2" class="head">ErrorHandler</th>
+            <th colspan="2" class="head">ExceptionHandler</th>
         </tr>
         <tr class="row-1">
             <td class="col1">Description:</td>
-            <td class="col2">Undefined array key "shortcuts"</td>
+            <td class="col2">Typed property Asset\Framework\Http\Response::$content must not be accessed before initialization</td>
         </tr>
         <tr class="row-1">
             <td class="col1">File:</td>
-            <td class="col2">/var/www/html/lh-2.dock/Repository/Default/Shortcut/Back/Main.php</td>
+            <td class="col2">/var/www/html/lh-2.dock/Asset/Framework/Http/Response.php</td>
         </tr>
         <tr class="row-1">
             <td></td>
             <td>
-                <b>Line: </b>232                <b>Level: </b>2                <b>Time: </b>1734543875            </td>
+                <b>Line: </b>121                <b>Level: </b>Not Set                <b>Time: </b>1735334613            </td>
         </tr>
         <tr class="row-3">
             <td class="col1 top">BackTrace Log:</td>
             <td class="col2">
-                <div class="container-track">/var/www/html/lh-2.dock/Repository/Default/Shortcut/Back/Main.php 130 calling Method: buildResponse('<h1>Content</h1>')<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 120 calling Method: process()<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 80 calling Method: dispatch('/Shortcut')<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 56 calling Method: buildDispatch()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 55 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 36 calling Method: lh()</div>
+                <div class="container-track">/var/www/html/lh-2.dock/Asset/Framework/Template/Deployment.php 59 calling Method: getContent()<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 121 calling Method: showContent(Asset\Framework\Http\Response)<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 80 calling Method: dispatch('/Platform-Translator')<br>/var/www/html/lh-2.dock/Asset/Framework/Http/Route.php 56 calling Method: buildDispatch()<br>/var/www/html/lh-2.dock/Asset/Framework/Core/Kernel.php 55 calling Method: initialize()<br>/var/www/html/lh-2.dock/public/index.php 36 calling Method: lh()</div>
             </td>
         </tr>
         <tr class="row-3">
@@ -145,298 +145,230 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Repository\Default\Shortcut\Back</span><span style="color: #007700">;
+</span><span style="color: #007700">namespace </span><span style="color: #0000BB">Asset\Framework\Http</span><span style="color: #007700">;
 
-
-use </span><span style="color: #0000BB">Asset\Framework\Base\FrontResource</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Core\Files</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Http\Response</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Interface\ControllerInterface</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Template\Form\FormInput</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Template\Form\FormSMG</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Asset\Framework\Template\Render</span><span style="color: #007700">;
 use </span><span style="color: #0000BB">Asset\Framework\Trait\SingletonTrait</span><span style="color: #007700">;
-use </span><span style="color: #0000BB">Exception</span><span style="color: #007700">;
 
 </span><span style="color: #FF8000">/**
- * Class that handles:
+ * Class that handles: Controller Responses
  *
- * @package Repository\Default\Shortcut\Back;
+ * @package Asset\Framework\Http;
  */
-</span><span style="color: #007700">class </span><span style="color: #0000BB">Main </span><span style="color: #007700">extends </span><span style="color: #0000BB">FrontResource </span><span style="color: #007700">implements </span><span style="color: #0000BB">ControllerInterface
+</span><span style="color: #007700">class </span><span style="color: #0000BB">Response
 </span><span style="color: #007700">{
 
     use </span><span style="color: #0000BB">SingletonTrait</span><span style="color: #007700">;
 
-    private const </span><span style="color: #0000BB">string TEMPLATE_PATH </span><span style="color: #007700">= </span><span style="color: #DD0000">'/../html/'</span><span style="color: #007700">;
-
-    private const </span><span style="color: #0000BB">string DIC_PATH </span><span style="color: #007700">= </span><span style="color: #DD0000">'/../dic/default.json'</span><span style="color: #007700">;
+    </span><span style="color: #FF8000">/**
+     * @var bool
+     */
+    </span><span style="color: #007700">private </span><span style="color: #0000BB">bool $show </span><span style="color: #007700">= </span><span style="color: #0000BB">true</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var Render
+     * @var string|null
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">Render $render</span><span style="color: #007700">;
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">string $in</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var Response
+     * @var array|null
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">Response $response</span><span style="color: #007700">;
+    </span><span style="color: #007700">private ?array </span><span style="color: #0000BB">$content</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var FormInput
+     * @var bool|null
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">FormInput $inputs</span><span style="color: #007700">;
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">bool $refresh</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var FormSMG
+     * @var bool|null
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">FormSMG $smg</span><span style="color: #007700">;
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">bool $nav</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var Event
+     * @var string|null
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">Event $event</span><span style="color: #007700">;
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">string $outputFormat </span><span style="color: #007700">= </span><span style="color: #DD0000">'html'</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * @var string
+     * @var bool
      */
-    </span><span style="color: #007700">private </span><span style="color: #0000BB">string $dic</span><span style="color: #007700">;
-
-
-    </span><span style="color: #FF8000">/**
-     * @var array
-     */
-    </span><span style="color: #007700">private array </span><span style="color: #0000BB">$shortcut</span><span style="color: #007700">;
+    </span><span style="color: #007700">private </span><span style="color: #0000BB">bool $mail </span><span style="color: #007700">= </span><span style="color: #0000BB">false</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
-     * Main constructor.
-     * @throws Exception
+     * @var mixed
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()
+    </span><span style="color: #007700">private </span><span style="color: #0000BB">mixed $event</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @var bool|null
+     */
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">bool $isError </span><span style="color: #007700">= </span><span style="color: #0000BB">false</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @return bool
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">isShow</span><span style="color: #007700">(): </span><span style="color: #0000BB">bool
+    </span><span style="color: #007700">{
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">show</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param bool $show
+     * @return $this
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setShow</span><span style="color: #007700">(</span><span style="color: #0000BB">bool $show</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">show </span><span style="color: #007700">= </span><span style="color: #0000BB">$show</span><span style="color: #007700">;
+
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return string|null
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getIn</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">string
+    </span><span style="color: #007700">{
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">in</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param string|null $in
+     * @return $this
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setIn</span><span style="color: #007700">(?</span><span style="color: #0000BB">string $in</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">in </span><span style="color: #007700">= </span><span style="color: #0000BB">$in</span><span style="color: #007700">;
+
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return array|null
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getContent</span><span style="color: #007700">(): ?array
     {
-        </span><span style="color: #0000BB">parent</span><span style="color: #007700">::</span><span style="color: #0000BB">__construct</span><span style="color: #007700">();
-
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">initializeComponents</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">initializeEvent</span><span style="color: #007700">();
-    }
-
-    private function </span><span style="color: #0000BB">initializeComponents</span><span style="color: #007700">(): </span><span style="color: #0000BB">void
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$files   </span><span style="color: #007700">= </span><span style="color: #0000BB">Files</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$dicPath </span><span style="color: #007700">= </span><span style="color: #0000BB">$files</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getAbsolutePath</span><span style="color: #007700">(</span><span style="color: #0000BB">dirname</span><span style="color: #007700">(</span><span style="color: #0000BB">__FILE__</span><span style="color: #007700">).</span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">DIC_PATH</span><span style="color: #007700">);
-
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">render   </span><span style="color: #007700">= </span><span style="color: #0000BB">Render</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response </span><span style="color: #007700">= </span><span style="color: #0000BB">Response</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">inputs   </span><span style="color: #007700">= </span><span style="color: #0000BB">FormInput</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">smg      </span><span style="color: #007700">= </span><span style="color: #0000BB">FormSMG</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">();
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dic      </span><span style="color: #007700">= </span><span style="color: #0000BB">$dicPath</span><span style="color: #007700">;
-
-
-    }
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content</span><span style="color: #007700">;    </span><span style="color: #FF8000">// error detected in this line!!!
+    </span><span style="color: #007700">}
 
     </span><span style="color: #FF8000">/**
-     * @return void
-     * @throws Exception
+     * @param array|null $content
+     * @return $this
      */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">initializeEvent</span><span style="color: #007700">(): </span><span style="color: #0000BB">void
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setContent</span><span style="color: #007700">(?array </span><span style="color: #0000BB">$content</span><span style="color: #007700">): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event </span><span style="color: #007700">= </span><span style="color: #0000BB">Event</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">eventHandler</span><span style="color: #007700">();
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @return Response
-     * @throws Exception
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">process</span><span style="color: #007700">(): </span><span style="color: #0000BB">Response
-    </span><span style="color: #007700">{
-
-        if (</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isEventExists</span><span style="color: #007700">()) {
-            return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResponse</span><span style="color: #007700">();
-        }
-
-        </span><span style="color: #0000BB">$content </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">buildContent</span><span style="color: #007700">();
-
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">buildResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">$content</span><span style="color: #007700">);
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @return Response
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getResponse</span><span style="color: #007700">(): </span><span style="color: #0000BB">Response
-    </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response</span><span style="color: #007700">;
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param Response $response
-     * @return Main
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">Response $response</span><span style="color: #007700">): </span><span style="color: #0000BB">self
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response </span><span style="color: #007700">= </span><span style="color: #0000BB">$response</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content </span><span style="color: #007700">= </span><span style="color: #0000BB">$content</span><span style="color: #007700">;
 
         return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @return string
-     * @throws Exception
+     * @return string|null
      */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">buildContent</span><span style="color: #007700">(): </span><span style="color: #0000BB">string
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getRefresh</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">string
     </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$templateFile </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getTemplateFile</span><span style="color: #007700">();
-
-        </span><span style="color: #0000BB">$templatePath </span><span style="color: #007700">= </span><span style="color: #0000BB">Files</span><span style="color: #007700">::</span><span style="color: #0000BB">getInstance</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getAbsolutePath</span><span style="color: #007700">(
-            </span><span style="color: #0000BB">dirname</span><span style="color: #007700">(</span><span style="color: #0000BB">__FILE__</span><span style="color: #007700">).</span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">TEMPLATE_PATH</span><span style="color: #007700">.</span><span style="color: #0000BB">$templateFile
-        </span><span style="color: #007700">);
-
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">shortcut </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getShortcut</span><span style="color: #007700">();
-
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">render
-            </span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setInput</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">inputs</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setSMG</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">smg</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setDic</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dic</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setInputControl</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInputControls</span><span style="color: #007700">())
-            -&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$templatePath</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setData</span><span style="color: #007700">()
-            -&gt;</span><span style="color: #0000BB">setOthers</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">, </span><span style="color: #DD0000">''</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">refresh</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @return string
+     * @param bool|null $refresh
+     * @return $this
      */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">getTemplateFile</span><span style="color: #007700">(): </span><span style="color: #0000BB">string
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setRefresh</span><span style="color: #007700">(?</span><span style="color: #0000BB">bool $refresh</span><span style="color: #007700">): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
-        return </span><span style="color: #DD0000">'content.phtml'</span><span style="color: #007700">;
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @return array
-     * @throws Exception
-     */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">getShortcut</span><span style="color: #007700">(): array
-    {
-
-        </span><span style="color: #0000BB">$default_resource_dic </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'dic'</span><span style="color: #007700">, </span><span style="color: #DD0000">'shortcut.json'</span><span style="color: #007700">]);
-        </span><span style="color: #0000BB">$default_resource     </span><span style="color: #007700">= </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #0000BB">DS</span><span style="color: #007700">, [</span><span style="color: #0000BB">PD</span><span style="color: #007700">, </span><span style="color: #DD0000">'Asset'</span><span style="color: #007700">, </span><span style="color: #DD0000">'resource'</span><span style="color: #007700">, </span><span style="color: #DD0000">'shortcut'</span><span style="color: #007700">, </span><span style="color: #DD0000">'default.json'</span><span style="color: #007700">]);
-
-        </span><span style="color: #0000BB">$shortcutsJson </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">render
-            </span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setPath</span><span style="color: #007700">(</span><span style="color: #0000BB">$default_resource</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setDic</span><span style="color: #007700">(</span><span style="color: #0000BB">$default_resource_dic</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">();
-
-        </span><span style="color: #0000BB">$shortcuts </span><span style="color: #007700">= </span><span style="color: #0000BB">json_decode</span><span style="color: #007700">(</span><span style="color: #0000BB">$shortcutsJson</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">);
-
-        if (isset(</span><span style="color: #0000BB">$shortcuts</span><span style="color: #007700">[</span><span style="color: #DD0000">'shortcuts'</span><span style="color: #007700">])) {
-
-            return </span><span style="color: #0000BB">$shortcuts</span><span style="color: #007700">[</span><span style="color: #DD0000">'shortcuts'</span><span style="color: #007700">];
-        } else {
-            
-            return [];
-        }
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @return string[]
-     */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">getInputControls</span><span style="color: #007700">(): array
-    {
-
-        return [
-            </span><span style="color: #DD0000">'template' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'this is a Template File/estructure'</span><span style="color: #007700">,
-        ];
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param string $content
-     * @return Response
-     */
-    </span><span style="color: #007700">private function </span><span style="color: #0000BB">buildResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">string $content</span><span style="color: #007700">): </span><span style="color: #0000BB">Response
-    </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">response
-            </span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setContent</span><span style="color: #007700">([
-                </span><span style="color: #DD0000">'html-content' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$content</span><span style="color: #007700">,
-                </span><span style="color: #DD0000">'assets'       </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getHtmlAssets</span><span style="color: #007700">(),
-                </span><span style="color: #DD0000">'shortcuts'    </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">shortcut</span><span style="color: #007700">[</span><span style="color: #DD0000">'shortcuts'</span><span style="color: #007700">],    </span><span style="color: #FF8000">// error detected in this line!!!
-            </span><span style="color: #007700">])
-            -&gt;</span><span style="color: #0000BB">setShow</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setIn</span><span style="color: #007700">(</span><span style="color: #DD0000">'html-content'</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setRefresh</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setNav</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">)
-            -&gt;</span><span style="color: #0000BB">setMail</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">);
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @return Render
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getRender</span><span style="color: #007700">(): </span><span style="color: #0000BB">Render
-    </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">render</span><span style="color: #007700">;
-    }
-
-    </span><span style="color: #FF8000">/**
-     * @param Render $render
-     * @return Main
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setRender</span><span style="color: #007700">(</span><span style="color: #0000BB">Render $render</span><span style="color: #007700">): </span><span style="color: #0000BB">self
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">render </span><span style="color: #007700">= </span><span style="color: #0000BB">$render</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">refresh </span><span style="color: #007700">= </span><span style="color: #0000BB">$refresh</span><span style="color: #007700">;
 
         return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @return FormInput
+     * @return string|null
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getInputs</span><span style="color: #007700">(): </span><span style="color: #0000BB">FormInput
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getNav</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">string
     </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">inputs</span><span style="color: #007700">;
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">nav</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @param FormInput $inputs
-     * @return Main
+     * @param bool|null $nav
+     * @return $this
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setInputs</span><span style="color: #007700">(</span><span style="color: #0000BB">FormInput $inputs</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setNav</span><span style="color: #007700">(?</span><span style="color: #0000BB">bool $nav</span><span style="color: #007700">): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">inputs </span><span style="color: #007700">= </span><span style="color: #0000BB">$inputs</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">nav </span><span style="color: #007700">= </span><span style="color: #0000BB">$nav</span><span style="color: #007700">;
 
         return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @return FormSMG
+     * @return string|null
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getSmg</span><span style="color: #007700">(): </span><span style="color: #0000BB">FormSMG
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getOutputFormat</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">string
     </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">smg</span><span style="color: #007700">;
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">outputFormat</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @param FormSMG $smg
-     * @return Main
+     * @param string|null $outputFormat
+     * @return $this
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setSmg</span><span style="color: #007700">(</span><span style="color: #0000BB">FormSMG $smg</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setOutputFormat</span><span style="color: #007700">(?</span><span style="color: #0000BB">string $outputFormat</span><span style="color: #007700">): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">smg </span><span style="color: #007700">= </span><span style="color: #0000BB">$smg</span><span style="color: #007700">;
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">outputFormat </span><span style="color: #007700">= </span><span style="color: #0000BB">$outputFormat</span><span style="color: #007700">;
 
         return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @return Event
+     * @return bool
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getEvent</span><span style="color: #007700">(): </span><span style="color: #0000BB">Event
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">isMail</span><span style="color: #007700">(): </span><span style="color: #0000BB">bool
+    </span><span style="color: #007700">{
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">mail</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param bool $mail
+     * @return $this
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setMail</span><span style="color: #007700">(</span><span style="color: #0000BB">bool $mail</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">mail </span><span style="color: #007700">= </span><span style="color: #0000BB">$mail</span><span style="color: #007700">;
+
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return bool|null
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getIsError</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">bool
+    </span><span style="color: #007700">{
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isError</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @param bool|null $isError
+     * @return $this
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setIsError</span><span style="color: #007700">(?</span><span style="color: #0000BB">bool $isError</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isError </span><span style="color: #007700">= </span><span style="color: #0000BB">$isError</span><span style="color: #007700">;
+
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+    }
+
+    </span><span style="color: #FF8000">/**
+     * @return mixed
+     */
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getEvent</span><span style="color: #007700">(): </span><span style="color: #0000BB">mixed
     </span><span style="color: #007700">{
         return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event</span><span style="color: #007700">;
     }
 
     </span><span style="color: #FF8000">/**
-     * @param Event $event
+     * @param mixed $event
      * @return $this
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setEvent</span><span style="color: #007700">(</span><span style="color: #0000BB">Event $event</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setEvent</span><span style="color: #007700">(</span><span style="color: #0000BB">mixed $event</span><span style="color: #007700">): </span><span style="color: #0000BB">self
     </span><span style="color: #007700">{
         </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event </span><span style="color: #007700">= </span><span style="color: #0000BB">$event</span><span style="color: #007700">;
 
@@ -444,22 +376,25 @@ use </span><span style="color: #0000BB">Exception</span><span style="color: #007
     }
 
     </span><span style="color: #FF8000">/**
+     * Returns the response structure as a JSON string
+     *
      * @return string
      */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getDic</span><span style="color: #007700">(): </span><span style="color: #0000BB">string
+    </span><span style="color: #007700">public function </span><span style="color: #0000BB">getResponseJson</span><span style="color: #007700">(): </span><span style="color: #0000BB">string
     </span><span style="color: #007700">{
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dic</span><span style="color: #007700">;
-    }
+        </span><span style="color: #0000BB">$responseArray </span><span style="color: #007700">= [
+            </span><span style="color: #DD0000">'show'         </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">show </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'in'           </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">in </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'content'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'refresh'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">refresh </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'nav'          </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">nav </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'outputFormat' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">outputFormat </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'mail'         </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">mail </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'event'        </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'isError'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isError </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+        ];
 
-    </span><span style="color: #FF8000">/**
-     * @param string $dic
-     * @return $this
-     */
-    </span><span style="color: #007700">public function </span><span style="color: #0000BB">setDic</span><span style="color: #007700">(</span><span style="color: #0000BB">string $dic</span><span style="color: #007700">): </span><span style="color: #0000BB">self
-    </span><span style="color: #007700">{
-        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dic </span><span style="color: #007700">= </span><span style="color: #0000BB">$dic</span><span style="color: #007700">;
-
-        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
+        return </span><span style="color: #0000BB">json_encode</span><span style="color: #007700">(</span><span style="color: #0000BB">$responseArray</span><span style="color: #007700">, </span><span style="color: #0000BB">JSON_PRETTY_PRINT</span><span style="color: #007700">);
     }
 }</span></code></pre></td>
         </tr>

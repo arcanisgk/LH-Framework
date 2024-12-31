@@ -492,17 +492,17 @@ class Event
 
         $content = $this->getRender()
             ->setDic($this->getMain()->getDic())
-            ->setSmgContent($token)
+            ->setContent($token)
             ->getTranslateContent();
 
         $cite = $this->getRender()
             ->setDic($this->getMain()->getDic())
-            ->setSmgContent('{{form-validation}}')
+            ->setContent('{{form-validation}}')
             ->getTranslateContent();
 
         $footer = $this->getRender()
             ->setDic($this->getMain()->getDic())
-            ->setSmgContent('{{system-message}}')
+            ->setContent('{{system-message}}')
             ->getTranslateContent();
 
 

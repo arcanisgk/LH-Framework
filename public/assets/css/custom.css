@@ -407,10 +407,8 @@ body {
 }
 
 tbody, td, tfoot, th, thead, tr {
-    border-style: solid !important;
-    border-width: 1px !important;
-    border-color: rgb(222, 226, 230) !important;
-
+    border-top-color: var(--bs-table-border-color) !important;
+    border-top-width: 1px !important;
 }
 
 input, select, textarea {

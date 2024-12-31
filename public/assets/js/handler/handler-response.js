@@ -24,6 +24,7 @@ export class HandlerResponse {
      * @param {string} [responseData.in] - The CSS selector of the element to update.
      * @param {boolean} [responseData.isError] - Indicates whether the response is an error.
      * @param {boolean} [responseData.refresh] - Indicates whether the page should be refreshed.
+     * @param {string} [responseData.outputFormat] - The format of the output data.
      * @returns {Promise<object>} - The processed response data.
      */
     static async processResponse(responseData) {
@@ -35,8 +36,8 @@ export class HandlerResponse {
             return;
         }
 
-        if (responseData.html && responseData.in) {
-            this.updateDOM(responseData);
+        if (responseData.in && (responseData.html || responseData.outputFormat)) {
+            await this.updateDOM(responseData);
         }
 
         if (responseData.isError) {
@@ -65,8 +66,17 @@ export class HandlerResponse {
      * @param {object} data - The data object containing the HTML content and the selector to update.
      * @param {string} data.in - The CSS selector of the element to update.
      * @param {string} data.html - The HTML content to be inserted into the selected element.
+     * @param {string} data.outputFormat - Format of the output data.
+     * @param {string} data.typeTarget - Type of element to update: modal, table, select2.
      */
-    static updateDOM(data) {
+    static async updateDOM(data) {
+
+        if (data.outputFormat && data.outputFormat === 'json') {
+
+            await HandlerDisplayContent.updatePlugin(data);
+            return;
+        }
+
         document.querySelector(data.in).innerHTML = data.html;
     }
 
@@ -90,7 +100,8 @@ export class HandlerResponse {
      * @returns {Promise<void>}
      */
     static async handleSuccess(data) {
-        console.warn(data.content);
+        if (!data.content) return;
+        //console.warn(data.content);
         await HandlerDisplayContent.displayContent(data.content);
     }
 

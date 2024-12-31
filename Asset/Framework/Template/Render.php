@@ -91,7 +91,7 @@ class Render
     /**
      * @var string
      */
-    private string $smgContent = '';
+    private string $content = '';
 
     /**
      *
@@ -206,6 +206,7 @@ class Render
 
         if (!$this->recursive) {
             if (!file_exists($this->path)) {
+                ex($this->path);
                 $this->path = Files::getInstance()->getAbsolutePath(
                     implode(DS, [PD, ...self::NOT_FOUND_TEMPLATE])
                 );
@@ -360,7 +361,7 @@ class Render
      */
     public function translateToken(string $token): string
     {
-        return $this->setSmgContent('{{'.$token.'}}')
+        return $this->setContent('{{'.$token.'}}')
             ->getTranslateContent();
     }
 
@@ -369,7 +370,7 @@ class Render
      */
     public function getTranslateContent(): string
     {
-        $content = $this->smgContent;
+        $content = $this->content;
         foreach ($this->dictionary as $key => $value) {
             $content = str_replace("{{".$key."}}", $value, $content);
         }
@@ -381,9 +382,9 @@ class Render
      * @param string $content
      * @return $this
      */
-    public function setSmgContent(string $content): self
+    public function setContent(string $content): self
     {
-        $this->smgContent = $content;
+        $this->content = $content;
 
         return $this;
     }

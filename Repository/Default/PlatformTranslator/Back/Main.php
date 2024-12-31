@@ -21,14 +21,14 @@ namespace Repository\Default\PlatformTranslator\Back;
 use Asset\Framework\Base\FrontResource;
 use Asset\Framework\Core\Files;
 use Asset\Framework\Http\Response;
+use Asset\Framework\I18n\Lang;
 use Asset\Framework\Interface\ControllerInterface;
 use Asset\Framework\Template\Form\FormInput;
 use Asset\Framework\Template\Form\FormSMG;
+use Asset\Framework\Template\Form\InputBuilder;
 use Asset\Framework\Template\Render;
 use Asset\Framework\Trait\SingletonTrait;
 use Exception;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 
 /**
  * Class that handles:
@@ -39,15 +39,6 @@ class Main extends FrontResource implements ControllerInterface
 {
 
     use SingletonTrait;
-
-    private const array SCAN_PATHS
-        = [
-            'Asset/resource/dic',
-            'Repository/Default',
-            'Repository/Project',
-        ];
-
-    private const array SUPPORTED_LANGUAGES = ['es', 'en', 'fr', 'pt'];
 
     private const string TEMPLATE_PATH = '/../html/';
 
@@ -112,6 +103,7 @@ class Main extends FrontResource implements ControllerInterface
      */
     private function initializeEvent(): void
     {
+
         $this->event = Event::getInstance($this)->eventHandler();
     }
 
@@ -156,6 +148,7 @@ class Main extends FrontResource implements ControllerInterface
      */
     private function buildContent(): string
     {
+
         $templateFile = $this->getTemplateFile();
         $templatePath = Files::getInstance()->getAbsolutePath(
             dirname(__FILE__).self::TEMPLATE_PATH.$templateFile
@@ -186,9 +179,12 @@ class Main extends FrontResource implements ControllerInterface
     private function getInputControls(): array
     {
 
-        return [
-            'template' => 'this is a Template File/estructure',
+        $workSpacesList = Lang::getInstance()->getWorkSpacesList();
 
+        $options = InputBuilder::getInstance()->buildSelectOptions($workSpacesList);
+
+        return [
+            'dictionary-options' => $options,
         ];
     }
 
@@ -303,108 +299,5 @@ class Main extends FrontResource implements ControllerInterface
         $this->dic = $dic;
 
         return $this;
-    }
-
-    public function findDictionaryFiles(): array
-    {
-        $dictionaryFiles = [];
-
-        foreach (self::SCAN_PATHS as $basePath) {
-            $fullPath = PD.DS.$basePath;
-
-            if ($basePath === 'Asset/resource/dic') {
-                $dictionaryFiles = array_merge(
-                    $dictionaryFiles,
-                    $this->scanDirectoryForJsonFiles($fullPath)
-                );
-                continue;
-            }
-
-            // For Repository paths, scan for 'dic' directories
-            $iterator = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($fullPath),
-                RecursiveIteratorIterator::SELF_FIRST
-            );
-
-            foreach ($iterator as $item) {
-                if ($item->isDir() && !$item->isDot() && $item->getBasename() === 'dic') {
-                    $dictionaryFiles = array_merge(
-                        $dictionaryFiles,
-                        $this->scanDirectoryForJsonFiles($item->getPathname())
-                    );
-                }
-            }
-        }
-
-        return $dictionaryFiles;
-    }
-
-    private function scanDirectoryForJsonFiles(string $directory): array
-    {
-        $jsonFiles = [];
-        if (!is_dir($directory)) {
-            return $jsonFiles;
-        }
-
-        $files = glob($directory.DS.'*.json');
-        foreach ($files as $file) {
-            $relativePath = str_replace(PD.DS, '', $file);
-            $jsonFiles[]  = [
-                'path'      => $relativePath,
-                'name'      => basename($file),
-                'directory' => dirname($relativePath),
-            ];
-        }
-
-        return $jsonFiles;
-    }
-
-    public function saveDictionaryContent(string $path, array $content): bool
-    {
-        $fullPath = PD.DS.$path;
-
-        return file_put_contents(
-                $fullPath,
-                json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
-            ) !== false;
-    }
-
-    public function validateDictionaryStructure(array $content): bool
-    {
-        if (!isset($content['fixed'], $content['translations'])) {
-            return false;
-        }
-
-        if (!is_array($content['fixed']) || !is_array($content['translations'])) {
-            return false;
-        }
-
-        if (isset($content['fixed']['files']) && !is_array($content['fixed']['files'])) {
-            return false;
-        }
-
-        if (isset($content['fixed']['const']) && !is_array($content['fixed']['const'])) {
-            return false;
-        }
-
-        foreach ($content['translations'] as $lang => $translations) {
-            if (!in_array($lang, self::SUPPORTED_LANGUAGES) || !is_array($translations)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public function loadDictionaryContent(string $path): ?array
-    {
-        $fullPath = PD.DS.$path;
-        if (!file_exists($fullPath)) {
-            return null;
-        }
-
-        $content = file_get_contents($fullPath);
-
-        return json_decode($content, true);
     }
 }

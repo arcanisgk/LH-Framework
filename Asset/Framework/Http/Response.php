@@ -41,6 +41,11 @@ class Response
     private ?string $in;
 
     /**
+     * @var string|null
+     */
+    private ?string $typeTarget;
+
+    /**
      * @var array|null
      */
     private ?array $content;
@@ -256,6 +261,7 @@ class Response
         $responseArray = [
             'show'         => $this->show ?? null,
             'in'           => $this->in ?? null,
+            'typeTarget'   => $this->typeTarget ?? null,
             'content'      => $this->content ?? null,
             'refresh'      => $this->refresh ?? null,
             'nav'          => $this->nav ?? null,
@@ -266,5 +272,17 @@ class Response
         ];
 
         return json_encode($responseArray, JSON_PRETTY_PRINT);
+    }
+
+    public function getTypeTarget(): ?string
+    {
+        return $this->typeTarget;
+    }
+
+    public function setTypeTarget(string $string): self
+    {
+        $this->typeTarget = $string;
+
+        return $this;
     }
 }
