@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Asset\Framework\I18n;
 
 use Asset\Framework\Core\Files;
+use Asset\Framework\Template\Form\InputBuilder;
 use Asset\Framework\Trait\SingletonTrait;
 use Exception;
 use FilesystemIterator;
@@ -199,18 +200,40 @@ class Lang
                 $status         = $completedCount === count(self::SUPPORTED_LANGUAGES) ? 'completed' : 'pending';
                 $priority       = $completedCount < 2 ? 'high' : ($completedCount < 3 ? 'medium' : 'low');
 
+                $inputBuilder = new InputBuilder();
+
                 $tableData['data'][] = [
                     'row'           => $rowId,
                     'key'           => $key,
                     'status'        => $status,
                     'priority'      => $priority,
                     'btn-translate' => sprintf(
-                        "<button class=\"btn btn-primary btn-xs translate-btn\" data-key=\"%s\" data-lh-pl=\"translate-content\" data-lh-content=\"%s\">{{translate}}</button>",
+                        $inputBuilder->buildButton([
+                            'text'           => 'translate',
+                            'type'           => 'button',
+                            'size'           => 'xs',
+                            'variant'        => 'primary',
+                            'class'          => 'translate-btn',
+                            'dataAttributes' => [
+                                'key'        => '%s',
+                                'lh-pl'      => 'translate-content',
+                                'lh-content' => '%s',
+                            ],
+                        ]),
                         htmlspecialchars($key),
                         htmlspecialchars($translationsStr)
                     ),
                     'btn-report'    => sprintf(
-                        "<button class=\"btn btn-warning btn-xs report-btn\" data-key=\"%s\">{{report}}</button>",
+                        $inputBuilder->buildButton([
+                            'text'           => '{{report}}',
+                            'type'           => 'button',
+                            'size'           => 'xs',
+                            'variant'        => 'warning',
+                            'class'          => 'report-btn',
+                            'dataAttributes' => [
+                                'key' => '%s',
+                            ],
+                        ]),
                         htmlspecialchars($key)
                     ),
                 ];

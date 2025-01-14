@@ -28,29 +28,32 @@ export class HandlerResponse {
      * @returns {Promise<object>} - The processed response data.
      */
     static async processResponse(responseData) {
+        try {
+            //console.log(responseData);
 
-        console.log(responseData);
+            if (responseData.nav) {
+                this.handleRedirect(responseData.nav);
+                return;
+            }
 
-        if (responseData.nav) {
-            this.handleRedirect(responseData.nav);
-            return;
+            if (responseData.in && (responseData.html || responseData.outputFormat)) {
+                await this.updateDOM(responseData);
+            }
+
+            if (responseData.isError) {
+                await this.handleError(responseData);
+            } else {
+                await this.handleSuccess(responseData);
+            }
+
+            if (responseData.refresh) {
+                this.handleRefresh();
+            }
+
+            return responseData;
+        } catch (error) {
+            console.error('Response processing error:', error);
         }
-
-        if (responseData.in && (responseData.html || responseData.outputFormat)) {
-            await this.updateDOM(responseData);
-        }
-
-        if (responseData.isError) {
-            await this.handleError(responseData);
-        } else {
-            await this.handleSuccess(responseData);
-        }
-
-        if (responseData.refresh) {
-            this.handleRefresh();
-        }
-
-        return responseData;
     }
 
     /**
@@ -77,7 +80,10 @@ export class HandlerResponse {
             return;
         }
 
-        document.querySelector(data.in).innerHTML = data.html;
+        let target_element = document.querySelector(data.in);
+        if (target_element) {
+            target_element.innerHTML = data.html;
+        }
     }
 
     /**
@@ -100,9 +106,12 @@ export class HandlerResponse {
      * @returns {Promise<void>}
      */
     static async handleSuccess(data) {
-        if (!data.content) return;
-        //console.warn(data.content);
-        await HandlerDisplayContent.displayContent(data.content);
+        try {
+            if (!data.content) return;
+            await HandlerDisplayContent.displayContent(data.content);
+        } catch (error) {
+            console.error('Display processing error:', error);
+        }
     }
 
     /**

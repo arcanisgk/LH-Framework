@@ -59,7 +59,7 @@ export class HandlerEvents {
                 uri: form.action,
                 data: formData,
                 type: 'multipart/form-data',
-                method: 'post'
+                method: form.method || 'post'
             });
             if (responseData) {
                 await HandlerResponse.processResponse(responseData);
@@ -101,13 +101,14 @@ export class HandlerEvents {
             event.preventDefault();
         });
 
-        const handleEvent = (event, form) => {
-            this.processEvent(event, form);
+        const handleEvent = async (event, form) => {
+            await this.processEvent(event, form);
         };
 
         ['button[type="button"][name="event"]',
             'select[name="event"]',
             'input[type="checkbox"][name="event"]'].forEach(selector => {
+
             const elements = form.querySelectorAll(selector);
             elements.forEach(element => {
                 const eventType = element.tagName.toLowerCase() === 'button' ? 'click' : 'change';
@@ -121,10 +122,12 @@ export class HandlerEvents {
      *
      * @param {HTMLFormElement} form - The form element.
      * @param {Event} event - The event object.
+     * @param {Event} event.submitter - submitter of event.
      * @returns {FormData} - The constructed FormData object.
      */
     buildFormData(form, event) {
         const formData = new FormData();
+
         const buttonClicked = event.submitter || event.target;
 
         formData.append('uri_current', window.location.pathname);
@@ -137,10 +140,8 @@ export class HandlerEvents {
         }
 
         form.querySelectorAll('input, select, textarea').forEach(input => {
-
             let name = input.name === 'event' ? input.getAttribute('data-lh-var') : input.name;
             formData.append(name, input.type === 'checkbox' ? input.checked : input.value);
-
         });
 
         return formData;

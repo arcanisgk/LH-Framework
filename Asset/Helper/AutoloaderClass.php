@@ -26,11 +26,30 @@ use RuntimeException;
  */
 class AutoloaderClass
 {
-    
+
     /**
      * @var AutoloaderClass|null Singleton instance of the AutoloaderClass.
      */
     private static ?self $instance = null;
+
+    /**
+     * AutoloaderClass constructor.
+     * Registers the autoloader function.
+     */
+    public function __construct()
+    {
+        $this->register();
+    }
+
+    /**
+     * Registers the autoloader function in Composer.
+     *
+     * @return void
+     */
+    public function register(): void
+    {
+        spl_autoload_register([$this, 'autoload']);
+    }
 
     /**
      * Get the singleton instance of AutoloaderClass.
@@ -45,16 +64,6 @@ class AutoloaderClass
 
         return self::$instance;
     }
-
-    /**
-     * AutoloaderClass constructor.
-     * Registers the autoloader function.
-     */
-    public function __construct()
-    {
-        $this->register();
-    }
-
 
     /**
      * Autoload the class.
@@ -73,18 +82,6 @@ class AutoloaderClass
             return;
         }
         $this->handleClassNotFound($class);
-    }
-
-    /**
-     * Validate the class name.
-     *
-     * @param string $class The class name.
-     *
-     * @return bool True if the class name is valid, false otherwise.
-     */
-    private function isValidClassName(string $class): bool
-    {
-        return preg_match('/^[a-zA-Z0-9\\\\]+$/', $class) === 1;
     }
 
     /**
@@ -108,6 +105,18 @@ class AutoloaderClass
     }
 
     /**
+     * Validate the class name.
+     *
+     * @param string $class The class name.
+     *
+     * @return bool True if the class name is valid, false otherwise.
+     */
+    private function isValidClassName(string $class): bool
+    {
+        return preg_match('/^[a-zA-Z0-9\\\\]+$/', $class) === 1;
+    }
+
+    /**
      * Handle the case when the class is not found.
      *
      * @param string $class The class name.
@@ -118,15 +127,5 @@ class AutoloaderClass
     private function handleClassNotFound(string $class): void
     {
         throw new RuntimeException("Class $class not found");
-    }
-
-    /**
-     * Registers the autoloader function in Composer.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-        spl_autoload_register([$this, 'autoload']);
     }
 }

@@ -111,6 +111,7 @@ export class HandlerModal {
      * @param {boolean} [config.keyboard=false] - Whether the modal should be closable by the keyboard.
      * @param {boolean} [config.focus=true] - Whether the modal should focus on the first focusable element.
      * @param {boolean} [config.show=true] - Whether to show the modal immediately after creation.
+     * @param {HTMLElement} [config.sourceButton] - The source button element for the modal.
      * @param {boolean} [config.sound=false] - Whether to play a sound when the modal is shown.
      * @param {boolean} [config.hideAll=true] - Whether to hide all existing modals before displaying the new one.
      * @param {boolean} [config.autoHide=false] - Whether to automatically hide the modal after a certain time.
@@ -121,7 +122,32 @@ export class HandlerModal {
      * @returns {bootstrap.Modal} - The created modal instance.
      */
     static createModal(config) {
-        const modalId = config.target || this.generateModalId('modal-', Date.now());
+        let modalId;
+
+        if (config.sourceButton && config.sourceButton instanceof HTMLElement) {
+            const existingModalId = config.sourceButton.getAttribute('data-modal-id');
+            if (existingModalId) {
+                modalId = existingModalId;
+            } else {
+                modalId = config.target || this.generateModalId('modal-', Date.now());
+                // Store modal ID in button
+                config.sourceButton.setAttribute('data-modal-id', modalId);
+            }
+        } else {
+            modalId = config.target || this.generateModalId('modal-', Date.now());
+        }
+
+        let existingModal = document.getElementById(modalId);
+        if (existingModal) {
+            const bsModal = bootstrap.Modal.getInstance(existingModal) || new bootstrap.Modal(existingModal, {
+                backdrop: config.backdrop,
+                keyboard: config.keyboard,
+                focus: config.focus
+            });
+
+            if (config.show) bsModal.show();
+            return bsModal;
+        }
 
         const modal = document.createElement('div');
         modal.id = modalId;
@@ -205,14 +231,6 @@ export class HandlerModal {
         modalDialog.append(modalContent);
         modal.append(modalDialog);
 
-        document.body.append(modal);
-
-        const bsModal = new bootstrap.Modal(modal, {
-            backdrop: config.backdrop,
-            keyboard: config.keyboard,
-            focus: config.focus
-        });
-
         modal.addEventListener('shown.bs.modal', () => {
             const firstFocusableElement = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
             if (firstFocusableElement) {
@@ -230,12 +248,32 @@ export class HandlerModal {
         modal.addEventListener('hidden.bs.modal', () => {
             if (config.refresh) window.location.reload();
             if (config.navigate) this.handleNavigation();
-            modal.remove();
+            //modal.remove();
+            modal.style.display = 'none';
+        });
+
+        document.body.append(modal);
+
+        const bsModal = new bootstrap.Modal(modal, {
+            backdrop: config.backdrop,
+            keyboard: config.keyboard,
+            focus: config.focus
         });
 
         if (config.show) bsModal.show();
 
         return bsModal;
+    }
+
+    static destroyModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            if (bsModal) {
+                bsModal.dispose();
+            }
+            modal.remove();
+        }
     }
 
     /**

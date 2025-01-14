@@ -26,53 +26,58 @@ export class HandlerDisplayContent {
     /**
      * Displays content based on the provided configuration.
      *
-     * @param {object} contents - The data object containing the HTML content and the selector to update.
-     * @param {string} contents.field - The CSS selector of the element to update.
-     * @param {string} contents.status - The status of the content: success, error, warning, info.
-     * @param {string} contents.smg - The message to display.
-     * @param {string} contents.in - The CSS selector of the element to update.
-     * @param {string} contents.html - The HTML content to be inserted into the selected element.
-     * @param {string} contents.outputFormat - Format of the output data.
-     * @param {string} contents.typeTarget - Type of element to update: modal, table, select2.
-     * @returns {Promise<void>} - A Promise that resolves when the content has been displayed.
+     * @param {Array<{
+     *   field: string,   // The ID of the target container element
+     *   status: string,  // Status of the content ('valid' or other)
+     *   smg: string,     // The message/content to be displayed
+     *   in?: string      // Optional target type ('modal' or other)
+     * }>} contents - Array of content configurations
+     * @returns {Promise<void>} - Promise that resolves when content is displayed
      */
     static async displayContent(contents) {
-        contents.forEach(content => {
-            if (!content.field) return;
-            const container = document.getElementById(content.field);
-            console.log(container);
-            if (container) {
-                if (content.status === 'valid') {
-                    console.log('valid');
-                    const inputFieldId = content.field.replace('-smg', '');
-                    const inputElement = document.getElementById(inputFieldId);
+        try {
+            if (contents && typeof contents === 'object' && Symbol.iterator in Object(contents)) {
+                contents.forEach(content => {
+                    if (!content.field) return;
+                    const container = document.getElementById(content.field);
+                    console.log(container);
+                    if (container) {
+                        if (content.status === 'valid') {
+                            console.log('valid');
+                            const inputFieldId = content.field.replace('-smg', '');
+                            const inputElement = document.getElementById(inputFieldId);
 
-                    if (inputElement) {
-                        inputElement.classList.add('is-valid');
-                        container.className = 'valid-feedback';
-                        container.innerHTML = content.smg
-                            .replace('<div class="valid-feedback">', '')
-                            .replace('</div>', '')
-                            .trim();
+                            if (inputElement) {
+                                inputElement.classList.add('is-valid');
+                                container.className = 'valid-feedback';
+                                container.innerHTML = content.smg
+                                    .replace('<div class="valid-feedback">', '')
+                                    .replace('</div>', '')
+                                    .trim();
+                            }
+                        } else if (content.in && content.in === 'modal') {
+
+                            if (content.in === 'modal') {
+                                console.log('modal');
+                                //const modal = new bootstrap.Modal(container);
+                                //modal.show();
+                            } else if (content.in !== 'modal' && content.in != null) {
+                                console.log('Target/Plugin');
+                            }
+
+                        } else {
+
+                            HandlerDOM.showContent(container);
+                            container.innerHTML = content.smg;
+
+                        }
                     }
-                } else if (contents.in && content.in === 'modal') {
-
-                    if (content.in === 'modal') {
-                        console.log('modal');
-                        //const modal = new bootstrap.Modal(container);
-                        //modal.show();
-                    } else if (content.in !== 'modal' && content.in != null) {
-                        console.log('Target/Plugin');
-                    }
-
-                } else {
-
-                    HandlerDOM.showContent(container);
-                    container.innerHTML = content.smg;
-
-                }
+                });
             }
-        });
+        } catch (error) {
+            console.error('Display output error:', error);
+        }
+
     }
 
     /**

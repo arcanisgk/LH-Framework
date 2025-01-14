@@ -3,6 +3,10 @@ body {
     height: 97% !important;
 }
 
+i {
+    pointer-events: none !important;
+}
+
 .user-access-logo {
     height: 200px;
     width: 200px;

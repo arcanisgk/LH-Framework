@@ -6,20 +6,21 @@
                     <h4 class="card-title mt-2">{{platform-translator-title}}</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-
-                        <label class="form-label col-form-label col-md-3" for="dictionary-selector">{{label-key-selector}}</label>
-
-                        <div class="col-md-7">
-                            <form action="/Platform-Translator" method="post">
+                    <form action="/Platform-Translator" method="post">
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-3" for="dictionary-selector">{{label-key-selector}}</label>
+                            <div class="col-md-7">
                                 <select class="form-control" id="dictionary-selector" data-lh-pl="select" data-width="100%" name="event" data-lh-event="getDictionary" data-lh-var="workspace-selected">
                                     <option value="0">{{select-dictionary}}</option>
                                     {{dictionary-options}}
                                 </select>
-                            </form>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-outline-info" name="event" value="refresh">
+                                    <i class="fa-solid fa-arrows-rotate"></i></button>
+                            </div>
                         </div>
-                    </div>
-
+                    </form>
                     <div class="row">
                         <div class="col-12">
 

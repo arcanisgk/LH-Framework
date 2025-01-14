@@ -117,7 +117,7 @@
         <tr class="row-1">
             <td></td>
             <td>
-                <b>Line: </b>121                <b>Level: </b>Not Set                <b>Time: </b>1735334613            </td>
+                <b>Line: </b>126                <b>Level: </b>Not Set                <b>Time: </b>1736196853            </td>
         </tr>
         <tr class="row-3">
             <td class="col1 top">BackTrace Log:</td>
@@ -168,6 +168,11 @@ use </span><span style="color: #0000BB">Asset\Framework\Trait\SingletonTrait</sp
      * @var string|null
      */
     </span><span style="color: #007700">private ?</span><span style="color: #0000BB">string $in</span><span style="color: #007700">;
+
+    </span><span style="color: #FF8000">/**
+     * @var string|null
+     */
+    </span><span style="color: #007700">private ?</span><span style="color: #0000BB">string $typeTarget</span><span style="color: #007700">;
 
     </span><span style="color: #FF8000">/**
      * @var array|null
@@ -385,6 +390,7 @@ use </span><span style="color: #0000BB">Asset\Framework\Trait\SingletonTrait</sp
         </span><span style="color: #0000BB">$responseArray </span><span style="color: #007700">= [
             </span><span style="color: #DD0000">'show'         </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">show </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
             </span><span style="color: #DD0000">'in'           </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">in </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
+            </span><span style="color: #DD0000">'typeTarget'   </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">typeTarget </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
             </span><span style="color: #DD0000">'content'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
             </span><span style="color: #DD0000">'refresh'      </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">refresh </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
             </span><span style="color: #DD0000">'nav'          </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">nav </span><span style="color: #007700">?? </span><span style="color: #0000BB">null</span><span style="color: #007700">,
@@ -395,6 +401,18 @@ use </span><span style="color: #0000BB">Asset\Framework\Trait\SingletonTrait</sp
         ];
 
         return </span><span style="color: #0000BB">json_encode</span><span style="color: #007700">(</span><span style="color: #0000BB">$responseArray</span><span style="color: #007700">, </span><span style="color: #0000BB">JSON_PRETTY_PRINT</span><span style="color: #007700">);
+    }
+
+    public function </span><span style="color: #0000BB">getTypeTarget</span><span style="color: #007700">(): ?</span><span style="color: #0000BB">string
+    </span><span style="color: #007700">{
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">typeTarget</span><span style="color: #007700">;
+    }
+
+    public function </span><span style="color: #0000BB">setTypeTarget</span><span style="color: #007700">(</span><span style="color: #0000BB">string $string</span><span style="color: #007700">): </span><span style="color: #0000BB">self
+    </span><span style="color: #007700">{
+        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">typeTarget </span><span style="color: #007700">= </span><span style="color: #0000BB">$string</span><span style="color: #007700">;
+
+        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">;
     }
 }</span></code></pre></td>
         </tr>

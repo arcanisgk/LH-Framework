@@ -1,4 +1,5 @@
 {
   "app_setting": true,
-  "dev_tool": true
+  "dev_tool": true,
+  "translate_tool": ""
 }

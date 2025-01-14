@@ -90,7 +90,6 @@ export class HandlerUtilities {
         return window.matchMedia("(orientation: landscape)").matches;
     }
 
-
     /**
      * Applies a function to be called when the device orientation changes.
      *
@@ -128,6 +127,18 @@ export class HandlerUtilities {
         return () => {
             mediaQueryPortrait.removeEventListener('change', checkOrientation);
         };
+    }
+
+
+    /**
+     * Checks if an object is iterable.
+     *
+     * @param {*} obj - The object to check for iterability.
+     * @returns {boolean} - True if the object is iterable, false otherwise.
+     */
+    static isIterable(obj) {
+        if (obj == null) return false;
+        return typeof obj[Symbol.iterator] === 'function' || Array.isArray(obj) || typeof obj === 'object';
     }
 }
 

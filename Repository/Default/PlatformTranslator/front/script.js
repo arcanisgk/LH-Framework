@@ -1,8 +1,10 @@
 import {HandlerModal} from "../../handler/handler-modal.js";
 import {HandlerRequest} from "../../handler/handler-request.js";
+import {HandlerTranslateTool} from "../../handler/handler-translate-tool.js";
 
 export class TranslationManager {
     constructor() {
+        this.translator = new HandlerTranslateTool();
         this.initialize();
     }
 
@@ -11,6 +13,9 @@ export class TranslationManager {
             if (e.target.matches('.translate-btn')) {
                 this.handleTranslateButton(e.target);
             }
+            if (e.target.matches('.auto-translate-btn')) {
+                this.handleAutoTranslate();
+            }
         });
     }
 
@@ -18,7 +23,7 @@ export class TranslationManager {
         const key = button.dataset.key;
         const content = button.dataset.lhContent;
         const translations = this.parseTranslations(content);
-        this.showTranslationModal(key, translations);
+        this.showTranslationModal(key, translations, button);
     }
 
     parseTranslations(content) {
@@ -29,7 +34,7 @@ export class TranslationManager {
         }, {});
     }
 
-    showTranslationModal(key, translations) {
+    showTranslationModal(key, translations, sourceButton) {
         const languages = ['es', 'en', 'fr', 'pt'];
         const modalContent = this.createModalContent(key, languages, translations);
 
@@ -38,7 +43,13 @@ export class TranslationManager {
         config.content = modalContent;
         config.size = 'lg';
         config.type = 'custom';
+        config.sourceButton = sourceButton;
         config.footerButtons = [
+            {
+                text: 'Auto Translate',
+                class: 'btn-warning auto-translate-btn',
+                onClick: () => this.handleAutoTranslate()
+            },
             {
                 text: 'Save',
                 class: 'btn-primary',
@@ -56,25 +67,69 @@ export class TranslationManager {
 
     createModalContent(key, languages, translations) {
         const formGroups = languages.map(lang => `
-            <div class="form-group mb-3">
-                <label for="translation-${lang}" class="form-label text-uppercase">${lang}</label>
-                <textarea 
-                    id="translation-${lang}" 
-                    class="form-control translation-input" 
-                    data-lang="${lang}"
-                    data-key="${key}"
-                    rows="3"
-                >${translations[lang] || ''}</textarea>
-            </div>
-        `).join('');
+        <div class="form-group mb-3">
+            <label for="translation-${key}-${lang}" class="form-label text-uppercase">${lang}</label>
+            <textarea 
+                id="translation-${key}-${lang}" 
+                class="form-control translation-input" 
+                data-lang="${lang}"
+                data-key="${key}" 
+                rows="3"
+            >${translations[lang] || ''}</textarea>
+        </div>
+    `).join('');
 
         return `
-            <div class="translation-form">
-                <input type="hidden" id="translation-key" value="${key}">
-                ${formGroups}
-            </div>
-        `;
+        <div class="translation-form">
+            <input type="hidden" id="translation-key-${key}" value="${key}">
+            ${formGroups}
+        </div>
+    `;
     }
+
+    async handleAutoTranslate() {
+        const spanishInput = document.querySelector('.translation-input[data-lang="es"]');
+        if (!spanishInput || !spanishInput.value.trim()) {
+            await HandlerModal.showErrorModal('Spanish text is required for auto-translation', true);
+            return;
+        }
+
+        const spanishText = spanishInput.value;
+        const targetLanguages = ['en', 'fr', 'pt'];
+
+        try {
+            const result = await this.translator.translateText(spanishText, 'es', targetLanguages);
+
+            if (result.success) {
+                targetLanguages.forEach(lang => {
+                    const translatedText = this.preserveTokens(spanishText, result.translations[lang]);
+                    const textarea = document.querySelector(`.translation-input[data-lang="${lang}"]`);
+                    if (textarea) {
+                        textarea.value = translatedText;
+                    }
+                });
+            } else {
+                await HandlerModal.showErrorModal('Auto-translation failed', true);
+            }
+        } catch (error) {
+            await HandlerModal.showErrorModal('Error during auto-translation', true);
+        }
+    }
+
+    preserveTokens(originalText, translatedText) {
+        const tokenRegex = /{{[^}]+}}/g;
+        const tokens = originalText.match(tokenRegex) || [];
+        let preservedText = translatedText;
+
+        tokens.forEach((token, index) => {
+            preservedText = preservedText.replace(new RegExp(`\\{\\{[^}]+\\}\\}*`, 'g'), (match, offset) => {
+                return tokens[index] || match;
+            });
+        });
+
+        return preservedText;
+    }
+
 
     async handleSave(key) {
         try {
@@ -155,3 +210,4 @@ export class TranslationManager {
 }
 
 new TranslationManager();
+

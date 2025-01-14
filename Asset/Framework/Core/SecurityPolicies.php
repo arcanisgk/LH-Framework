@@ -113,8 +113,10 @@ class SecurityPolicies
     {
         $directives = self::CSP_DIRECTIVES;
 
-        $directives['script-src'] .= " 'nonce-".self::$nonce."'";
-        $directives['style-src']  .= " 'nonce-".self::$nonce."'";
+        $directives['script-src']  .= " 'nonce-".self::$nonce."'";
+        $directives['style-src']   .= " 'nonce-".self::$nonce."'";
+        $directives['connect-src'] .= ' '.CONFIG->tools->getTranslateTool();
+
 
         $cspParts = [];
         foreach ($directives as $directive => $value) {
@@ -124,6 +126,9 @@ class SecurityPolicies
         self::$contentSecurityPolicy = implode('; ', $cspParts).'; '.
             'block-all-mixed-content; '.
             'upgrade-insecure-requests;';
+
+
+        //ex_c([CONFIG, self::$contentSecurityPolicy, CONFIG->tools->getTranslateTool()]);
     }
 
     /**
