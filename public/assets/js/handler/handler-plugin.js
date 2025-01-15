@@ -18,6 +18,7 @@ import {HandlerEvents} from "./handler-event.js";
 import {HandlerShortcut} from "./handler-shortcut.js";
 import {DatatablePlugin} from "./plugins/pl-datatable.js";
 import {Select2Plugin} from "./plugins/pl-select2.js";
+import {ChoicesPlugin} from "./plugins/pl-choices.js";
 
 /**
  * Represents a plugin manager that handles various UI functionality, such as cache clearing, navigation, password view, spy scroll, Select2, Datatable, SummerNote, Dropzone, password strength, and developer mode.
@@ -91,6 +92,14 @@ export class HandlerPlugin {
             selector: '[data-lh-pl="select"]',
             init: async (elements) => {
                 await this.handlerSelect2(elements);
+            }
+        },
+        {
+            name: 'choices',
+            assets: true,
+            selector: '[data-lh-pl="choices"]',
+            init: async (elements) => {
+                await this.handlerChoices(elements);
             }
         },
         {
@@ -279,6 +288,21 @@ export class HandlerPlugin {
         await Promise.all(Array.from(elements).map(async (element) => {
             const select2Plugin = new Select2Plugin();
             await select2Plugin.initialize(element);
+        }));
+    }
+
+    /**
+     * Handles the Choices functionality for a set of elements.
+     * This function initializes the Choices plugin on the provided elements,
+     * sets up event handlers, and applies required styling if necessary.
+     *
+     * @param {HTMLElement[]} elements - An array of HTML elements to initialize with Choices
+     * @returns {Promise<void>}
+     */
+    async handlerChoices(elements) {
+        await Promise.all(Array.from(elements).map(async (element) => {
+            const choicesPlugin = new ChoicesPlugin();
+            await choicesPlugin.initialize(element);
         }));
     }
 

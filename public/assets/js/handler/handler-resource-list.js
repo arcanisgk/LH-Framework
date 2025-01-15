@@ -58,6 +58,13 @@ export class HandlerResourceList {
                     {typeR: 'js', group: 2, src: 'assets/lib/select2/select2.full.min.js'},
                 ],
             },
+            choices: {
+                resources: [
+                    {typeR: 'css', group: 1, src: 'assets/lib/choices/base.min.css'},
+                    {typeR: 'css', group: 1, src: 'assets/lib/choices/choices.min.css'},
+                    {typeR: 'js', group: 2, src: 'assets/lib/choices/choices.min.js'},
+                ],
+            },
             datatable: {
                 resources: [
                     {typeR: 'css', group: 1, src: 'assets/lib/datatable/datatables.min.css'},

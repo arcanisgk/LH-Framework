@@ -60,12 +60,12 @@ export class HandlerUtilities {
     static findModalParent(target) {
 
         const panelBody = target.closest('.panel-body');
-        if (panelBody.length > 0) {
+        if (panelBody && panelBody.length > 0) {
             return {target: panelBody, length: 1};
         }
 
         const modalBody = target.closest('.modal-body');
-        if (modalBody.length > 0) {
+        if (modalBody && modalBody.length > 0) {
             return {target: target.parents('.modal-body'), length: 1};
         }
 
